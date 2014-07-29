@@ -1,6 +1,8 @@
 import json
 from igraph import *
 
+#python indicators.py export_sample 011171e509d303ecf1710551179e5c1a6e299f0e
+
 def create_graph(path, name):
     path = "./DATA/"+path+"/"+name+"/friends.jsons"
     f = open(path, 'r')
@@ -27,8 +29,7 @@ def create_graph(path, name):
     graph = Graph(list_of_edges)
     for v in graph.vs:
         v["name"] = index_to_vertex[v.index]
-    return (graph, index_to_vertex, vertex_to_index)
-    
+    return (graph, index_to_vertex, vertex_to_index)    
     
     
 def create_list_neighbors(graph):
