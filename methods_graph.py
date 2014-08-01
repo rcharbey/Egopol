@@ -1,8 +1,8 @@
 import json
 from igraph import *
 
-def create_graph(path, name):
-    path = "./DATA/"+path+"/"+name+"/friends.jsons"
+def create_graph(path):
+    path = path+"/friends.jsons"
     f = open(path, 'r')
     list_of_edges = []
     index_to_vertex = {}
