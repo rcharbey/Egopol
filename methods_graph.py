@@ -1,11 +1,12 @@
 import json
+import gzip
 from igraph import *
 
 # python indicators.py DATA/export_sample/011171e509d303ecf1710551179e5c1a6e299f0e
 
 def create_graph(path):
-    path = path+"/friends.jsons"
-    f = open(path, 'r')
+    gz = path+"/friends.jsons.gz"
+    f = gzip.open(gz, 'rb')
     list_of_edges = []
     index_to_vertex = {}
     vertex_to_index = {}
