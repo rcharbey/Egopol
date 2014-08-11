@@ -12,12 +12,20 @@ def create_graph(path, name):
     nb_of_vertices = 0
     for line in f:
         jr = json.loads(line)
+        if not "mutual" in jr:
+            vertex_to_index[jr["id"]] = nb_of_vertices
+            index_to_vertex[nb_of_vertices] = jr["id"]
+            nb_of_vertices += 1
+    f.close()
+    f = open(path, 'r')
+    for line in f:
+        jr = json.loads(line)
+        if not "mutual" in jr:
+            continue
         if not jr["id"] in vertex_to_index:
             vertex_to_index[jr["id"]] = nb_of_vertices
             index_to_vertex[nb_of_vertices] = jr["id"]
             nb_of_vertices += 1
-        if not "mutual" in jr:
-            continue    
         for neighbor in jr["mutual"]:
             if not neighbor["id"] in vertex_to_index:
                 vertex_to_index[neighbor["id"]] = nb_of_vertices
@@ -44,3 +52,22 @@ def create_list_neighbors(graph):
     for l in list_neighbors:
         l.sort(key =lambda vertex: vertex.index,  reverse = True)
     return list_neighbors  
+    
+def calculate_degree_distribution(graph):
+    result = []
+    for v in graph.vs:
+        result.append(v.degree())
+    result.sort()
+    return result
+    
+def calculate_degree_combination(graph):
+    temp = []
+    for v in graph.vs:
+        temp.append(v.degree())
+    result = []
+    for v in graph.vs:
+        result.append(v.degree())
+        for neighbor in v.neighors():
+            result.append(neighbor.degree())
+    result.sort()
+    return result()
