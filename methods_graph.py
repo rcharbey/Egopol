@@ -67,7 +67,9 @@ def calculate_degree_combination(graph):
     result = []
     for v in graph.vs:
         result.append(v.degree())
-        for neighbor in v.neighors():
-            result.append(neighbor.degree())
+        neighborhood = v.neighbors()
+        for neighbor in neighborhood:
+            result[v.index] += neighbor.degree()
+        v["neighbor_degree"] = result[v.index]
     result.sort()
-    return result()
+    return result
