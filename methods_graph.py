@@ -1,11 +1,12 @@
 import json
+import gzip
 from igraph import *
 
-#python indicators.py export_sample 011171e509d303ecf1710551179e5c1a6e299f0e
+# python indicators.py DATA/export_sample/011171e509d303ecf1710551179e5c1a6e299f0e
 
-def create_graph(path, name):
-    path = "./DATA/"+path+"/"+name+"/friends.jsons"
-    f = open(path, 'r')
+def create_graph(path):
+    gz = path+"/friends.jsons.gz"
+    f = gzip.open(gz, 'rb')
     list_of_edges = []
     index_to_vertex = {}
     vertex_to_index = {}
@@ -52,6 +53,7 @@ def create_list_neighbors(graph):
     for l in list_neighbors:
         l.sort(key =lambda vertex: vertex.index,  reverse = True)
     return list_neighbors  
+<<<<<<< HEAD
     
 def calculate_degree_distribution(graph):
     result = []
@@ -73,3 +75,5 @@ def calculate_degree_combination(graph):
         v["neighbor_degree"] = result[v.index]
     result.sort()
     return result
+=======
+>>>>>>> 6454b59ed887fbbaa0fa1851cf4a615ca7941246
