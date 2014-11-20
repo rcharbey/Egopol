@@ -2,8 +2,6 @@ import read_html
 import print_html
 import os
 import sys
-
-sys.path.append('./Indicators')
 import status
 
 def enumeration(folder, ego, quality, patterns_enumeration, path_aggregation = None):
