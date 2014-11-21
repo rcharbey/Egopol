@@ -15,7 +15,7 @@ def main(dict_friends, dict_commenters, folder, ego):
         commenters.write_graph(graph_commenters)
     
     graph_both = both_friends_status.create_graph(graph_friends, graph_commenters, folder, ego)
-    if len(graph_both.es) > 0:
+    #if len(graph_both.es) > 0:
         #both_friends_status.draw_graph_weighted(graph_both)
         #both_friends_status.draw_graph(graph_both)
     
