@@ -31,7 +31,7 @@ def draw_graph(graph):
     if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']):
         os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego'])
     place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/friends.svg'
-    plot(graph, place, layout = layout, vertex_size = 10)
+    #plot(graph, place, layout = layout, vertex_size = 10)
       
 def write_graph(graph):
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/friends.gml', format = 'gml')
