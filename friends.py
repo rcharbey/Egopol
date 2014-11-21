@@ -54,5 +54,5 @@ def induced_graph(graph, id_status, list_of_vertices):
     if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/statuses/'+id_status):
         os.mkdir('GALLERY/'+folder+'/'+ego+'/statuses/'+id_status)
     place = 'GALLERY/'+folder+'/'+ego+'/statuses/'+id_status+'/induit_friends.svg'
-    plot(induced, place, layout = layout, vertex_size = 10)
+    #plot(induced, place, layout = layout, vertex_size = 10)
     return induced
