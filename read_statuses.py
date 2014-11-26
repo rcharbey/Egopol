@@ -2,7 +2,6 @@ import gzip
 import json
 
 def dict_of_commenters_per_status(folder, ego, list_of_friends):
-    
     path = folder + '/' + ego
     gz = "DATA/"+path+"/statuses.jsons.gz"
     f = gzip.open(gz, 'rb')
@@ -28,7 +27,6 @@ def dict_of_commenters_per_status(folder, ego, list_of_friends):
 
 
 def dict_of_mutual_commenters(folder, ego, list_of_friends):
-    
     path = folder + '/' + ego
     gz = "DATA/"+path+"/statuses.jsons.gz"
     f = gzip.open(gz, 'rb')
@@ -49,5 +47,22 @@ def dict_of_mutual_commenters(folder, ego, list_of_friends):
                         if commenter_2 in list_of_friends and commenter_2 != commenter:
                             result[commenter].append(commenter_2)
                             
+    return result
+
+def list_of_commenters(folder, ego, list_of_friends):
+    path = folder + '/' + ego
+    gz = "DATA/"+path+"/statuses.jsons.gz"
+    f = gzip.open(gz, 'rb')
+    
+    result = []
+    
+    for line in f:
+        status = json.loads(line)
+        if 'comments' in status:
+            for comment in status['comments']:
+                commenter = comment['from']['id']
+                if commenter not in result and commenter in list_of_friends:
+                    result.append(commenter)
+                    
     return result
     
