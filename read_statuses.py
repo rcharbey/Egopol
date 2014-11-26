@@ -49,20 +49,28 @@ def dict_of_mutual_commenters(folder, ego, list_of_friends):
                             
     return result
 
-def list_of_commenters(folder, ego, list_of_friends):
+def calculate_info_commenters(folder, ego, list_of_friends):
     path = folder + '/' + ego
     gz = "DATA/"+path+"/statuses.jsons.gz"
     f = gzip.open(gz, 'rb')
     
-    result = []
+    result = {}
     
     for line in f:
+        list_commenters_of_line = []
         status = json.loads(line)
         if 'comments' in status:
             for comment in status['comments']:
                 commenter = comment['from']['id']
-                if commenter not in result and commenter in list_of_friends:
-                    result.append(commenter)
-                    
+                if commenter in list_of_friends:
+                    if commenter in result:
+                        result[commenter]['nb_of_comments'] += 1
+                        if commenter not in list_commenters_of_line:
+                            result[commenter]['nb_of_statuses'] += 1
+                            list_commenters_of_line.append(commenter)
+                    else:
+                        result[commenter] = {'nb_of_comments' : 1, 'nb_of_statuses' : 1}
+                        list_commenters_of_line.append(commenter)
+                        
     return result
     

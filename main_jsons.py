@@ -14,6 +14,6 @@ def main(folder, ego, options):
 def list_of_friends(folder, ego):
     return read_friends.list_of_friends(folder, ego)
 
-def list_of_commenters(folder, ego):
+def calculate_info_commenters(folder, ego):
     list_friends = list_of_friends(folder, ego)
-    return read_statuses.list_of_commenters(folder, ego, list_friends)
+    return read_statuses.calculate_info_commenters(folder, ego, list_friends)
