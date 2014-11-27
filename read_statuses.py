@@ -25,6 +25,52 @@ def dict_of_commenters_per_status(folder, ego, list_of_friends):
         result[status['id']] = commenters
     return result
 
+def dict_of_likers_per_status(folder, ego, list_of_friends):
+    path = folder + '/' + ego
+    gz = "DATA/"+path+"/statuses.jsons.gz"
+    f = gzip.open(gz, 'rb')
+    
+    result = {}
+
+    for line in f:
+        status = json.loads(line)
+        likers = []
+        if 'likes' in status:
+            for like in status['likes']:
+                liker = like['id']
+                if liker == ego:
+                    liker = 0
+                elif liker not in list_of_friends:
+                    continue
+                likers.append(liker)
+        result[status['id']] = likers
+    return result
+
+def dict_of_likers_of_comments_per_status(folder, ego, list_of_friends):
+    path = folder + '/' + ego
+    gz = "DATA/"+path+"/statuses.jsons.gz"
+    f = gzip.open(gz, 'rb')
+    
+    result = {}
+
+    for line in f:
+        status = json.loads(line)
+        likers = {}
+        if 'comments' in status:
+            for comment in status['comments']:
+                if 'likes' in comment:
+                    for like in comment['likes']:
+                        liker = like['id']
+                        if liker == ego:
+                            liker = 0
+                        elif liker not in list_of_friends:
+                            continue
+                        if liker not in likers:
+                            likers[liker] = 1
+                        else:
+                            likers[liker] += 1
+        result[status['id']] = likers
+    return result
 
 def dict_of_mutual_commenters(folder, ego, list_of_friends):
     path = folder + '/' + ego
@@ -73,4 +119,45 @@ def calculate_info_commenters(folder, ego, list_of_friends):
                         list_commenters_of_line.append(commenter)
                         
     return result
+
+def calculate_info_likers(folder, ego, list_of_friends):
+    path = folder + '/' + ego
+    gz = "DATA/"+path+"/statuses.jsons.gz"
+    f = gzip.open(gz, 'rb')
     
+    result = {}
+    
+    for line in f:
+        status = json.loads(line)
+        if 'likes' in status:
+            for like in status['likes']:
+                liker = like['id']
+                if liker in list_of_friends:
+                    if liker in result:
+                        result[liker] += 1
+                    else:
+                        result[liker] = 1
+                        
+    return result
+
+def calculate_info_likers_of_comment(folder, ego, list_of_friends):
+    path = folder + '/' + ego
+    gz = "DATA/"+path+"/statuses.jsons.gz"
+    f = gzip.open(gz, 'rb')
+    
+    result = {}
+    
+    for line in f:
+        status = json.loads(line)
+        if 'comments' in status:
+            for comment in status['comments']:
+                if 'likes' in comment: 
+                    for like in comment['likes']:
+                        liker = like['id']
+                        if liker in list_of_friends:
+                            if liker in result:
+                                result[liker] += 1
+                            else:
+                                result[liker] = 1
+                        
+    return result

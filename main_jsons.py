@@ -17,3 +17,24 @@ def list_of_friends(folder, ego):
 def calculate_info_commenters(folder, ego):
     list_friends = list_of_friends(folder, ego)
     return read_statuses.calculate_info_commenters(folder, ego, list_friends)
+
+def calculate_info_likers(folder, ego):
+    list_friends = list_of_friends(folder, ego)
+    return read_statuses.calculate_info_likers(folder, ego, list_friends)
+
+def calculate_info_likers_of_comment(folder, ego):
+    list_friends = list_of_friends(folder, ego)
+    return read_statuses.calculate_info_likers_of_comment(folder, ego, list_friends)
+
+def calculate_dict_of_commenters_per_status(folder, ego):
+    list_friends = list_of_friends(folder, ego)
+    return read_statuses.dict_of_commenters_per_status(folder, ego, list_friends)
+
+def calculate_dict_of_likers_per_status(folder, ego):
+    list_friends = list_of_friends(folder, ego)
+    return read_statuses.dict_of_likers_per_status(folder, ego, list_friends)
+
+def calculate_dict_of_likers_of_comments_per_status(folder, ego):
+    list_friends = list_of_friends(folder, ego)
+    return read_statuses.dict_of_likers_of_comments_per_status(folder, ego, list_friends)
+    
