@@ -124,3 +124,10 @@ def html_to_csv(quality):
                     csv_file = open('GALLERY/'+folder+'/'+ego+'/patterns_'+quality+'.csv', 'wb')
                 writer = csv.writer(csv_file, delimiter=';')
                 writer.writerow(result)  
+
+def main():
+    html_to_csv('friends')
+    html_to_csv('commenters')
+    aggregate('friends')
+    aggregate('statuses')
+    add_aggregation_data_all('csa')
