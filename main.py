@@ -15,6 +15,7 @@ import main_graphs
 import methods_html
 import main_jsons
 import csv
+import pretty_print
 
 folder = args.folder
 ego = args.ego
@@ -74,6 +75,8 @@ if options != None:
             study_status(args.options[1])
         else:
             study_statuses()
+    elif 'pretty_print' in options:
+        pretty_print.main()
     
 else:
     triple = init()
@@ -96,4 +99,5 @@ else:
                 enumeration_status[i] += temp[i]
         #if len(list_of_statuses) > 0:
             #print_result_all_induced(enumeration_status)
+        pretty_print.main()
     
