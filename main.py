@@ -75,8 +75,6 @@ if options != None:
             study_status(args.options[1])
         else:
             study_statuses()
-    elif 'pretty_print' in options:
-        pretty_print.main()
     
 else:
     triple = init()
