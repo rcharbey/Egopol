@@ -157,5 +157,3 @@ def main():
     aggregate('statuses')
     aggregate_status('induced_friends')
     add_aggregation_data_all()
-    
-main()
