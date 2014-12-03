@@ -14,6 +14,8 @@ import main_enumeration
 import main_graphs
 import methods_html
 import main_jsons
+import csv
+import pretty_print
 
 folder = args.folder
 ego = args.ego
@@ -31,8 +33,10 @@ def init():
 def enumerate(quality):
     graph = main_graphs.import_graph(folder, ego, quality)
     enumeration = main_enumeration.main(graph, {})
-    methods_html.aggregation_patterns(ego, quality, enumeration[0])
-    methods_html.enumeration(folder, ego, quality, enumeration[0], './GALLERY')
+    path = 'GALLERY/'+folder+'/'+ego+'/'
+    csv_file = open(path+'patterns_'+quality+'.csv', 'wb')
+    writer = csv.writer(csv_file, delimiter=';')
+    writer.writerow(enumeration[0])
     return enumeration[0]
     
 def study_statuses():
@@ -46,9 +50,10 @@ def study_status(id_status):
     graph_friends = main_graphs.import_graph(folder, ego, 'friends')
     induced_graph_friends = main_graphs.induced_subgraph(graph_friends, id_status, list_of_commenters, 'friends')
     patterns_enumeration = main_enumeration.main(induced_graph_friends, {})
-    methods_html.aggregation_patterns(id_status, 'friends_induced', patterns_enumeration[0])
-    methods_html.aggregation_patterns(id_status, 'friends_induced', patterns_enumeration[0], './GALLERY/'+folder+'/'+ego+'/statuses', './../../../PATTERNS', True)
-    methods_html.enumeration_induced_in_status(folder, ego, id_status, patterns_enumeration[0], 'friends_induced', './GALLERY')
+    path = 'GALLERY/'+folder+'/'+ego+'/statuses/'+id_status+'/'
+    csv_file = open(path+'patterns_induced_friends.csv', 'wb')
+    writer = csv.writer(csv_file, delimiter=';')
+    writer.writerow(patterns_enumeration[0])
     return patterns_enumeration[0]
     
     #graph_commenters = main_graphs.import_graph(folder, ego, 'statuses')
@@ -70,6 +75,8 @@ if options != None:
             study_status(args.options[1])
         else:
             study_statuses()
+    elif 'pretty_print' in options:
+        pretty_print.main()
     
 else:
     triple = init()
@@ -92,4 +99,5 @@ else:
                 enumeration_status[i] += temp[i]
         #if len(list_of_statuses) > 0:
             #print_result_all_induced(enumeration_status)
+        pretty_print.main()
     
