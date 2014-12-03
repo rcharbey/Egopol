@@ -7,8 +7,6 @@ def read_csv(name):
         return [0]*30
     csv_file = open(name, 'rb')
     reader = csv.reader(csv_file, delimiter=';')
-    result = []
-    place = 0
     for line in reader:
         return line
 
