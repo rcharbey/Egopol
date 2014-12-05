@@ -11,30 +11,30 @@ def read_csv(name):
         result.append(line)
     return result
 
-def create_list_colors(patterns_table):
+def create_list_colors(table):
     temp = []
-    for elem in patterns_table:
+    for elem in table:
         temp.append(elem)
         
     colors = []
     prev_max = None
     suppressed_elem = 0
     while suppressed_elem < len(temp):
-        max = -1
+        maximum = -1
         for elem in temp:
-            if elem > max :
-                if prev_max == None or elem < prev_max:
-                    max = elem
+            if float(elem) > float(maximum) :
+                if prev_max == None or float(elem) < float(prev_max):
+                    maximum = elem
         colors.append([])
         for i in range(0, len(temp)):
-            if temp[i] == max:
+            if temp[i] == maximum:
                 colors[len(colors) - 1].append(i)
                 suppressed_elem += 1
-        prev_max = max
+        prev_max = maximum
     
-    result = [0]*len(patterns_table)
+    result = [0]*len(table)
     for j in range(0, len(colors)):
-        for pat in colors[j]:
+        for color in colors[j]:
             red = int(255-j*(255/float(len(colors))))
             if red < 10:
                 str_red = '00'+str(red)
@@ -42,7 +42,7 @@ def create_list_colors(patterns_table):
                 str_red = '0'+str(red)
             else:
                 str_red = str(red)
-            result[pat] = '('+str_red+',0,0)'
+            result[color] = '('+str_red+',0,0)'
    
     return result
 
@@ -61,6 +61,7 @@ def appearance_pattern(patterns_enumeration, i, file_html, colors):
     else:
         file_html.write(colors[i-1])
     file_html.write('">'+str(patterns_enumeration[i-1]))
+    file_html.write('</td>')
 
 def image_pattern(path_patterns, i, file_html):
     file_html.write('<td><img src="'+path_patterns+'/pattern')
@@ -73,6 +74,8 @@ def image_pattern(path_patterns, i, file_html):
 
 def enumeration(file_html, infos, path_patterns):
     colors = create_list_colors(infos[0])
+    if len(infos) > 1:
+        colors_significativity = create_list_colors(infos[1])
     print_begin(file_html)
     
     file_html.write('<table style="width:100%">')
@@ -84,14 +87,46 @@ def enumeration(file_html, infos, path_patterns):
         
         j = 1
         while len(infos) > j:
-            file_html.write(' ('+str(infos[j][i-1])+')')
+            file_html.write('<td style = "color:rgb')
+            if infos[j][i-1] == 0:
+                file_html.write('(000,0,0)')
+            else:
+                file_html.write(colors_significativity[i-1])
+            file_html.write('">'+str(infos[j][i-1]))
+            file_html.write('</td>')
             j += 1
             
-        file_html.write('</td>\n')
+        file_html.write('\n')
         file_html.write('</tr>')
         file_html.write('\n')
     
     file_html.close()  
+    
+def status(folder, ego, list_of_statuses):
+    if not os.path.isdir('GALLERY/'+folder):
+        os.mkdir('GALLERY/'+folder)
+    if not os.path.isdir('GALLERY/'+folder+'/'+ego):
+        os.mkdir('GALLERY/'+folder+'/'+ego)
+        
+    fichier = open('GALLERY/'+folder+'/'+ego+'/resultats_status.html',"w")
+    print_begin(fichier)
+    
+    fichier.write('<table style="width:100%">')
+    fichier.write('<tr>\n')
+    
+    fichier.write('<td>Id du status</td><td>nombre de commentateurs</td><td>nombre de commentaires de ego</td>\n')
+    fichier.write('</tr>')
+    
+    result = []
+    
+    for status in list_of_statuses:
+        if status[1] - status[2] > 2:
+            result.append(status)
+            fichier.write('<tr>')
+            fichier.write('<td>'+str(status[0])+'</td><td>'+str(status[1])+'</td><td>'+str(status[2])+'</td>')
+            fichier.write('</tr>')
+            
+    return result
     
 def main():
     for quality in ['aggregation_patterns_induced_friends', 'aggregation_patterns_induced_statuses', 'aggregation_patterns_friends', 'aggregation_patterns_statuses']:
@@ -102,6 +137,7 @@ def main():
     for folder in list_folders: 
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
+            print ego
             path = 'GALLERY/'+folder+'/'+ego+'/'
             for quality in ['patterns_friends', 'patterns_statuses']:
                 name = path + quality

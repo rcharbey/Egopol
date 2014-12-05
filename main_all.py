@@ -7,10 +7,18 @@ import sys
 import os
 import pretty_print
 import aggregation
+import csv
+import status
+sys.path.append("./Graphs")
+sys.path.append("./Enumeration")
+sys.path.append("./Jsons")
+sys.path.append("./Indicators")
+import main_enumeration
+import main_graphs
+import main_jsons
+import indicators
 
 def main():
-    dirname = 'DATA/csa_2014-09-16/'
-    liste_ego = [f for f in os.listdir(dirname) if os.path.isdir(os.path.join(dirname, f))]
     if args.options != None:
         if 'pretty_print' in args.options:
             pretty_print.main()
@@ -18,15 +26,24 @@ def main():
         elif 'aggregation' in args.options:
             aggregation.main()
             return
+        elif 'indicators' in args.options:
+            indicators.main()
         
-    for ego in liste_ego:
-        if not os.path.isdir('./GALLERY/csa_2014-09-16/'+ego):
-            sys.argv = ['main.py', 'csa_2014-09-16', ego]
-            if args.options != None:
-                sys.argv.append('-o')
-                for option in args.options:
-                    sys.argv.append(option)
-            execfile("main.py")
+    
+    list_folders = [f for f in os.listdir('DATA') if os.path.isdir(os.path.join('DATA', f))]
+    for folder in list_folders:
+        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
+        for ego in list_ego:
+            if not os.path.isdir('GALLERY/'+folder+'/'+ego):
+                print ego
+                sys.argv = ['main.py', folder, ego]
+                if args.options != None:
+                    sys.argv.append('-o')
+                    for option in args.options:
+                        sys.argv.append(option)
+                execfile("main.py")
+    aggregation.main()
+    pretty_print.main()
             
 main()
         

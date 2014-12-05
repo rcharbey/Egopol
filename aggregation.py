@@ -13,7 +13,7 @@ def read_csv(name):
 def refresh_aggregation(name, patterns_enumeration):
     if os.path.isfile(name):
         prev = read_csv(name)
-    else :
+    else:
         prev = [0]*len(patterns_enumeration)
     new_aggregation = [0]*len(patterns_enumeration)
     for i in range(0, len(patterns_enumeration)):
