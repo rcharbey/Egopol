@@ -32,3 +32,12 @@ def list_of_friends(folder, ego):
         
     f.close()    
     return result
+
+def find_friend(folder, ego, id):
+    path = folder + '/' + ego
+    gz = "DATA/"+path+"/statuses.jsons.gz"
+    f = gzip.open(gz, 'rb')
+    for line in f:
+        friend = json.loads(line)
+        if friend['id'] == id:
+            return friend

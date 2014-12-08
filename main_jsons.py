@@ -38,3 +38,8 @@ def calculate_dict_of_likers_of_comments_per_status(folder, ego):
     list_friends = list_of_friends(folder, ego)
     return read_statuses.dict_of_likers_of_comments_per_status(folder, ego, list_friends)
     
+def find_status(folder, ego, id):
+    return read_statuses.find_status(folder, ego, id)
+
+def find_friend(folder, ego, id):
+    return read_friends.find_friend(folder, ego, id)

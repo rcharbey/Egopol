@@ -161,3 +161,12 @@ def calculate_info_likers_of_comment(folder, ego, list_of_friends):
                                 result[liker] = 1
                         
     return result
+
+def find_status(folder, ego, id):
+    path = folder + '/' + ego
+    gz = "DATA/"+path+"/statuses.jsons.gz"
+    f = gzip.open(gz, 'rb')
+    for line in f:
+        status = json.loads(line)
+        if status['id'] == id:
+            return status
