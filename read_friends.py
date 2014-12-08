@@ -41,3 +41,4 @@ def find_friend(folder, ego, id):
         friend = json.loads(line)
         if friend['id'] == id:
             return friend
+    return {'id' : id}
