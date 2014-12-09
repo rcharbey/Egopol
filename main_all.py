@@ -27,8 +27,8 @@ def main():
             aggregation.main()
             return
         elif 'indicators' in args.options:
-            indicators.main()
-        
+            indicators.main()        
+            return
     
     list_folders = [f for f in os.listdir('DATA') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
