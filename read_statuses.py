@@ -13,7 +13,10 @@ def dict_of_commenters_per_status(folder, ego, list_of_friends):
         commenters = {}
         if 'comments' in status:
             for comment in status["comments"]:
-                commenter = comment["from"]["id"]
+                if 'name' in comment['from']:
+                    commenter = comment['from']['name']
+                else:
+                    commenter = comment["from"]["id"]
                 if commenter == ego:
                     commenter = 0
                 elif commenter not in list_of_friends:
@@ -37,7 +40,10 @@ def dict_of_likers_per_status(folder, ego, list_of_friends):
         likers = []
         if 'likes' in status:
             for like in status['likes']:
-                liker = like['id']
+                if 'name' in like:
+                    liker = like['name']
+                else:
+                    liker = like['id']
                 if liker == ego:
                     liker = 0
                 elif liker not in list_of_friends:
@@ -60,8 +66,17 @@ def dict_of_likers_of_comments_per_status(folder, ego, list_of_friends):
             for comment in status['comments']:
                 if 'likes' in comment:
                     for like in comment['likes']:
-                        liker = like['id']
-                        if liker == ego:
+                        if 'name' in like:
+                            liker = like['name']
+                        else:
+                            liker = like['id']
+                        if 'name' in like:
+                            gz_bis = 'DATA/'+path+'/ego.json.gz'
+                            f_bis = gzip.open(gz_bis, 'rb')
+                            infos = json.loads(f_bis)
+                            if liker == infos['name']:
+                                liker = 0
+                        elif liker == ego:
                             liker = 0
                         elif liker not in list_of_friends:
                             continue
@@ -86,10 +101,16 @@ def dict_of_mutual_commenters(folder, ego, list_of_friends):
         status = json.loads(line)
         if 'comments' in status:
             for comment in status['comments']:
-                commenter = comment['from']['id']
+                if 'name' in comment['from']:
+                    commenter = comment['from']['name']
+                else:
+                    commenter = comment['from']['id']
                 if commenter in list_of_friends:
                     for comment_2 in status['comments']:
-                        commenter_2 = comment_2['from']['id']
+                        if 'name' in comment_2['from']:
+                            commenter_2 = comment_2['from']['name']
+                        else:
+                            commenter_2 = comment_2['from']['id']
                         if commenter_2 in list_of_friends and commenter_2 != commenter:
                             result[commenter].append(commenter_2)
                             
@@ -107,7 +128,10 @@ def calculate_info_commenters(folder, ego, list_of_friends):
         status = json.loads(line)
         if 'comments' in status:
             for comment in status['comments']:
-                commenter = comment['from']['id']
+                if 'name' in comment['from']:
+                    commenter = comment['from']['name']
+                else:
+                    commenter = comment['from']['id']
                 if commenter in list_of_friends:
                     if commenter in result:
                         result[commenter]['nb_of_comments'] += 1
@@ -131,7 +155,10 @@ def calculate_info_likers(folder, ego, list_of_friends):
         status = json.loads(line)
         if 'likes' in status:
             for like in status['likes']:
-                liker = like['id']
+                if 'name' in like:
+                    liker = like['name']
+                else:
+                    liker = like['id']
                 if liker in list_of_friends:
                     if liker in result:
                         result[liker] += 1
@@ -153,7 +180,10 @@ def calculate_info_likers_of_comment(folder, ego, list_of_friends):
             for comment in status['comments']:
                 if 'likes' in comment: 
                     for like in comment['likes']:
-                        liker = like['id']
+                        if 'name' in like:
+                            liker = like['name']
+                        else:
+                            liker = like['id']
                         if liker in list_of_friends:
                             if liker in result:
                                 result[liker] += 1
