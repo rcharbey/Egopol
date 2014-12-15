@@ -24,6 +24,7 @@ def refresh_aggregation(name, patterns_enumeration):
     
 def aggregate(quality):
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
+    os.remove('GALLERY/aggregation_patterns_'+quality+'.csv')
     for folder in list_folders: 
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
@@ -35,6 +36,7 @@ def aggregate(quality):
        
 def aggregate_status(quality):
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
+    os.remove('GALLERY/aggregation_patterns_'+quality+'.csv',) 
     for folder in list_folders: 
         dirname = 'GALLERY/'+folder
         list_ego = [f for f in os.listdir(dirname) if os.path.isdir(os.path.join(dirname, f))]
@@ -42,6 +44,7 @@ def aggregate_status(quality):
             path = dirname+'/'+ego
             if not os.path.isdir(path+'/statuses'):
                 continue
+            os.remove(path+'/statuses/aggregation_patterns_'+quality+'.csv',)
             list_statuses = [f for f in os.listdir(path+'/statuses') if os.path.isdir(os.path.join(path+'/statuses', f))]
             for status in list_statuses:
                 patterns_enumeration = read_csv(path+'/statuses/'+status+'/patterns_'+quality+'.csv')
