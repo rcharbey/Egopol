@@ -25,6 +25,9 @@ def refresh_aggregation(name, patterns_enumeration):
 def aggregate(quality):
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     os.remove('GALLERY/aggregation_patterns_'+quality+'.csv')
+    csv_file = open('GALLERY/aggregation_patterns_'+quality+'.csv', 'wb')
+    writer = csv.writer(csv_file, delimiter=';')
+    writer.writerow([0]*30)
     for folder in list_folders: 
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
