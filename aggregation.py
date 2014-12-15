@@ -20,8 +20,6 @@ def refresh_aggregation(name, patterns_enumeration):
         new_aggregation[i] = int(prev[i]) + int(patterns_enumeration[i])
     csv_file = open(name, 'wb')
     writer = csv.writer(csv_file, delimiter=';')
-    if name == 'GALLERY/aggregation_patterns_friends.csv':
-        print new_aggregation
     writer.writerow(new_aggregation)
     
 def aggregate(quality):
@@ -160,9 +158,6 @@ def html_to_csv(quality):
                 writer.writerow(result)  
 
 def main():
-    html_to_csv('friends')
-    html_to_csv('commenters')
-    html_to_csv('induced_friends')
     aggregate('friends')
     aggregate('statuses')
     aggregate_status('induced_friends')
