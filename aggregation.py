@@ -20,6 +20,8 @@ def refresh_aggregation(name, patterns_enumeration):
         new_aggregation[i] = int(prev[i]) + int(patterns_enumeration[i])
     csv_file = open(name, 'wb')
     writer = csv.writer(csv_file, delimiter=';')
+    if name == 'GALLERY/aggregation_patterns_friends.csv':
+        print new_aggregation
     writer.writerow(new_aggregation)
     
 def aggregate(quality):
