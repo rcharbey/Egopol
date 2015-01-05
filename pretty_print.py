@@ -54,25 +54,30 @@ def print_begin(fichier):
     fichier.write('<body>')
     fichier.write('\n')
     
-def appearance_pattern(patterns_enumeration, i, file_html, colors):
+def appearance_pattern(pattern_appearance, file_html, color):
     file_html.write('<td style = "color:rgb')
-    if patterns_enumeration[i-1] == 0:
+    if pattern_appearance == 0:
         file_html.write('(000,0,0)')
     else:
-        file_html.write(colors[i-1])
-    file_html.write('">'+str(patterns_enumeration[i-1]))
+        file_html.write(color)
+    file_html.write('">'+str(pattern_appearance))
     file_html.write('</td>')
 
 def image_pattern(path_patterns, i, file_html):
     file_html.write('<td><img src="'+path_patterns+'/pattern')
-    if i < 10:
+    if i+1 < 10:
         file_html.write('0')
-    file_html.write(str(i)+'.svg" width="70" height = "70" alt="pattern')
-    if i < 10:
+    file_html.write(str(i+1)+'.svg" width="70" height = "70" alt="pattern')
+    if i+1 < 10:
         file_html.write('0')
-    file_html.write(str(i)+'"></td>')
+    file_html.write(str(i+1)+'"></td>')
 
 def enumeration(file_html, infos, path_patterns):
+    """
+            enumeration writes the content of infos in file_html.
+            it uses the colors computed by create_list_colors and picks the images in path_patterns
+            it works for both patterns and positions (but only for one alter this far)
+    """
     colors = create_list_colors(infos[0])
     if len(infos) > 1:
         colors_significativity = create_list_colors(infos[1])
@@ -137,6 +142,7 @@ def main():
     for folder in list_folders: 
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
+            print 'pretty print : ',
             print ego
             path = 'GALLERY/'+folder+'/'+ego+'/'
             for quality in ['patterns_friends', 'patterns_statuses']:
@@ -155,4 +161,4 @@ def main():
                 for quality in ['patterns_induced_friends', 'patterns_induced_statuses']:
                     name = path + status + '/' + quality
                     if os.path.isfile(name+'.csv'):
-                        enumeration(open(name + '.html', 'w'), read_csv(name + '.csv'), '../../../../PATTERNS')
+                        enumeration(open(name + '.html', 'w'), read_csv(name + '.csv'), '../../../../PATTERNS')    

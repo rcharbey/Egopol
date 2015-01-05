@@ -111,51 +111,6 @@ def add_aggregation_data_all():
             add_aggregation_data(folder, ego, 'statuses')
             if os.path.isdir(dirname+'/'+ego+'/statuses'):
                 add_aggregation_data(folder, ego, 'induced_friends', True)
-            
-def read_html(file_html):
-    result = []
-    place = 0
-    for line in file_html:
-        current_value = ''
-        if len(line) > 100:
-            if place == 0:
-                for j in range(0, len(line)) :
-                    if line[j] == ')':
-                        place = j + 3
-                        break
-            i = place
-            while line[i] >= '0' and line[i] <= '9':
-                current_value += line[i]
-                i += 1
-            result.append(current_value)
-    return result
-        
-def html_to_csv(quality):
-    list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
-    for folder in list_folders: 
-        list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
-        for ego in list_ego:
-            path = 'GALLERY/'+folder+'/'+ego
-            if quality == 'induced_friends':
-                if not os.path.isdir(path+'/statuses'):
-                    continue
-                list_statuses = [f for f in os.listdir(path+'/statuses/') if os.path.isdir(os.path.join(path+'/statuses/', f))]
-                for status in list_statuses:
-                    if os.path.isfile(path+'/statuses/'+ status +'/patterns_induced_friends_induced.html'):
-                        file_html = open(path+'/statuses/'+status+'/patterns_induced_friends_induced.html', 'r')
-                        result = read_html(file_html)
-                        csv_file = open(path+'/statuses/'+status+'/patterns_'+quality+'.csv', 'wb')
-                        writer = csv.writer(csv_file, delimiter=';')
-                        writer.writerow(result) 
-            if os.path.isfile(path+'/patterns_'+quality+'.html'):
-                file_html = open(path+'/patterns_'+quality+'.html', 'r')
-                result = read_html(file_html)
-                if quality == 'commenters':
-                    csv_file = open(path+'/patterns_statuses.csv', 'wb')
-                else:
-                    csv_file = open(path+'/patterns_'+quality+'.csv', 'wb')
-                writer = csv.writer(csv_file, delimiter=';')
-                writer.writerow(result)  
 
 def main():
     aggregate('friends')

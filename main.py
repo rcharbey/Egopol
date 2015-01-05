@@ -29,13 +29,19 @@ def init(args):
         return None
     
 def enumerate(args, quality):
+    """
+       enumerate imports the graph from the ml file created by init and runs the enumeration algo on it.
+       once the result shows up, it prints it in two differents csv files. One for the patterns and the other for the positions.
+    """
     graph = main_graphs.import_graph(args.folder, args.ego, quality)
     enumeration = main_enumeration.main(graph, {})
     path = 'GALLERY/'+args.folder+'/'+args.ego+'/'
-    csv_file = open(path+'patterns_'+quality+'.csv', 'wb')
-    writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(enumeration[0])
-    return enumeration[0]
+    writer_patterns = csv.writer(open(path+'patterns_'+quality+'.csv', 'wb'), delimiter=';')
+    writer_patterns.writerow(enumeration[0])
+    writer_positions= csv.writer(open(path+'positions_'+quality+'.csv', 'wb'), delimiter = ';')
+    for i in range(0, len(graph.vs)):
+        writer_positions.writerow(enumeration[1][i])
+    return enumeration
     
 def study_statuses(args):
     dict_of_commenters_per_status = main_jsons.main(args.folder, args.ego, 'commenters')
@@ -64,7 +70,7 @@ def study_status(args, id_status):
 
 if args.options != None:
     if 'init' in args.options:
-        init()
+        init(args)
     elif 'enumerate' in args.options:
         enumerate(args, 'friends')
         enumerate(args, 'commenters')
@@ -81,7 +87,9 @@ else:
         graph_commenters = triple[1]
         enumeration = None
         if len(graph_friends.es) < 2000 and len(graph_friends.es) > 0:
-            enumeration = enumerate(args, 'friends')
+            enumeration = enumerate(args, 'friends')[0]
+        else:
+            print len(graph_friends.es)
         if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
             enumerate(args, 'commenters')
         list_of_statuses = study_statuses(args)
