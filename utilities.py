@@ -53,7 +53,7 @@ def create_list_colors(table):
 
 def print_begin(fichier):
     fichier.write('''
-<!DOCTYPE html>'
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -69,4 +69,3 @@ def print_begin(fichier):
 </head>
 <body>
 ''')
-    
