@@ -57,7 +57,7 @@ def print_begin(fichier):
 <html>
 <head>
   <meta charset="utf-8">
-  <style>
+  <style type="text/css">
     td nb {
       align: right;
     }
