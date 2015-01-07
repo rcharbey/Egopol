@@ -8,7 +8,7 @@ def image(path_to_images, i, file_html, rowspan = 1):
     file_html.write(str(i+1)+'"></td>')
     
 def appearance(number, file_html, color):
-    file_html.write('<td style = "color:rgb')
+    file_html.write('<td class="nb" style = "color:rgb')
     if number == 0:
         file_html.write('(000,0,0)')
     else:

@@ -69,7 +69,7 @@ def pretty_print(path, quality, path_images):
                 utilities.appearance(enumeration[index_alter][index_color], file_html, colors_enumeration[index_alter][index_color])
             
                 if proportion != -1:
-                    file_html.write('<td style = "color:rgb')
+                    file_html.write('<td class="ratio" style = "color:rgb')
                     if proportion[index_alter][pattern_to_first_position[index_pattern] + index_position] == 0:
                         file_html.write('(000,0,0)')
                     else:
