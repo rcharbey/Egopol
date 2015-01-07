@@ -52,9 +52,21 @@ def create_list_colors(table):
     return result
 
 def print_begin(fichier):
-    fichier.write('<!DOCTYPE html>')
-    fichier.write('\n')
-    fichier.write('<html>')
-    fichier.write('\n\n')
-    fichier.write('<body>')
-    fichier.write('\n')
+    fichier.write('''
+<!DOCTYPE html>'
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    td nb {
+      align: right;
+    }
+    td ratio {
+      border-right: solid thin black;
+      padding-right: 4px;
+    }
+  </style>
+</head>
+<body>
+''')
+    
