@@ -58,12 +58,12 @@ def print_begin(fichier):
 <head>
   <meta charset="utf-8">
   <style type="text/css">
-    td nb {
-      align: right;
+    td.nb {
+      text-align: right;
     }
-    td ratio {
+    td.ratio {
       border-right: solid thin black;
-      padding-right: 4px;
+      padding: 0 4px;
     }
   </style>
 </head>
