@@ -9,8 +9,8 @@ def main():
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders: 
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
-        if not 'entre' in folder:
-            continue
+        #if not 'entre' in folder:
+            #continue
         for ego in list_ego:
             print 'pretty print : ',
             print ego
