@@ -173,7 +173,6 @@ def calculate_info_likers_of_comment(folder, ego, list_of_friends):
     f = gzip.open(gz, 'rb')
     
     result = {}
-    
     for line in f:
         status = json.loads(line)
         if 'comments' in status:
@@ -189,7 +188,6 @@ def calculate_info_likers_of_comment(folder, ego, list_of_friends):
                                 result[liker] += 1
                             else:
                                 result[liker] = 1
-                        
     return result
 
 def find_status(folder, ego, id):

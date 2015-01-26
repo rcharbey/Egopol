@@ -44,10 +44,13 @@ def list_of_friends(folder, ego):
 
 def find_friend(folder, ego, id):
     path = folder + '/' + ego
-    gz = "DATA/"+path+"/statuses.jsons.gz"
+    gz = "DATA/"+path+"/friends.jsons.gz"
     f = gzip.open(gz, 'rb')
     for line in f:
         friend = json.loads(line)
+        if 'name' in friend:
+            print friend['name']
+            print id
         if friend['id'] == id or ('name' in friend and friend['name'] == id):
             return friend
     return {'id' : id}
