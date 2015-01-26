@@ -97,10 +97,10 @@ else:
             enumeration_status = [0]*30
         else:
             enumeration_status = [0]*len(enumeration)
-        for status in list_of_statuses:
-            temp = study_status(args, status[0])
-            for i in range(0, len(temp)):
-                enumeration_status[i] += temp[i]
+        #for status in list_of_statuses:
+            #temp = study_status(args, status[0])
+            #for i in range(0, len(temp)):
+                #enumeration_status[i] += temp[i]
         #if len(list_of_statuses) > 0:
             #print_result_all_induced(enumeration_status)
         indicators.main(args.folder, args.ego)
