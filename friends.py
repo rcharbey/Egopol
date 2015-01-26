@@ -1,11 +1,14 @@
 from igraph import *
+import sys
+sys.path.append('./Json')
+import main_jsons
 
 def create_graph(dict_of_mutual, folder, ego):
     graph = Graph.Full(0)
     n = 0
     name_to_id = {}
     for friend in dict_of_mutual:
-        graph.add_vertex(name = friend)
+        graph.add_vertex(name = friend.encode('utf8'))
         name_to_id[friend] = n
         n += 1
     for friend in dict_of_mutual:
@@ -19,6 +22,17 @@ def create_graph(dict_of_mutual, folder, ego):
                     break
             if already_in == False:
                 graph.add_edge(name_to_id[friend], name_to_id[neighbor])
+    infos_commenters = main_jsons.calculate_info_commenters(folder, ego)
+    infos_likers = main_jsons.calculate_info_likers(folder, ego)
+    for v in graph.vs:
+        if v['name'] in infos_likers:
+            v['nb_likes'] = int(infos_likers[v['name']])
+        else:
+            v['nb_likes'] = 0
+        if v['name'] in infos_commenters:
+            v['nb_comments'] = int(infos_commenters[v['name']]['nb_of_comments'])
+        else:
+            v['nb_comments'] = 0
     graph['folder'] = folder
     graph['ego'] = ego
     return graph

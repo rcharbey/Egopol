@@ -7,7 +7,7 @@ def create_graph(dict_of_mutual_commenters, folder, ego):
     for commenter in dict_of_mutual_commenters:
         if len(dict_of_mutual_commenters[commenter]) == 0:
             continue
-        graph.add_vertex(name = commenter)
+        graph.add_vertex(name = commenter.encore('utf8'))
         name_to_id[commenter] = n
         n += 1
     for commenter in graph.vs:

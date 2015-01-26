@@ -6,8 +6,10 @@ def create_list_neighbors(graph):
     for v in graph.vs:
         v['list_neighbors'] = []
     for e in graph.es:
-        graph.vs[e.target]['list_neighbors'].append(e.source)
-        graph.vs[e.source]['list_neighbors'].append(e.target)
+        if not e.source in graph.vs[e.target]['list_neighbors']:
+            graph.vs[e.target]['list_neighbors'].append(e.source)
+        if not e.target in graph.vs[e.source]['list_neighbors']:
+            graph.vs[e.source]['list_neighbors'].append(e.target)
     for v in graph.vs:
         v['list_neighbors'].sort(reverse = True)
      

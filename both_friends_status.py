@@ -9,7 +9,7 @@ import os
 def create_graph(graph_friends, graph_commenters, folder, ego):
     graph = Graph.Full(0)
     for v in graph_friends.vs:
-        graph.add_vertex(name = v['name'])
+        graph.add_vertex(name = v['name'].encode('utf8'))
     for e in graph_friends.es:
         graph.add_edge(e.source, e.target, **{'friends' : True, 'nbst' : 0})
     for e_com in graph_commenters.es:
