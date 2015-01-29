@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import argparse
 parser = argparse.ArgumentParser(description="main")
 parser.add_argument('folder', help="ego's folder")
@@ -35,7 +37,11 @@ def enumerate(args, quality):
     """
     graph = main_graphs.import_graph(args.folder, args.ego, quality)
     enumeration = main_enumeration.main(graph, {})
-    path = 'GALLERY/'+args.folder+'/'+args.ego+'/'
+    if not os.path.isdir('GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/'):
+        os.mkdir('GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/')
+    if not os.path.isdir('GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/'):
+        os.mkdir('GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/')
+    path = 'GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/'
     writer_patterns = csv.writer(open(path+'patterns_'+quality+'.csv', 'wb'), delimiter=';')
     writer_patterns.writerow(enumeration[0])
     writer_positions= csv.writer(open(path+'positions_'+quality+'.csv', 'wb'), delimiter = ';')
@@ -57,7 +63,7 @@ def study_status(args, id_status):
     graph_friends = main_graphs.import_graph(args.folder, args.ego, 'friends')
     induced_graph_friends = main_graphs.induced_subgraph(graph_friends, id_status, list_of_commenters, 'friends')
     patterns_enumeration = main_enumeration.main(induced_graph_friends, {})
-    path = 'GALLERY/'+args.folder+'/'+args.ego+'/statuses/'+id_status+'/'
+    path = 'GALLERY/'+args.folder+'/'+args.ego+'/Statuses/'+id_status+'/'
     csv_file = open(path+'patterns_induced_friends.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
     writer.writerow(patterns_enumeration[0])
@@ -81,17 +87,23 @@ if args.options != None:
             study_statuses(args)
     
 else:
+    if not os.path.isdir('GALLERY/'+args.folder):
+        os.mkdir('GALLERY/'+args.folder)
+    if not os.path.isdir('GALLERY/'+args.folder+'/'+args.ego):
+        os.mkdir('GALLERY/'+args.folder+'/'+args.ego)
     triple = init(args)
     if triple != None :
         graph_friends = triple[0]
         graph_commenters = triple[1]
         enumeration = None
-        if len(graph_friends.es) < 2000 and len(graph_friends.es) > 0:
+        if len(graph_friends.es) < 3000 and len(graph_friends.es) > 0:
             enumeration = enumerate(args, 'friends')[0]
+            print 'enumeration friends done'
         else:
             print len(graph_friends.es)
         if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
             enumerate(args, 'commenters')
+            print 'enumeration commenters done'
         list_of_statuses = study_statuses(args)
         if enumeration == None:
             enumeration_status = [0]*30
