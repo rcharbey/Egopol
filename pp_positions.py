@@ -16,7 +16,7 @@ def read_enumeration(path, quality):
         read_enumeration returns the enumeration of positions in the file path+quality.csv
         if this file does not exist, it returns [] instead
     """
-    file_to_read = path+'positions_'+quality+'.csv'
+    file_to_read = path+'CSV/positions_'+quality+'.csv'
     if not os.path.isfile(file_to_read):
         return []
     reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
@@ -26,7 +26,7 @@ def read_enumeration(path, quality):
     return result
 
 def read_proportion(path, quality):
-    file_to_read = path+'proportion_positions_'+quality+'.csv'
+    file_to_read = path+'CSV/proportion_positions_'+quality+'.csv'
     if not os.path.isfile(file_to_read):
         return -1
     reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
@@ -66,10 +66,12 @@ def pretty_print(path, quality, path_images):
     if os.path.isfile(path+quality_2+'.gml'):
         graph = Graph.Load(path+quality_2+'.gml')
         for v in graph.vs:
-            names.append(v['name'])
+            names.append(v['name'].decode('utf8').encode('utf8'))
     else:
         names = range(1, len(enumeration)+1)
-    file_html = open(path+'positions_'+quality+'.html', 'wb')
+    if not os.path.isdir(path+'HTML'):
+        os.mkdir(path+'HTML')
+    file_html = open(path+'HTML/positions_'+quality+'.html', 'wb')
     
     utilities.print_begin(file_html)
     file_html.write('<table style="width:100%">')

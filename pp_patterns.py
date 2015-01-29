@@ -7,7 +7,7 @@ def read_enumeration(path, quality):
         read_enumeration returns the enumeration of patterns in the file path+patterns_+quality.csv
         if this file does not exist, it returns [0]*30 instead
     """
-    file_to_read = path+'patterns_'+quality+'.csv'
+    file_to_read = path+'CSV/patterns_'+quality+'.csv'
     if not os.path.isfile(file_to_read):
         return [0]*30
     reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
@@ -18,7 +18,7 @@ def read_enumeration(path, quality):
     return result[0]
 
 def read_proportion(path, quality):
-    file_to_read = path+'proportion_patterns_'+quality+'.csv'
+    file_to_read = path+'CSV/proportion_patterns_'+quality+'.csv'
     if not os.path.isfile(file_to_read):
         return -1
     reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
@@ -29,7 +29,13 @@ def read_proportion(path, quality):
     return result[0]
     
 def pretty_print(path, quality, path_images):
-    file_html = open(path+'patterns_'+quality+'.html', 'wb')
+    if not os.path.isdir(path+'CSV'):
+        print path+'CSV'
+        print 'no enumeration file yet'
+        return
+    if not os.path.isdir(path+'HTML'):
+        os.mkdir(path+'HTML')
+    file_html = open(path+'HTML/patterns_'+quality+'.html', 'wb')
     
     enumeration = read_enumeration(path, quality)
     colors_enumeration = utilities.create_list_colors(enumeration)
