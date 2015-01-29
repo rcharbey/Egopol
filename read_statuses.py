@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import gzip
 import json
 
@@ -18,6 +20,7 @@ def dict_of_commenters_per_status(folder, ego, list_of_friends):
                 else:
                     commenter = comment["from"]["id"]
                 if commenter == ego:
+                    print 'ego commente'
                     commenter = 0
                 elif commenter not in list_of_friends:
                     continue

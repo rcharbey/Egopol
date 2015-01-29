@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import gzip
 import json
 
@@ -38,7 +40,6 @@ def list_of_friends(folder, ego):
             result.append(friend['name'])
         else:
             result.append(friend["id"])
-        
     f.close()    
     return result
 
@@ -48,9 +49,6 @@ def find_friend(folder, ego, id):
     f = gzip.open(gz, 'rb')
     for line in f:
         friend = json.loads(line)
-        if 'name' in friend:
-            print friend['name']
-            print id
-        if friend['id'] == id or ('name' in friend and friend['name'] == id):
+        if ('name' in friend and friend['name'] == id) or friend['id'] == id:
             return friend
     return {'id' : id}
