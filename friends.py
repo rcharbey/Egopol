@@ -1,4 +1,7 @@
 from igraph import *
+import sys
+sys.path.append('./Json')
+import main_jsons
 
 def create_graph(dict_of_mutual, folder, ego):
     graph = Graph.Full(0)
@@ -19,8 +22,22 @@ def create_graph(dict_of_mutual, folder, ego):
                     break
             if already_in == False:
                 graph.add_edge(name_to_id[friend], name_to_id[neighbor])
+    infos_commenters = main_jsons.calculate_info_commenters(folder, ego)
+    infos_likers = main_jsons.calculate_info_likers(folder, ego)
+    for v in graph.vs:
+        if v['name'] in infos_likers:
+            v['nb_likes'] = int(infos_likers[v['name']])
+        else:
+            v['nb_likes'] = 0
+        if v['name'] in infos_commenters:
+            v['nb_comments'] = int(infos_commenters[v['name']]['nb_of_comments'])
+        else:
+            v['nb_comments'] = 0
     graph['folder'] = folder
     graph['ego'] = ego
+    for v in graph.vs:
+        v['sum_comments_likes'] = int(v['nb_comments']) + int(v['nb_likes'])
+        v['name'] = v['name'].encode('utf8')
     return graph
 
 def draw_graph(graph):
@@ -34,10 +51,12 @@ def draw_graph(graph):
     #plot(graph, place, layout = layout, vertex_size = 10)
       
 def write_graph(graph):
-    graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/friends.gml', format = 'gml')
+    if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs'):
+        os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs')
+    graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.gml', format = 'gml')
     
 def import_graph(folder, ego):
-    graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/friends.gml', format = 'gml')
+    graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = 'gml')
     graph['folder'] = folder
     graph['ego'] = ego
     return graph

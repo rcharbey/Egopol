@@ -1,5 +1,4 @@
 import sys
-import json
 from igraph import *
 import math
 import os
