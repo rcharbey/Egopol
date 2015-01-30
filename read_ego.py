@@ -1,5 +1,6 @@
 import gzip
 import json
+import os
 
 def list_of_liked_pages(folder, ego):
     path = folder +'/' + ego

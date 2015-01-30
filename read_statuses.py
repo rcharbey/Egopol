@@ -2,6 +2,7 @@
 
 import gzip
 import json
+import os
 
 def dict_of_commenters_per_status(folder, ego, list_of_friends):
     path = folder +'/' + ego
