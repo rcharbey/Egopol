@@ -1,5 +1,6 @@
 import read_friends
 import read_statuses
+import read_ego
 
 def main(folder, ego, options):
     if options == 'friends' :
@@ -43,3 +44,6 @@ def find_status(folder, ego, id):
 
 def find_friend(folder, ego, id):
     return read_friends.find_friend(folder, ego, id)
+
+def list_of_liked_pages(folder, ego):
+    return read_ego.list_of_liked_pages(folder, ego)
