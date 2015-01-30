@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#import mdp
+import mdp
 import numpy as np
 import os
 import csv
@@ -11,7 +11,7 @@ def read_enumeration(path):
     for line in reader:
         result.append(line)
         break
-    return result[0]
+    return [float(x) for x in result[0]]
 
 def pick_all_data():
     result = []
@@ -23,5 +23,7 @@ def pick_all_data():
                 result.append(read_enumeration('GALLERY/'+folder+'/'+ego+'/'))
     return result
 
-print pick_all_data()
+data = pick_all_data()
+np_data = np.array(data)
+print mdp.pca(np_data)
                 
