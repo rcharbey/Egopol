@@ -4,9 +4,12 @@ import gzip
 import json
 
 def dict_of_commenters_per_status(folder, ego, list_of_friends):
-    path = folder + '/' + ego
-    gz = "DATA/"+path+"/statuses.jsons.gz"
-    f = gzip.open(gz, 'rb')
+    path = folder +'/' + ego
+    if os.path.isfile("DATA/"+path+"/statuses.jsons"):
+        f = open("DATA/"+path+"/statuses.jsons", 'rb')
+    else:
+        gz = "DATA/"+path+"/statuses.jsons.gz"
+        f = gzip.open(gz, 'rb')
     
     result = {}
 
@@ -32,9 +35,12 @@ def dict_of_commenters_per_status(folder, ego, list_of_friends):
     return result
 
 def dict_of_likers_per_status(folder, ego, list_of_friends):
-    path = folder + '/' + ego
-    gz = "DATA/"+path+"/statuses.jsons.gz"
-    f = gzip.open(gz, 'rb')
+    path = folder +'/' + ego
+    if os.path.isfile("DATA/"+path+"/statuses.jsons"):
+        f = open("DATA/"+path+"/statuses.jsons", 'rb')
+    else:
+        gz = "DATA/"+path+"/statuses.jsons.gz"
+        f = gzip.open(gz, 'rb')
     
     result = {}
 
@@ -56,9 +62,12 @@ def dict_of_likers_per_status(folder, ego, list_of_friends):
     return result
 
 def dict_of_likers_of_comments_per_status(folder, ego, list_of_friends):
-    path = folder + '/' + ego
-    gz = "DATA/"+path+"/statuses.jsons.gz"
-    f = gzip.open(gz, 'rb')
+    path = folder +'/' + ego
+    if os.path.isfile("DATA/"+path+"/statuses.jsons"):
+        f = open("DATA/"+path+"/statuses.jsons", 'rb')
+    else:
+        gz = "DATA/"+path+"/statuses.jsons.gz"
+        f = gzip.open(gz, 'rb')
     
     result = {}
 
@@ -91,9 +100,12 @@ def dict_of_likers_of_comments_per_status(folder, ego, list_of_friends):
     return result
 
 def dict_of_mutual_commenters(folder, ego, list_of_friends):
-    path = folder + '/' + ego
-    gz = "DATA/"+path+"/statuses.jsons.gz"
-    f = gzip.open(gz, 'rb')
+    path = folder +'/' + ego
+    if os.path.isfile("DATA/"+path+"/statuses.jsons"):
+        f = open("DATA/"+path+"/statuses.jsons", 'rb')
+    else:
+        gz = "DATA/"+path+"/statuses.jsons.gz"
+        f = gzip.open(gz, 'rb')
     
     result = {}
     
@@ -120,9 +132,12 @@ def dict_of_mutual_commenters(folder, ego, list_of_friends):
     return result
 
 def calculate_info_commenters(folder, ego, list_of_friends):
-    path = folder + '/' + ego
-    gz = "DATA/"+path+"/statuses.jsons.gz"
-    f = gzip.open(gz, 'rb')
+    path = folder +'/' + ego
+    if os.path.isfile("DATA/"+path+"/statuses.jsons"):
+        f = open("DATA/"+path+"/statuses.jsons", 'rb')
+    else:
+        gz = "DATA/"+path+"/statuses.jsons.gz"
+        f = gzip.open(gz, 'rb')
     
     result = {}
     
@@ -148,9 +163,12 @@ def calculate_info_commenters(folder, ego, list_of_friends):
     return result
 
 def calculate_info_likers(folder, ego, list_of_friends):
-    path = folder + '/' + ego
-    gz = "DATA/"+path+"/statuses.jsons.gz"
-    f = gzip.open(gz, 'rb')
+    path = folder +'/' + ego
+    if os.path.isfile("DATA/"+path+"/statuses.jsons"):
+        f = open("DATA/"+path+"/statuses.jsons", 'rb')
+    else:
+        gz = "DATA/"+path+"/statuses.jsons.gz"
+        f = gzip.open(gz, 'rb')
     
     result = {}
     
@@ -171,9 +189,12 @@ def calculate_info_likers(folder, ego, list_of_friends):
     return result
 
 def calculate_info_likers_of_comment(folder, ego, list_of_friends):
-    path = folder + '/' + ego
-    gz = "DATA/"+path+"/statuses.jsons.gz"
-    f = gzip.open(gz, 'rb')
+    path = folder +'/' + ego
+    if os.path.isfile("DATA/"+path+"/statuses.jsons"):
+        f = open("DATA/"+path+"/statuses.jsons", 'rb')
+    else:
+        gz = "DATA/"+path+"/statuses.jsons.gz"
+        f = gzip.open(gz, 'rb')
     
     result = {}
     for line in f:
@@ -194,9 +215,12 @@ def calculate_info_likers_of_comment(folder, ego, list_of_friends):
     return result
 
 def find_status(folder, ego, id):
-    path = folder + '/' + ego
-    gz = "DATA/"+path+"/statuses.jsons.gz"
-    f = gzip.open(gz, 'rb')
+    path = folder +'/' + ego
+    if os.path.isfile("DATA/"+path+"/statuses.jsons"):
+        f = open("DATA/"+path+"/statuses.jsons", 'rb')
+    else:
+        gz = "DATA/"+path+"/statuses.jsons.gz"
+        f = gzip.open(gz, 'rb')
     for line in f:
         status = json.loads(line)
         if status['id'] == id:
