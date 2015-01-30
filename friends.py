@@ -8,7 +8,7 @@ def create_graph(dict_of_mutual, folder, ego):
     n = 0
     name_to_id = {}
     for friend in dict_of_mutual:
-        graph.add_vertex(name = friend.encode('utf8'))
+        graph.add_vertex(name = friend)
         name_to_id[friend] = n
         n += 1
     for friend in dict_of_mutual:
@@ -35,6 +35,9 @@ def create_graph(dict_of_mutual, folder, ego):
             v['nb_comments'] = 0
     graph['folder'] = folder
     graph['ego'] = ego
+    for v in graph.vs:
+        v['sum_comments_likes'] = int(v['nb_comments']) + int(v['nb_likes'])
+        v['name'] = v['name'].encode('utf8')
     return graph
 
 def draw_graph(graph):
@@ -48,10 +51,12 @@ def draw_graph(graph):
     #plot(graph, place, layout = layout, vertex_size = 10)
       
 def write_graph(graph):
-    graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/friends.gml', format = 'gml')
+    if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs'):
+        os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs')
+    graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.gml', format = 'gml')
     
 def import_graph(folder, ego):
-    graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/friends.gml', format = 'gml')
+    graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = 'gml')
     graph['folder'] = folder
     graph['ego'] = ego
     return graph

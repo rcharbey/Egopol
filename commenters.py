@@ -7,7 +7,7 @@ def create_graph(dict_of_mutual_commenters, folder, ego):
     for commenter in dict_of_mutual_commenters:
         if len(dict_of_mutual_commenters[commenter]) == 0:
             continue
-        graph.add_vertex(name = commenter.encode('utf8'))
+        graph.add_vertex(name = commenter)
         name_to_id[commenter] = n
         n += 1
     for commenter in graph.vs:
@@ -30,6 +30,8 @@ def create_graph(dict_of_mutual_commenters, folder, ego):
                 
     graph['folder'] = folder
     graph['ego'] = ego
+    for v in graph.vs:
+        v['name'] = v['name'].encode('utf8')
     return graph
 
 def draw_graph(graph):
@@ -46,10 +48,12 @@ def draw_graph(graph):
     #plot(graph, place, layout = layout, vertex_size = 10)
       
 def write_graph(graph):
-    graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/commenters.gml', format = 'gml')
+    if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs'):
+        os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs')
+    graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/commenters.gml', format = 'gml')
     
 def import_graph(folder, ego):
-    graph =  Graph.Read('GALLERY/'+folder+'/'+ego+'/commenters.gml', format = 'gml')
+    graph =  Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/commenters.gml', format = 'gml')
     graph['folder'] = folder
     graph['ego'] = ego
     return graph
