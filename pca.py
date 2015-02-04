@@ -25,7 +25,7 @@ def pick_all_data():
 
 data = pick_all_data()
 np_data = np.array(data)
-principal_components = mdp.pca(data)
+principal_components = mdp.pca(np_data)
 writer = csv.writer(open('pca.txt', 'wb'), delimiter = ' ')
 for vector in principal:
     writer.writerow(vector)
