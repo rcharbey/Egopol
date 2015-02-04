@@ -23,8 +23,7 @@ def dict_of_commenters_per_status(folder, ego, list_of_friends):
                     commenter = comment['from']['name']
                 else:
                     commenter = comment["from"]["id"]
-                if commenter == ego:
-                    print 'ego commente'
+                if commenter == ego.decode('utf-8'):
                     commenter = 0
                 elif commenter not in list_of_friends:
                     continue
@@ -54,7 +53,7 @@ def dict_of_likers_per_status(folder, ego, list_of_friends):
                     liker = like['name']
                 else:
                     liker = like['id']
-                if liker == ego:
+                if liker == ego.decode('utf-8'):
                     liker = 0
                 elif liker not in list_of_friends:
                     continue
@@ -151,6 +150,13 @@ def calculate_info_commenters(folder, ego, list_of_friends):
                     commenter = comment['from']['name']
                 else:
                     commenter = comment['from']['id']
+                #if commenter == ego:
+                    #commenter = 0
+                    #if commenter in result:
+                        #result[commenter]['nb_of_comments'] += 1
+                        #if commenter not in list_commenters_of_line:
+                            #result[commenter]['nb_of_statuses'] += 1
+                            #list_commenters_of_line.append(commenter)
                 if commenter in list_of_friends:
                     if commenter in result:
                         result[commenter]['nb_of_comments'] += 1
