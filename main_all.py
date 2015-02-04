@@ -36,7 +36,7 @@ def main():
             continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
-            #print ego
+            print ego
             if not os.path.isdir('GALLERY/'+folder+'/'+ego):
                 sys.argv = ['main.py', folder, ego]
                 if args.options != None:
