@@ -47,8 +47,9 @@ def draw_graph(graph):
         os.mkdir('GALLERY/'+graph['folder'])
     if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']):
         os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego'])
-    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/friends.svg'
-    #plot(graph, place, layout = layout, vertex_size = 10)
+    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.svg'
+    if socket.gethostname() != 'ccadovir01':
+        plot(graph, place, layout = layout, vertex_size = 10)
       
 def write_graph(graph):
     if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs'):
