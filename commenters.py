@@ -1,4 +1,5 @@
 from igraph import *
+import socket
 
 def create_graph(dict_of_mutual_commenters, folder, ego):
     graph = Graph.Full(0)

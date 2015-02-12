@@ -2,6 +2,7 @@ from igraph import *
 import sys
 sys.path.append('./Json')
 import main_jsons
+import socket
 
 def create_graph(dict_of_mutual, folder, ego):
     graph = Graph.Full(0)
