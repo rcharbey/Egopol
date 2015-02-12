@@ -2,6 +2,7 @@ import sys
 from igraph import *
 import math
 import os
+import socket
 
 #Creation/Affichage du graphes amis/commentaires 
 
@@ -55,8 +56,9 @@ def draw_graph_weighted(graph):
         os.mkdir('GALLERY/'+graph['folder'])
     if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']):
         os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego'])
-    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/both_weighted.svg'
-    #plot(graph, place, layout = layout, vertex_size = 10)
+    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/both_weighted.svg'
+    if socket.gethostname() != 'ccadovir01':
+        plot(graph, place, layout = layout, vertex_size = 10)
     
 def draw_graph(graph):
     path = 'GALLERY/' + graph['folder'] + '/' + graph['ego']
@@ -80,6 +82,7 @@ def draw_graph(graph):
         os.mkdir('GALLERY/'+graph['folder'])
     if not os.path.isdir(path):
         os.mkdir(path)
-    place = path+'/both.svg'
-    #plot(graph, place, layout = layout, vertex_size = 10)
+    place = path+'/Graphs/both.svg'
+    if socket.gethostname() != 'ccadovir01':
+        plot(graph, place, layout = layout, vertex_size = 10)
 
