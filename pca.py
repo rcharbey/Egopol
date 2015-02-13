@@ -14,7 +14,7 @@ parser.add_argument('quality', help="patterns or positions")
 args = parser.parse_args()
 
 def read_enumeration(path, quality):
-    file_to_read = path+'Enumeration/CSV/'+quality+'_friends.csv'
+    file_to_read = path+'Enumeration/CSV/proportion_'+quality+'_friends.csv'
     reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
     result = []
     for line in reader:
@@ -29,18 +29,22 @@ def pick_all_data(quality):
     for folder in list_folders:
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
-            if os.path.isfile('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'+quality+'_friends.csv'):
+            if os.path.isfile('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/proportion_'+quality+'_friends.csv'):
                 temp.append(read_enumeration('GALLERY/'+folder+'/'+ego+'/', quality))
                 noms.append((folder, ego))
     return temp, noms 
 
-def plot_3D(quality):
-    data_temp, noms = pick_all_data(quality)
-    data = np.array(data_temp)
+def pca(data):
+    data_pca = np.array(data)
     try:
-        results = PCA(data)
+        results = PCA(data_pca)
     except:
         raise
+
+    somme = 0
+    for variance in results.fracs:
+        somme += round(variance*100,1)
+        print str(somme) + '% ',
 
     x = []
     y = []
@@ -50,8 +54,10 @@ def plot_3D(quality):
         y.append(item[1])
         z.append(item[2])
         
-    pltData = [x,y,z] 
+    pltData = [x,y,z]
+    return pltData
 
+def plot_3D(pltData):
     fig1 = plt.figure() # Make a plotting figure
     ax = Axes3D(fig1) # use the plotting figure to create a Axis3D object.
     ax.scatter(pltData[0], pltData[1], pltData[2], 'bo') # make a scatter plot of blue dots from the data
@@ -66,31 +72,19 @@ def plot_3D(quality):
 
     plt.show() # show the plot
     
-def plot_2D(quality):
-    data_temp, noms = pick_all_data(quality)
-    data = np.array(data_temp)
-    try:
-        results = PCA(data)
-    except:
-        raise
-
-    x = []
-    y = []
-    for item in results.Y:
-        x.append(item[0])
-        y.append(item[1])
-        
-    pltData = [x,y] 
+def plot_2D(pltData):
     fig, ax = plt.subplots()
     ax.scatter(pltData[0], pltData[1])
 
     plt.show()
     
 def main():
+    data, noms = pick_all_data(args.quality)
+    pltData = pca(data)
     if args.d == '3D':
-        plot_3D(args.quality)
+        plot_3D(pltData)
     else:
-        plot_2D(args.quality)
+        plot_2D(pltData[0:2])
         
 main()
 

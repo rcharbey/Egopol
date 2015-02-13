@@ -32,7 +32,7 @@ def main():
     
     list_folders = [f for f in os.listdir('DATA') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
-        if 'csa' in folder:
+        if '2015' not in folder:
             continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
