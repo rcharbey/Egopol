@@ -79,7 +79,7 @@ if args.options != None:
         init(args)
     elif 'enumerate' in args.options:
         enumerate(args, 'friends')
-        enumerate(args, 'commenters')
+        #enumerate(args, 'commenters')
     elif 'status' in args.options:
         if len(args.options) > 1:
             study_status(args, args.options[1])

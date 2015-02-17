@@ -45,6 +45,9 @@ def pca(data):
     for variance in results.fracs:
         somme += round(variance*100,1)
         print str(somme) + '% ',
+    print
+    
+    print results.sigma
 
     x = []
     y = []
@@ -75,16 +78,38 @@ def plot_3D(pltData):
 def plot_2D(pltData):
     fig, ax = plt.subplots()
     ax.scatter(pltData[0], pltData[1])
+    
+    # make simple, bare axis lines through space:
+    xAxisLine = ((min(pltData[0]), max(pltData[0])), (0, 0)) # 2 points make the x-axis line at the data extrema along x-axis 
+    ax.plot(xAxisLine[0], xAxisLine[1], 'r') # make a red line for the x-axis.
+    yAxisLine = ((0, 0), (min(pltData[1]), max(pltData[1]))) # 2 points make the y-axis line at the data extrema along y-axis
+    ax.plot(yAxisLine[0], yAxisLine[1], 'r') # make a red line for the y-axis.
 
     plt.show()
     
 def main():
     data, noms = pick_all_data(args.quality)
     pltData = pca(data)
+    
+    for i in range(len(pltData[0])):
+        if pltData[0][i] < 0.1 and pltData[0][i] > -0.1:
+            if pltData[1][i] < -3:
+                folder = noms[i][0]
+                ego = noms[i][1]
+                print pltData[0][i],
+                print ' ',
+                print pltData[1][i],
+                print ' : ',
+                print read_enumeration('GALLERY/'+folder+'/'+ego+'/', args.quality)
+        i += 1
+    
+    
     if args.d == '3D':
         plot_3D(pltData)
     else:
         plot_2D(pltData[0:2])
+    
+        
         
 main()
 
