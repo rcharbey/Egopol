@@ -48,9 +48,53 @@ def draw_graph(graph):
         os.mkdir('GALLERY/'+graph['folder'])
     if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']):
         os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego'])
-    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.svg'
+        
+    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends_comments_likes.svg'
+    for v in graph.vs:
+        v['size'] = 10*math.log(2+v['sum_comments_likes'])
+        if v['sum_comments_likes'] > 10:
+            v['label'] = v['name']
     if socket.gethostname() != 'ccadovir01':
-        plot(graph, place, layout = layout, vertex_size = 10)
+        plot(graph, place, layout = layout)
+    for v in graph.vs:
+        v['size'] = 10
+        v['label'] = None
+        
+    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends_degree.svg'
+    for v in graph.vs:
+        v['size'] = 10*math.log(2+v.degree())
+        if v.degree() > 10:
+            v['label'] = v['name']
+    if socket.gethostname() != 'ccadovir01':
+        plot(graph, place, layout = layout)
+    for v in graph.vs:
+        v['size'] = 10
+        v['label'] = None
+        
+    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends_degree_comments_likes.svg'
+    max_sum = 0
+    for v in graph.vs:
+        if v['sum_comments_likes'] > max_sum:
+            max_sum = v['sum_comments_likes']
+    for v in graph.vs:
+        v['size'] = 10*math.log(2+v.degree())
+        if v['sum_comments_likes'] < 0.25*max_sum:
+            v['color'] = 'blue'
+        elif v['sum_comments_likes'] < 0.5*max_sum:
+            v['color'] = 'green'
+        elif v['sum_comments_likes'] < 0.75*max_sum:
+            v['color'] = 'orange'
+        else:
+            v['color'] = 'red'
+        if v.degree() > 10:
+            if v['sum_comments_likes'] > max_sum/2:
+                v['label'] = v['name']
+                v['label_size'] = 5*math.log(2+v.degree())
+    if socket.gethostname() != 'ccadovir01':
+        plot(graph, place, layout = layout)
+    for v in graph.vs:
+        v['size'] = 10
+        v['label'] = None
       
 def write_graph(graph):
     if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs'):

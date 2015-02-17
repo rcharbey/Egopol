@@ -56,9 +56,10 @@ def draw_graph_weighted(graph):
         os.mkdir('GALLERY/'+graph['folder'])
     if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']):
         os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego'])
-    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/both_weighted.svg'
+    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/both_weighted'
     if socket.gethostname() != 'ccadovir01':
-        plot(graph, place, layout = layout, vertex_size = 10)
+        plot(graph, place+'.svg', layout = layout, vertex_size = 10)
+    graph.write(place+'.gml', format = 'gml')
     
 def draw_graph(graph):
     path = 'GALLERY/' + graph['folder'] + '/' + graph['ego']
