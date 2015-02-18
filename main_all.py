@@ -47,9 +47,7 @@ def main():
     for file_zip in [f for f in os.listdir('DATA') if os.path.isfile('DATA/'+f)]:
         tar = tarfile.open('DATA/'+file_zip, 'r')
         folder = file_zip[0:len(file_zip)-7]
-        print [elem.name for elem in tar if (elem.isdir() and 'export' not in elem.name)]
-        print [elem.name for elem in tar if (elem.isdir())]
-        for ego in [elem for elem in tar if (elem.isdir() and 'export' not in elem.name)]:
+        for ego in [elem for elem in tar if (elem.isdir() and len(elem.name) > 20)]:
             print ego
             tar.extract(ego.name+'/friends.jsons.gz', path='DATA/'+folder)
             tar.extract(ego.name+'/statuses.jsons.gz', path='DATA/'+folder)
