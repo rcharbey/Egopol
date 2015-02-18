@@ -45,7 +45,7 @@ def main():
                 execfile("main.py")
     
     for file_zip in [f for f in os.listdir('DATA') if os.path.isfile('DATA/'+f)]:
-        tar = tarfile.open('DATA/'+file_zip, 'r:gz')
+        tar = tarfile.open('DATA/'+file_zip, 'r')
         folder = file_zip[0:len(file_zip)-7]
         for ego in [elem for elem in tar if elem.isdir()]:
             tar.extract(ego.name+'/friends.jsons.gz', path='DATA/'+folder)
