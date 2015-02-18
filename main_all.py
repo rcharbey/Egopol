@@ -49,8 +49,7 @@ def main():
         folder = file_zip[0:len(file_zip)-7]
         for ego in [elem for elem in tar if (elem.isdir() and len(elem.name) > 20)]:
             print ego
-            tar.extract(ego.name+'/friends.jsons.gz', path='DATA/'+folder)
-            tar.extract(ego.name+'/statuses.jsons.gz', path='DATA/'+folder)
+            tar.extract(ego.name, path='DATA/'+folder)
             if not os.path.isdir('GALLERY/'+folder+'/'+ego.name):
                 sys.argv = ['main.py', folder, ego.name]
                 if args.options != None:
