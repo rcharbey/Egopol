@@ -11,10 +11,14 @@ import argparse
 parser = argparse.ArgumentParser(description="main")
 parser.add_argument('d', help="number of dimensions")
 parser.add_argument('quality', help="patterns or positions")
+parser.add_argument('proportion', help="prop si on veut les proportions")
 args = parser.parse_args()
 
-def read_enumeration(path, quality):
-    file_to_read = path+'Enumeration/CSV/proportion_'+quality+'_friends.csv'
+def read_enumeration(path, quality, proportion):
+    patch = ''
+    if proportion:
+        patch = 'proportion_'
+    file_to_read = path+'Enumeration/CSV/'+patch+quality+'_friends.csv'
     reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
     result = []
     for line in reader:
@@ -22,15 +26,18 @@ def read_enumeration(path, quality):
         break
     return [float(x) for x in result[0]]
 
-def pick_all_data(quality):
+def pick_all_data(quality, proportion):
+    patch = ''
+    if proportion:
+        patch = 'proportion_'
     temp = []
     noms = []
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders:
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
-            if os.path.isfile('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/proportion_'+quality+'_friends.csv'):
-                temp.append(read_enumeration('GALLERY/'+folder+'/'+ego+'/', quality))
+            if os.path.isfile('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'+patch+quality+'_friends.csv'):
+                temp.append(read_enumeration('GALLERY/'+folder+'/'+ego+'/', quality, proportion))
                 noms.append((folder, ego))
     return temp, noms 
 
@@ -88,7 +95,10 @@ def plot_2D(pltData):
     plt.show()
     
 def main():
-    data, noms = pick_all_data(args.quality)
+    if args.proportion == 'prop':
+        data, noms = pick_all_data(args.quality, True)
+    else:
+        data, noms = pick_all_data(args.quality, False)
     pltData = pca(data)
     
     for i in range(len(pltData[0])):
