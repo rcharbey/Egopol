@@ -58,6 +58,6 @@ def main():
                         sys.argv.append(option)
                 execfile("main.py")
             shutil.rmtree('DATA/'+folder+'/'+ego.name)
-        shutil.rmtree('DATA/'+folder)
+        #shutil.rmtree('DATA/'+folder)
 main()
         
