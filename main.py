@@ -23,6 +23,10 @@ import status
 
 def init(args):
     print args
+    if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/commenters.gml'):
+        return None
+    if len(main_jsons.list_of_friends(args.folder, args.ego)) > 1000:
+        return
     dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
     dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
     if len(dict_of_mutual_friends) > 0:
