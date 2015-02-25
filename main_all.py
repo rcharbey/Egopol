@@ -45,22 +45,5 @@ def main():
                     for option in args.options:
                         sys.argv.append(option)
                 execfile("main.py")
-    
-    for file_zip in [f for f in os.listdir('DATA') if os.path.isfile('DATA/'+f)]:
-        tar = tarfile.open('DATA/'+file_zip, 'r')
-        folder = file_zip[0:len(file_zip)-7]
-        for ego in [elem for elem in tar if (elem.isdir() and len(elem.name) > 30)]:
-            print ego
-            tar.extract(ego.name, path = 'DATA/'+ folder)
-            tar.extract(ego.name+'/friends.jsons.gz', path='DATA/'+folder)
-            tar.extract(ego.name+'/statuses.jsons.gz', path='DATA/'+folder)
-            if not os.path.isdir('GALLERY/'+folder+'/'+ego.name):
-                sys.argv = ['main.py', folder, ego.name]
-                if args.options != None:
-                    sys.argv.append('-o')
-                    for option in args.options:
-                        sys.argv.append(option)
-                execfile("main.py")
-            shutil.rmtree('DATA/'+folder+'/'+ego.name)
 main()
         
