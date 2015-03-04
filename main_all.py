@@ -34,8 +34,6 @@ def main():
     
     list_folders = [f for f in os.listdir('DATA') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
-        if not 'all_2015' in folder:
-            continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
             if not os.path.isdir('GALLERY/'+folder+'/'+ego):
@@ -46,4 +44,3 @@ def main():
                         sys.argv.append(option)
                 execfile("main.py")
 main()
-        

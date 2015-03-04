@@ -11,80 +11,107 @@ import argparse
 parser = argparse.ArgumentParser(description="main")
 parser.add_argument('d', help="number of dimensions")
 parser.add_argument('quality', help="patterns or positions")
-parser.add_argument('proportion', help="prop si on veut les proportions")
 parser.add_argument('--options', '-o', nargs='+')
 args = parser.parse_args()
 
-def read_enumeration(path, quality, proportion):
-    patch = ''
-    if proportion:
-        patch = 'proportion_'
-    file_to_read = path+'Enumeration/CSV/'+patch+quality+'_friends.csv'
+def read_enumeration(path, param):
+    file_to_read = path+'Enumeration/CSV/'+param['prop']+param['quality']+'_friends.csv'
     reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
-    result = []
+    
+    temp = []
     for line in reader:
-        result.append(line)
-        break
-    return [float(x) for x in result[0]]
+        temp.append(line)
+        if param['quality'] == 'patterns':
+            break
+    
+    temp_2 = []
+    
+    if param['restriction'] == '_3':
+        if param['quality'] == 'patterns':
+            temp_2.append(temp[0][1:3])
+        else:
+            for vector in temp:
+                temp_2.append(vector[1:5])
+    elif param['restriction'] == '_4':
+        if param['quality'] == 'patterns':
+            temp_2.append(temp[0][3:9])
+        else:
+            for vector in temp:
+                temp_2.append(vector[4:15])
+    elif param['restriction'] == '_5':
+        if param['quality'] == 'patterns':
+            temp_2.append(temp[0][9:30])
+        else:
+            for vector in temp:
+                temp_2.append(vector[15:73])
+    else:
+        temp_2 = temp
+            
+    result = []
+    for vector in temp_2:
+        result.append([float(x) for x in vector])
+    
+    return result
 
-def pick_all_data(quality, proportion, blocs, number):
-    patch = ''
-    if proportion:
-        patch = 'proportion_'
+def create_blocs(param):
+    file_blocs = open('GALLERY/General/Percentiles/'+param['prop']+param['quality']+'.csv', 'rb')
+    csv_blocs = csv.reader(file_blocs, delimiter = ';')
+    
+    stats = []
+    for row in csv_blocs:
+        if param['number'] == '_quartiles':
+            stats.append([row[4], row[9], row[14]])
+        elif param['number'] == '_quintiles':
+            stats.append([row[3], row[7], row[11], row[15]])
+        else:
+            stats.append([row[1], row[3], row[5], row[7], row[9], row[11], row[13], row[15], row[17]])
+    file_blocs.close()
+    return stats
+
+def value_to_bloc(enumeration, stats, i):
+    found = False
+    for decile in range(len(stats[i])):
+        if enumeration[i] < float(stats[i][decile]):
+            enumeration[i] = decile + 1
+            found = True
+            break
+    if found == False:
+        enumeration[i] = len(stats[i])
+
+def pick_all_data(param):
     temp = []
     noms = []
     
-    stats = []
-    if proportion :
-        patch_blocs = 'Proportion_'
-    else:
-        patch_blocs = 'Absolute_'
-    file_blocs = open('GALLERY/General/Percentiles/'+patch_blocs+quality+'.csv', 'rb')
-    csv_blocs = csv.reader(file_blocs, delimiter = ';')
-    for row in csv_blocs:
-        if 'décile' in row[1]:
-            continue
-        if number == 10:
-            stats.append(row[1:number])
-        elif number == 5:
-            stats.append([elem for elem in row[1:10] if row.index(elem)%2 == 1])
-        else:
-            stats.append([row[2], row[5], row[8]])
-    file_blocs.close()
+    if param['number'] != '':
+        stats = create_blocs(param)
     
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders:
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
-            if os.path.isfile('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'+patch+quality+'_friends.csv'):
-                enumeration = read_enumeration('GALLERY/'+folder+'/'+ego+'/', quality, proportion)
-                if blocs:
-                    for i in range(len(enumeration)):
-                        found = False
-                        for decile in range(number - 1):
-                            if enumeration[i] < float(stats[i][decile]):
-                                enumeration[i] = decile + 1
-                                found = True
-                                break
-                        if found == False:
-                            enumeration[i] = number
-                temp.append(enumeration)
+            if os.path.isfile('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'+param['prop']+param['quality']+'_friends.csv'):
+                enumeration = read_enumeration('GALLERY/'+folder+'/'+ego+'/', param)
+                for vector in enumeration:
+                    if param['number'] != '':
+                        for i in range(len(vector)):
+                            value_to_bloc(vector, stats, i)
+                    temp.append(vector)
                 noms.append((folder, ego))
     return temp, noms 
 
-def pca(data):
+def pca(data, file_to_write):
     data_pca = np.array(data)
-    print data_pca
     try:
         results = PCA(data_pca)
     except:
         raise
 
+    file = open(file_to_write, 'w')
     somme = 0
     for variance in results.fracs:
         somme += round(variance*100,1)
-        print str(somme) + '% ',
-    print
+        file.write(str(somme) + '% ')
+    file.close()
 
     x = []
     y = []
@@ -97,7 +124,7 @@ def pca(data):
     pltData = [x,y,z]
     return pltData
 
-def plot_3D(pltData, number):
+def plot_3D(pltData, param):
     fig1 = plt.figure() # Make a plotting figure
     ax = Axes3D(fig1) # use the plotting figure to create a Axis3D object.
     ax.scatter(pltData[0], pltData[1], pltData[2], 'bo') # make a scatter plot of blue dots from the data
@@ -112,7 +139,7 @@ def plot_3D(pltData, number):
 
     plt.show() # show the plot
     
-def plot_2D(pltData, prop, blocs, quality, number):
+def plot_2D(pltData, param):
     fig, ax = plt.subplots()
     ax.scatter(pltData[0], pltData[1])
     
@@ -121,45 +148,56 @@ def plot_2D(pltData, prop, blocs, quality, number):
     ax.plot(xAxisLine[0], xAxisLine[1], 'r') # make a red line for the x-axis.
     yAxisLine = ((0, 0), (min(pltData[1]), max(pltData[1]))) # 2 points make the y-axis line at the data extrema along y-axis
     ax.plot(yAxisLine[0], yAxisLine[1], 'r') # make a red line for the y-axis.
-    
-    name = ''
-    if prop:
-        name += 'proportion_'
-    else:
-        name += 'absolute_'
-    name += quality
-    if blocs:
-        name += '_blocs'
-    if number != False:
-        name += '_'+str(number)
 
-    plt.savefig('GALLERY/General/PCA/'+name+'.svg', bbox_inches='tight')
-    plt.show()
+    plt.savefig('GALLERY/General/PCA/'+param['prop']+param['quality']+param['number']+param['restriction']+'.svg', bbox_inches='tight')
+    #plt.show()
+    
+def create_param():
+    param = {'prop' : '', 'number' : '', 'restriction' : ''}
+    
+    param['dimension'] = args.d
+    param['quality'] = args.quality
+    
+    if args.options != None:
+        if 'prop' in args.options:
+            param['prop'] = 'proportion_'
+        if 'quartiles' in args.options:
+            param['number'] = '_quartiles'
+        elif 'quintiles' in args.options:
+            param['number'] = '_quintiles'
+        else:
+            param['number'] = '_deciles'
+        if 'l3' in args.options:
+            param['restriction'] = '_3'
+        elif 'l4' in args.options:
+            param['restriction'] = '_4'
+        elif 'l5' in args.options:
+            param['restriction'] = '_5'
+    
+    return param
     
 def main():
-    if args.proportion == 'prop':
-        prop = True
-    else:
-        prop = False
-    blocs = False
-    number = False
-    if args.options != None:
-        if 'blocs' in args.options:
-            blocs = True
-            if 'deciles' in args.options:
-                number = 10
-            elif 'quintiles' in args.options:
-                number = 5
-            else:
-                number = 3
-        
-    data, noms = pick_all_data(args.quality, prop, blocs, number)
-    pltData = pca(data)    
+    param = create_param()
+    print param
+    print args
+    file_to_delete = 'GALLERY/General/Aggregations/all_'+param['prop']+param['quality']+param['restriction']+'_friends.csv'
+    if os.path.isfile(file_to_delete):
+        os.remove(file_to_delete)
     
-    if args.d == '3D':
-        plot_3D(pltData, prop, blocs, args.quality, number)
+    data, noms = pick_all_data(param)
+    
+    file_to_write = 'GALLERY/General/Aggregations/all_'+param['prop']+param['quality']+param['number']+param['restriction']+'_friends'
+    writer = csv.writer(open(file_to_write+'.csv', 'wb'), delimiter = ';')
+    for line in data:
+        writer.writerow(line)
+       
+    file_to_write = 'GALLERY/General/PCA/'+param['prop']+param['quality']+param['number']+param['restriction']+'_variance.txt'
+    pltData = pca(data, file_to_write)    
+    
+    if param['dimension'] == '3D':
+        plot_3D(pltData, param)
     else:
-        plot_2D(pltData[0:2], prop, blocs, args.quality, number)
+        plot_2D(pltData[0:2], param)
 
         
 main()
