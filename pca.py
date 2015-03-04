@@ -26,19 +26,19 @@ def read_enumeration(path, param):
     
     temp_2 = []
     
-    if param['restriction'] == '_3':
+    if param['restriction'] == '3_':
         if param['quality'] == 'patterns':
             temp_2.append(temp[0][1:3])
         else:
             for vector in temp:
                 temp_2.append(vector[1:5])
-    elif param['restriction'] == '_4':
+    elif param['restriction'] == '4_':
         if param['quality'] == 'patterns':
             temp_2.append(temp[0][3:9])
         else:
             for vector in temp:
                 temp_2.append(vector[4:15])
-    elif param['restriction'] == '_5':
+    elif param['restriction'] == '5_':
         if param['quality'] == 'patterns':
             temp_2.append(temp[0][9:30])
         else:
@@ -149,7 +149,7 @@ def plot_2D(pltData, param):
     yAxisLine = ((0, 0), (min(pltData[1]), max(pltData[1]))) # 2 points make the y-axis line at the data extrema along y-axis
     ax.plot(yAxisLine[0], yAxisLine[1], 'r') # make a red line for the y-axis.
 
-    plt.savefig('GALLERY/General/PCA/'+param['prop']+param['quality']+param['number']+param['restriction']+'.svg', bbox_inches='tight')
+    plt.savefig('GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'.svg', bbox_inches='tight')
     #plt.show()
     
 def create_param():
@@ -168,11 +168,11 @@ def create_param():
         else:
             param['number'] = '_deciles'
         if 'l3' in args.options:
-            param['restriction'] = '_3'
+            param['restriction'] = '3_'
         elif 'l4' in args.options:
-            param['restriction'] = '_4'
+            param['restriction'] = '4_'
         elif 'l5' in args.options:
-            param['restriction'] = '_5'
+            param['restriction'] = '5_'
     
     return param
     
@@ -180,18 +180,18 @@ def main():
     param = create_param()
     print param
     print args
-    file_to_delete = 'GALLERY/General/Aggregations/all_'+param['prop']+param['quality']+param['restriction']+'_friends.csv'
+    file_to_delete = 'GALLERY/General/Aggregations/all_'+param['restriction']+param['prop']+param['quality']+'_friends.csv'
     if os.path.isfile(file_to_delete):
         os.remove(file_to_delete)
     
     data, noms = pick_all_data(param)
     
-    file_to_write = 'GALLERY/General/Aggregations/all_'+param['prop']+param['quality']+param['number']+param['restriction']+'_friends'
+    file_to_write = 'GALLERY/General/Aggregations/all_'+param['restriction']+param['prop']+param['quality']+param['number']+'_friends'
     writer = csv.writer(open(file_to_write+'.csv', 'wb'), delimiter = ';')
     for line in data:
         writer.writerow(line)
        
-    file_to_write = 'GALLERY/General/PCA/'+param['prop']+param['quality']+param['number']+param['restriction']+'_variance.txt'
+    file_to_write = 'GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'_variance.txt'
     pltData = pca(data, file_to_write)    
     
     if param['dimension'] == '3D':

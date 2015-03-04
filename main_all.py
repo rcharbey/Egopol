@@ -43,4 +43,6 @@ def main():
                     for option in args.options:
                         sys.argv.append(option)
                 execfile("main.py")
+    print 'zou'
+                
 main()
