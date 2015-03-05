@@ -76,7 +76,7 @@ def value_to_bloc(enumeration, stats, i):
             found = True
             break
     if found == False:
-        enumeration[i] = len(stats[i])
+        enumeration[i] = len(stats[i])+1
 
 def pick_all_data(param):
     temp = []
@@ -150,6 +150,7 @@ def plot_2D(pltData, param):
     ax.plot(yAxisLine[0], yAxisLine[1], 'r') # make a red line for the y-axis.
 
     plt.savefig('GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'.svg', bbox_inches='tight')
+    print 'GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'.svg'
     #plt.show()
     
 def create_param():
@@ -165,7 +166,7 @@ def create_param():
             param['number'] = '_quartiles'
         elif 'quintiles' in args.options:
             param['number'] = '_quintiles'
-        else:
+        elif 'deciles' in args.options:
             param['number'] = '_deciles'
         if 'l3' in args.options:
             param['restriction'] = '3_'
@@ -190,6 +191,7 @@ def main():
     writer = csv.writer(open(file_to_write+'.csv', 'wb'), delimiter = ';')
     for line in data:
         writer.writerow(line)
+    print file_to_write
        
     file_to_write = 'GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'_variance.txt'
     pltData = pca(data, file_to_write)    
@@ -198,6 +200,8 @@ def main():
         plot_3D(pltData, param)
     else:
         plot_2D(pltData[0:2], param)
+        
+    os.system('Rscript pca.R '+param['restriction']+param['prop']+param['quality']+param['number'])
 
         
 main()

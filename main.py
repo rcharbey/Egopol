@@ -86,6 +86,7 @@ if not os.path.isdir('GALLERY/'+args.folder+'/'+args.ego):
   
 if args.options != None:
     if 'init' in args.options:
+        print 'hello main'
         init(args)
     elif 'enumerate' in args.options:
         enumerate(args, 'friends')
