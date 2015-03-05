@@ -78,6 +78,7 @@ def study_status(args, id_status):
     #enumeration = main_enumeration.main(induced_graph_commenters, {})
     #methods_htmls.enumerate_induced(args.folder, args.ego, id_status, enumeration[0], 'status')
   
+print args.options
 
 if not os.path.isdir('GALLERY/'+args.folder):
     os.mkdir('GALLERY/'+args.folder)
@@ -86,7 +87,6 @@ if not os.path.isdir('GALLERY/'+args.folder+'/'+args.ego):
   
 if args.options != None:
     if 'init' in args.options:
-        print 'hello main'
         init(args)
     elif 'enumerate' in args.options:
         enumerate(args, 'friends')
