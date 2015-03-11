@@ -16,13 +16,9 @@ def create_graph(dict_of_mutual, folder, ego):
         for neighbor in dict_of_mutual[friend]:
             if neighbor not in dict_of_mutual:
                 continue
-            already_in = False
-            for already_neighbor in graph.vs[name_to_id[friend]].neighbors():
-                if name_to_id[neighbor] == already_neighbor.index:
-                    already_in = True
-                    break
-            if already_in == False:
-                graph.add_edge(name_to_id[friend], name_to_id[neighbor])
+            if name_to_id[friend] <= name_to_id[neighbor]:
+                continue
+            graph.add_edge(name_to_id[friend], name_to_id[neighbor])
     infos_commenters = main_jsons.calculate_info_commenters(folder, ego)
     infos_likers = main_jsons.calculate_info_likers(folder, ego)
     for v in graph.vs:
