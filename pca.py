@@ -6,6 +6,9 @@ from matplotlib.mlab import PCA
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d import proj3d
+from numpy import corrcoef, sum, log, arange
+from pylab import pcolor, show, colorbar, xticks, yticks
+import pylab
 
 import argparse
 parser = argparse.ArgumentParser(description="main")
@@ -186,6 +189,16 @@ def main():
         os.remove(file_to_delete)
     
     data, noms = pick_all_data(param)
+    
+    data_kmean = np.array(data)
+    data_kmean.transpose()
+    
+    R = corrcoef(data_kmean)
+    pcolor(R)
+    #colorbar()
+    #yticks(arange(0.5,10.5),range(0,10))
+    #xticks(arange(0.5,10.5),range(0,10))
+    pylab.savefig('GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'.png')
     
     file_to_write = 'GALLERY/General/Aggregations/all_'+param['restriction']+param['prop']+param['quality']+param['number']+'_friends'
     writer = csv.writer(open(file_to_write+'.csv', 'wb'), delimiter = ';')
