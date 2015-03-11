@@ -8,7 +8,7 @@ def main(dict_friends, dict_commenters, folder, ego):
         os.mkdir('GALLERY/'+folder+'/'+ego+'/Graphs')
     graph_friends = friends.create_graph(dict_friends, folder, ego)
     if len(graph_friends.es) > 0:
-        friends.draw_graph(graph_friends)
+        #friends.draw_graph(graph_friends)
         friends.write_graph(graph_friends)
 
     #graph_commenters = commenters.create_graph(dict_commenters, folder, ego)
