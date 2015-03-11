@@ -35,7 +35,7 @@ def create_graph(dict_of_mutual, folder, ego):
             if name_to_id[friend] <= name_to_id[neighbor]:
                 continue
             graph.add_edge(name_to_id[friend], name_to_id[neighbor])
-    add_graph_infos(graph, folder, ego)
+#    add_graph_infos(graph, folder, ego)
     graph['folder'] = folder
     graph['ego'] = ego
     return graph
