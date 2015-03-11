@@ -4,6 +4,22 @@ sys.path.append('./Json')
 import main_jsons
 import socket
 
+def add_graph_infos(graph, folder, ego):
+    infos_commenters = main_jsons.calculate_info_commenters(folder, ego)
+    infos_likers = main_jsons.calculate_info_likers(folder, ego)
+    for v in graph.vs:
+        if v['name'] in infos_likers:
+            v['nb_likes'] = int(infos_likers[v['name']])
+        else:
+            v['nb_likes'] = 0
+        if v['name'] in infos_commenters:
+            v['nb_comments'] = int(infos_commenters[v['name']]['nb_of_comments'])
+        else:
+            v['nb_comments'] = 0
+    for v in graph.vs:
+        v['sum_comments_likes'] = int(v['nb_comments']) + int(v['nb_likes'])
+        v['name'] = v['name'].encode('utf8')
+
 def create_graph(dict_of_mutual, folder, ego):
     graph = Graph.Full(0)
     n = 0
@@ -19,22 +35,9 @@ def create_graph(dict_of_mutual, folder, ego):
             if name_to_id[friend] <= name_to_id[neighbor]:
                 continue
             graph.add_edge(name_to_id[friend], name_to_id[neighbor])
-    infos_commenters = main_jsons.calculate_info_commenters(folder, ego)
-    infos_likers = main_jsons.calculate_info_likers(folder, ego)
-    for v in graph.vs:
-        if v['name'] in infos_likers:
-            v['nb_likes'] = int(infos_likers[v['name']])
-        else:
-            v['nb_likes'] = 0
-        if v['name'] in infos_commenters:
-            v['nb_comments'] = int(infos_commenters[v['name']]['nb_of_comments'])
-        else:
-            v['nb_comments'] = 0
+    add_graph_infos(graph, folder, ego)
     graph['folder'] = folder
     graph['ego'] = ego
-    for v in graph.vs:
-        v['sum_comments_likes'] = int(v['nb_comments']) + int(v['nb_likes'])
-        v['name'] = v['name'].encode('utf8')
     return graph
 
 def draw_graph(graph):
