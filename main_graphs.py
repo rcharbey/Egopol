@@ -1,8 +1,11 @@
 import friends
 import commenters
 import both_friends_status
+import os
     
 def main(dict_friends, dict_commenters, folder, ego):
+    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/Graphs'):
+        os.mkdir('GALLERY/'+folder+'/'+ego+'/Graphs')
     graph_friends = friends.create_graph(dict_friends, folder, ego)
     if len(graph_friends.es) > 0:
         friends.draw_graph(graph_friends)
