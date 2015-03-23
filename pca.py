@@ -9,6 +9,7 @@ from mpl_toolkits.mplot3d import proj3d
 from numpy import corrcoef, sum, log, arange
 from pylab import pcolor, show, colorbar, xticks, yticks
 import pylab
+import math
 
 import argparse
 parser = argparse.ArgumentParser(description="main")
@@ -98,6 +99,8 @@ def pick_all_data(param):
                     if param['number'] != '':
                         for i in range(len(vector)):
                             value_to_bloc(vector, stats, i)
+                    if param['log'] == '_log':
+                        vector = [math.log(value+1) for value in vector] 
                     temp.append(vector)
                 noms.append((folder, ego))
     return temp, noms 
@@ -152,12 +155,12 @@ def plot_2D(pltData, param):
     yAxisLine = ((0, 0), (min(pltData[1]), max(pltData[1]))) # 2 points make the y-axis line at the data extrema along y-axis
     ax.plot(yAxisLine[0], yAxisLine[1], 'r') # make a red line for the y-axis.
 
-    plt.savefig('GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'.svg', bbox_inches='tight')
-    print 'GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'.svg'
+    plt.savefig('GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+param['log']+'.svg', bbox_inches='tight')
+    print 'GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+param['log']+'.svg'
     #plt.show()
     
 def create_param():
-    param = {'prop' : '', 'number' : '', 'restriction' : ''}
+    param = {'prop' : '', 'number' : '', 'restriction' : '', 'log' : ''}
     
     param['dimension'] = args.d
     param['quality'] = args.quality
@@ -177,7 +180,9 @@ def create_param():
             param['restriction'] = '4_'
         elif 'l5' in args.options:
             param['restriction'] = '5_'
-    
+        if 'log' in args.options:
+            param['log'] = '_log'
+            
     return param
     
 def main():
@@ -198,15 +203,15 @@ def main():
     #colorbar()
     #yticks(arange(0.5,10.5),range(0,10))
     #xticks(arange(0.5,10.5),range(0,10))
-    pylab.savefig('GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'.png')
+    pylab.savefig('GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+param['log']+'.png')
     
-    file_to_write = 'GALLERY/General/Aggregations/all_'+param['restriction']+param['prop']+param['quality']+param['number']+'_friends'
+    file_to_write = 'GALLERY/General/Aggregations/all_'+param['restriction']+param['prop']+param['quality']+param['number']+param['log']+'_friends'
     writer = csv.writer(open(file_to_write+'.csv', 'wb'), delimiter = ';')
     for line in data:
         writer.writerow(line)
     print file_to_write
        
-    file_to_write = 'GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+'_variance.txt'
+    file_to_write = 'GALLERY/General/PCA/'+param['restriction']+param['prop']+param['quality']+param['number']+param['log']+'_variance.txt'
     pltData = pca(data, file_to_write)    
     
     if param['dimension'] == '3D':
@@ -214,7 +219,7 @@ def main():
     else:
         plot_2D(pltData[0:2], param)
         
-    os.system('Rscript pca.R '+param['restriction']+param['prop']+param['quality']+param['number'])
+    os.system('Rscript pca.R '+param['restriction']+param['prop']+param['quality']+param['number']+param['log'])
 
         
 main()

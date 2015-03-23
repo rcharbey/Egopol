@@ -106,9 +106,9 @@ else:
             print 'enumeration friends done'
         else:
             print len(graph_friends.es)
-        if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
-            enumerate(args, 'commenters')
-            print 'enumeration commenters done'
+        #if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
+            #enumerate(args, 'commenters')
+            #print 'enumeration commenters done'
         list_of_statuses = study_statuses(args)
         if enumeration == None:
             enumeration_status = [0]*30
