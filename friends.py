@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from igraph import *
 import sys
 sys.path.append('./Json')
@@ -35,9 +37,10 @@ def create_graph(dict_of_mutual, folder, ego):
             if name_to_id[friend] <= name_to_id[neighbor]:
                 continue
             graph.add_edge(name_to_id[friend], name_to_id[neighbor])
-#    add_graph_infos(graph, folder, ego)
+    add_graph_infos(graph, folder, ego)
     graph['folder'] = folder
-    graph['ego'] = ego
+    print ego
+    graph['ego'] = ego.encode('utf8')
     return graph
 
 def draw_graph(graph):
