@@ -98,9 +98,12 @@ def draw_graph(graph):
         v['label'] = None
       
 def write_graph(graph):
+    print 'write_graph'
     if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs'):
         os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs')
+        print 'creation folder'
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.gml', format = 'gml')
+    print 'graphe wrote'
     
 def import_graph(folder, ego):
     graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = 'gml')
