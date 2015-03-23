@@ -24,7 +24,7 @@ import status
 def init(args):
     print args
     if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
-        return None
+        return (main_graphs.import_graph(folder, ego), None, None)
     dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
     dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
     if len(dict_of_mutual_friends) > 0:
@@ -97,6 +97,7 @@ if args.options != None:
     
 else:
     triple = init(args)
+    print triple
     if triple != None :
         graph_friends = triple[0]
         graph_commenters = triple[1]
