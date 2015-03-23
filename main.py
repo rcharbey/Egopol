@@ -24,7 +24,7 @@ import status
 def init(args):
     print args
     if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
-        return (main_graphs.import_graph(args.folder, args.ego), None, None)
+        return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
     dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
     if len(dict_of_mutual_friends) > 0:
