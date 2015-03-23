@@ -39,8 +39,6 @@ def create_graph(dict_of_mutual, folder, ego):
             graph.add_edge(name_to_id[friend], name_to_id[neighbor])
     add_graph_infos(graph, folder, ego)
     graph['folder'] = folder
-    print 'nom de ego : ',
-    print ego
     graph['ego'] = ego.encode('utf8')
     return graph
 
