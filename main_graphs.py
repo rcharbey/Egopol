@@ -15,14 +15,15 @@ def main(dict_friends, dict_commenters, folder, ego):
     #if len(graph_commenters.es) > 0:
         #commenters.draw_graph(graph_commenters) 
         #commenters.write_graph(graph_commenters)
+    graph_commenters = None
     
     #graph_both = both_friends_status.create_graph(graph_friends, graph_commenters, folder, ego)
     #if len(graph_both.es) > 0:
         #both_friends_status.draw_graph_weighted(graph_both)
         #both_friends_status.draw_graph(graph_both)
+    graph_both = None
     
-    #return (graph_friends, graph_commenters, graph_both)
-    return 
+    return (graph_friends, graph_commenters, graph_both)
 
 def import_graph(folder, ego, quality):
     if quality == 'friends' :
