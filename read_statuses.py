@@ -4,7 +4,7 @@ import gzip
 import json
 import os
 
-def dict_of_commenters_per_status(folder, ego, list_of_friends):
+def dict_of_commenters_per_status(folder, ego):
     path = folder +'/' + ego
     if os.path.isfile("DATA/"+path+"/statuses.jsons"):
         f = open("DATA/"+path+"/statuses.jsons", 'rb')
@@ -25,8 +25,6 @@ def dict_of_commenters_per_status(folder, ego, list_of_friends):
                     commenter = comment["from"]["id"]
                 if commenter == ego.decode('utf-8'):
                     commenter = 0
-                elif commenter not in list_of_friends:
-                    continue
                 if commenter not in commenters:
                     commenters[commenter] = 1
                 else:
@@ -34,7 +32,7 @@ def dict_of_commenters_per_status(folder, ego, list_of_friends):
         result[status['id']] = commenters
     return result
 
-def dict_of_likers_per_status(folder, ego, list_of_friends):
+def dict_of_likers_per_status(folder, ego):
     path = folder +'/' + ego
     if os.path.isfile("DATA/"+path+"/statuses.jsons"):
         f = open("DATA/"+path+"/statuses.jsons", 'rb')
@@ -55,13 +53,11 @@ def dict_of_likers_per_status(folder, ego, list_of_friends):
                     liker = like['id']
                 if liker == ego.decode('utf-8'):
                     liker = 0
-                elif liker not in list_of_friends:
-                    continue
                 likers.append(liker)
         result[status['id']] = likers
     return result
 
-def dict_of_likers_of_comments_per_status(folder, ego, list_of_friends):
+def dict_of_likers_of_comments_per_status(folder, ego):
     path = folder +'/' + ego
     if os.path.isfile("DATA/"+path+"/statuses.jsons"):
         f = open("DATA/"+path+"/statuses.jsons", 'rb')
@@ -90,8 +86,6 @@ def dict_of_likers_of_comments_per_status(folder, ego, list_of_friends):
                                 liker = 0
                         elif liker == ego:
                             liker = 0
-                        elif liker not in list_of_friends:
-                            continue
                         if liker not in likers:
                             likers[liker] = 1
                         else:
@@ -131,7 +125,7 @@ def dict_of_mutual_commenters(folder, ego, list_of_friends):
                             
     return result
 
-def calculate_info_commenters(folder, ego, list_of_friends):
+def calculate_info_commenters(folder, ego):
     path = folder +'/' + ego
     if os.path.isfile("DATA/"+path+"/statuses.jsons"):
         f = open("DATA/"+path+"/statuses.jsons", 'rb')
@@ -157,19 +151,18 @@ def calculate_info_commenters(folder, ego, list_of_friends):
                         #if commenter not in list_commenters_of_line:
                             #result[commenter]['nb_of_statuses'] += 1
                             #list_commenters_of_line.append(commenter)
-                if commenter in list_of_friends:
-                    if commenter in result:
-                        result[commenter]['nb_of_comments'] += 1
-                        if commenter not in list_commenters_of_line:
-                            result[commenter]['nb_of_statuses'] += 1
-                            list_commenters_of_line.append(commenter)
-                    else:
-                        result[commenter] = {'nb_of_comments' : 1, 'nb_of_statuses' : 1}
+                if commenter in result:
+                    result[commenter]['nb_of_comments'] += 1
+                    if commenter not in list_commenters_of_line:
+                        result[commenter]['nb_of_statuses'] += 1
                         list_commenters_of_line.append(commenter)
+                else:
+                    result[commenter] = {'nb_of_comments' : 1, 'nb_of_statuses' : 1}
+                    list_commenters_of_line.append(commenter)
                         
     return result
 
-def calculate_info_likers(folder, ego, list_of_friends):
+def calculate_info_likers(folder, ego):
     path = folder +'/' + ego
     if os.path.isfile("DATA/"+path+"/statuses.jsons"):
         f = open("DATA/"+path+"/statuses.jsons", 'rb')
@@ -187,15 +180,14 @@ def calculate_info_likers(folder, ego, list_of_friends):
                     liker = like['name']
                 else:
                     liker = like['id']
-                if liker in list_of_friends:
-                    if liker in result:
-                        result[liker] += 1
-                    else:
-                        result[liker] = 1
+                if liker in result:
+                    result[liker] += 1
+                else:
+                    result[liker] = 1
                         
     return result
 
-def calculate_info_likers_of_comment(folder, ego, list_of_friends):
+def calculate_info_likers_of_comment(folder, ego):
     path = folder +'/' + ego
     if os.path.isfile("DATA/"+path+"/statuses.jsons"):
         f = open("DATA/"+path+"/statuses.jsons", 'rb')
@@ -214,11 +206,10 @@ def calculate_info_likers_of_comment(folder, ego, list_of_friends):
                             liker = like['name']
                         else:
                             liker = like['id']
-                        if liker in list_of_friends:
-                            if liker in result:
-                                result[liker] += 1
-                            else:
-                                result[liker] = 1
+                        if liker in result:
+                            result[liker] += 1
+                        else:
+                            result[liker] = 1
     return result
 
 def find_status(folder, ego, id):
