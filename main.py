@@ -27,6 +27,7 @@ def init(args):
         return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
     #dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
+    dict_of_mutual_commenters = None
     if len(dict_of_mutual_friends) > 0:
         return main_graphs.main(dict_of_mutual_friends, dict_of_mutual_commenters, args.folder, args.ego)
     else:
