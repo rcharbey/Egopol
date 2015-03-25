@@ -16,9 +16,9 @@ def dict_of_mutual(folder, ego):
     for line in f:
         jr = json.loads(line)
         if 'name' in jr:
-            quality == 'name'
+            quality = 'name'
         else:
-            quality == 'id'
+            quality = 'id'
         result[jr[quality]] = []
         if 'mutual' in jr:
             for neighbor in jr['mutual']:
