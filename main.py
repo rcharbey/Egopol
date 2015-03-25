@@ -26,7 +26,7 @@ def init(args):
     if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
         return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
-    dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
+    #dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
     if len(dict_of_mutual_friends) > 0:
         return main_graphs.main(dict_of_mutual_friends, dict_of_mutual_commenters, args.folder, args.ego)
     else:
