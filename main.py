@@ -21,7 +21,6 @@ import pretty_print
 import indicators
 
 def init(args):
-    print args
     #if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
         #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     #print 'initialisé'
