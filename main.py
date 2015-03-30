@@ -51,23 +51,6 @@ def enumerate(args, quality):
     for i in range(0, len(graph.vs)):
         writer_positions.writerow(enumeration[1][i])
     return enumeration
-    
-def study_status(args, id_status):
-    dict_of_commenters_per_status = main_jsons.main(args.folder, args.ego, 'commenters')
-    list_of_commenters = dict_of_commenters_per_status[id_status]
-    graph_friends = main_graphs.import_graph(args.folder, args.ego, 'friends')
-    induced_graph_friends = main_graphs.induced_subgraph(graph_friends, id_status, list_of_commenters, 'friends')
-    patterns_enumeration = main_enumeration.main(induced_graph_friends, {})
-    path = 'GALLERY/'+args.folder+'/'+args.ego+'/Statuses/'+id_status+'/'
-    csv_file = open(path+'patterns_induced_friends.csv', 'wb')
-    writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(patterns_enumeration[0])
-    return patterns_enumeration[0]
-    
-    #graph_commenters = main_graphs.import_graph(args.folder, args.ego, 'statuses')
-    #induced_graph_commenters = main_graphs.induced_subgraph(graph_commenters, id_status, list_of_commenters, 'statuses')
-    #enumeration = main_enumeration.main(induced_graph_commenters, {})
-    #methods_htmls.enumerate_induced(args.folder, args.ego, id_status, enumeration[0], 'status')
   
 print args.options
 
@@ -81,7 +64,7 @@ if args.options != None:
         init(args)
     elif 'enumerate' in args.options:
         enumerate(args, 'friends')
-        #enumerate(args, 'commenters')
+        enumerate(args, 'commenters')
     
 else:
     triple = init(args)
@@ -95,8 +78,7 @@ else:
             print 'enumeration friends done'
         else:
             print len(graph_friends.es)
-        #if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
-            #enumerate(args, 'commenters')
-            #print 'enumeration commenters done'
-        list_of_statuses = study_statuses(args)
+        if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
+            enumerate(args, 'commenters')
+            print 'enumeration commenters done'
         indicators.main(args.folder, args.ego)
