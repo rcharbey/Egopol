@@ -91,11 +91,6 @@ if args.options != None:
     elif 'enumerate' in args.options:
         enumerate(args, 'friends')
         #enumerate(args, 'commenters')
-    elif 'status' in args.options:
-        if len(args.options) > 1:
-            study_status(args, args.options[1])
-        else:
-            study_statuses(args)
     
 else:
     triple = init(args)
@@ -113,15 +108,4 @@ else:
             #enumerate(args, 'commenters')
             #print 'enumeration commenters done'
         list_of_statuses = study_statuses(args)
-        if enumeration == None:
-            enumeration_status = [0]*30
-        else:
-            enumeration_status = [0]*len(enumeration)
-        #for status in list_of_statuses:
-            #temp = study_status(args, status[0])
-            #for i in range(0, len(temp)):
-                #enumeration_status[i] += temp[i]
-        #if len(list_of_statuses) > 0:
-            #print_result_all_induced(enumeration_status)
         indicators.main(args.folder, args.ego)
-    
