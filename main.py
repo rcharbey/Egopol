@@ -19,7 +19,6 @@ import main_jsons
 import csv
 import pretty_print
 import indicators
-import status
 
 def init(args):
     print args
@@ -52,14 +51,6 @@ def enumerate(args, quality):
     for i in range(0, len(graph.vs)):
         writer_positions.writerow(enumeration[1][i])
     return enumeration
-    
-def study_statuses(args):
-    dict_of_commenters_per_status = main_jsons.main(args.folder, args.ego, 'commenters')
-    dict_of_number_of_comments_by_ego = status.dict_of_number_of_comments_by_ego(dict_of_commenters_per_status)
-    dict_of_number_of_commenters = status.dict_of_number_of_commenters(dict_of_commenters_per_status)
-    sorted_list = status.sorted_list_of_status(dict_of_number_of_comments_by_ego, dict_of_number_of_commenters)
-    list_of_printed_statuses = pretty_print.status(args.folder, args.ego, sorted_list)
-    return list_of_printed_statuses
     
 def study_status(args, id_status):
     dict_of_commenters_per_status = main_jsons.main(args.folder, args.ego, 'commenters')
