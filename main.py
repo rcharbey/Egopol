@@ -68,17 +68,20 @@ if args.options != None:
     
 else:
     triple = init(args)
-    print triple
     if triple != None :
         graph_friends = triple[0]
         graph_commenters = triple[1]
-        enumeration = None
+        print 'enumeration friends'
         if len(graph_friends.es) < 3000 and len(graph_friends.es) > 0:
-            enumeration = enumerate(args, 'friends')[0]
-            print 'enumeration friends done'
+            enumerate(args, 'friends')[0]
+            print 'done'
         else:
-            print len(graph_friends.es)
+            print 'squeezed'
+        print 'enumeration commenters done'
         if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
             enumerate(args, 'commenters')
-            print 'enumeration commenters done'
+            print 'done'
+        else:
+            print 'squeezed'
+            
         indicators.main(args.folder, args.ego)
