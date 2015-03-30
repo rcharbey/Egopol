@@ -10,8 +10,7 @@ def main(folder, ego, options):
         list_of_friends = read_friends.list_of_friends(folder, ego)
         return read_statuses.dict_of_mutual_commenters(folder, ego, list_of_friends)
     elif options == 'commenters':
-        list_of_friends = read_friends.list_of_friends(folder, ego)
-        return read_statuses.dict_of_commenters_per_status(folder, ego, list_of_friends)
+        return read_statuses.dict_of_commenters_per_status(folder, ego)
     
 def list_of_friends(folder, ego):
     return read_friends.list_of_friends(folder, ego)
