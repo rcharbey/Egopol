@@ -8,7 +8,6 @@ import os
 import pretty_print
 import aggregation
 import csv
-import status
 sys.path.append("./Graphs")
 sys.path.append("./Enumeration")
 sys.path.append("./Jsons")
