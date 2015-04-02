@@ -20,6 +20,10 @@ import csv
 import pretty_print
 import indicators
 
+def init_light(args):
+    dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
+    main_graphs.light_graph(dict_of_mutual_friends, args.folder, args.ego)
+
 def init(args):
     #if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
         #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
