@@ -24,19 +24,14 @@ def add_graph_infos(graph, folder, ego):
 
 def create_graph(dict_of_mutual, folder, ego):
     graph = Graph.Full(0)
-    n = 0
     name_to_id = {}
-    for friend in dict_of_mutual:
-        graph.add_vertex(name = friend)
-        name_to_id[friend] = n
-        n += 1
-    for friend in dict_of_mutual:
-        for neighbor in dict_of_mutual[friend]:
-            if neighbor not in dict_of_mutual:
-                continue
-            if name_to_id[friend] <= name_to_id[neighbor]:
-                continue
-            graph.add_edge(name_to_id[friend], name_to_id[neighbor])
+    for friend_neighbors in dict_of_mutual:
+        graph.add_vertex()
+    id_friend = 0
+    for friend_neighbors in dict_of_mutual:
+        for id_neighbor in friend_neighbors:
+            if id_neighbor > id_friend:
+                graph.add_edge(id_friend, id_neighbor)
     add_graph_infos(graph, folder, ego)
     graph['folder'] = folder
     graph['ego'] = ego.encode('utf8')
@@ -49,21 +44,12 @@ def light_graph(dict_of_mutual, folder, ego):
     '''
     table_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/correspondence_table', 'w')
     graph_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', 'w')
-    correspondence_table = {}
-    n = 0
-    for friend in dict_of_mutual:
-        correspondence_table[friend] = n
-        table_to_write.write((friend + u'\n').encode('utf8'))
-        n += 1
-    table_to_write.close()
-    for friend in dict_of_mutual:
-        id_friend = correspondence_table[friend]
-        for neighbor in dict_of_mutual[friend]:
-            id_neighbor = correspondence_table[neighbor]
+    id_friend = 0
+    for friend_neighbors in dict_of_mutual:
+        for id_neighbor in friend_neighbors:
             if id_neighbor > id_friend:
                 graph_to_write.write(str(id_friend) + ' ' + str(id_neighbor) + '\n')
     graph_to_write.close()         
-               
 
 def draw_graph(graph):
     graph.es['curved'] = 0.3
