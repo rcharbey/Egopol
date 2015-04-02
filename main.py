@@ -20,11 +20,27 @@ import csv
 import pretty_print
 import indicators
 
+def create_folders(folder, ego):
+    for path in [
+        'GALLERY/', 
+        'GALLERY/' + folder,
+        'GALLERY/' + folder + '/'+ ego,
+        'GALLERY/' + folder + '/'+ ego + '/Graphs',
+        'GALLERY/' + folder + '/'+ ego + '/Enumeration',
+        'GALLERY/' + folder + '/'+ ego + '/Enumeration/CSV',
+        'GALLERY/' + folder + '/'+ ego + '/Enumeration/HTML',
+        'GALLERY/' + folder + '/'+ ego + '/CSV',
+        'GALLERY/' + folder + '/'+ ego + '/Statuses']:
+        if not os.path.isdir(path):
+            os.mkdir(path)
+
 def init_light(args):
+    create_folders(folder, ego)
     dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
     main_graphs.light_graph(dict_of_mutual_friends, args.folder, args.ego)
 
 def init(args):
+    create_folders(folder, ego)
     #if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
         #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     #print 'initialisé'
