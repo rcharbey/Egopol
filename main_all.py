@@ -28,20 +28,22 @@ def main():
             aggregation.main()
             return
         elif 'indicators' in args.options:
-            indicators.main()        
+            if 'light' in args.options:
+                tab_options = ['light']
+            else:
+                tab_options = None
+            indicators.main(options = tab_options)        
             return
     
     list_folders = [f for f in os.listdir('DATA') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
-            if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/Enumeration'):
-                sys.argv = ['main.py', folder, ego]
-                if args.options != None:
-                    sys.argv.append('-o')
-                    for option in args.options:
-                        sys.argv.append(option)
-                execfile("main.py")
-    print sys.argv
+            sys.argv = ['main.py', folder, ego]
+            if args.options != None:
+                sys.argv.append('-o')
+                for option in args.options:
+                    sys.argv.append(option)
+            execfile("main.py")
                 
 main()

@@ -63,6 +63,8 @@ if not os.path.isdir('GALLERY/'+args.folder+'/'+args.ego):
     os.mkdir('GALLERY/'+args.folder+'/'+args.ego)  
   
 if args.options != None:
+    if 'light' in args.options:
+        init_light(args)
     if 'init' in args.options:
         init(args)
     elif 'enumerate' in args.options:
