@@ -4,7 +4,7 @@ import gzip
 import json
 import os
 
-def dict_of_mutual(folder, ego):
+def dict_of_mutual(folder, ego, list_of_friends):
     path = folder +'/' + ego
     if os.path.isfile("DATA/"+path+"/friends.jsons"):
         f = open("DATA/"+path+"/friends.jsons", 'rb')
@@ -22,7 +22,8 @@ def dict_of_mutual(folder, ego):
         result[jr[quality]] = []
         if 'mutual' in jr:
             for neighbor in jr['mutual']:
-                result[jr[quality]].append(neighbor[quality])
+                if neighbor in list_of_friends:
+                    result[jr[quality]].append(neighbor[quality])
     f.close()
     return result
 
