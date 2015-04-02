@@ -42,6 +42,35 @@ def create_graph(dict_of_mutual, folder, ego):
     graph['ego'] = ego.encode('utf8')
     return graph
 
+def light_graph(dict_of_mutual, folder, ego):
+    '''
+    this function create a file representing the frienship graph with an edge per line 
+    and a correspondence_table between the friends and their id
+    '''
+    if not os.path.isdir('GALLERY/'+folder):
+        os.mkdir('GALLERY/'+folder)
+    if not os.path.isdir('GALLERY/'+folder+'/'+ego):
+        os.mkdir('GALLERY/'+folder+'/'+ego)
+    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/Graphs'):
+        os.mkdir('GALLERY/'+folder+'/'+ego+'/Graphs')
+    table_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/correspondence_table', 'w')
+    graph_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', 'w')
+    correspondence_table = {}
+    n = 0
+    for friend in dict_of_mutual:
+        correspondence_table[friend] = n
+        table_to_write.write(friend + '\n')
+        n += 1
+    table_to_write.close()
+    for friend in dict_of_mutual:
+        id_friend = correspondence_table[friend]
+        for neighbor in dict_of_mutual[friend]:
+            id_neighbor = correspondence_table[neighbor]
+            if id_neighbor > id_friend:
+                graph_to_write.write(str(id_friend) + ' ' + str(id_neighbor) + '\n')
+    graph_to_write.close()         
+               
+
 def draw_graph(graph):
     graph.es['curved'] = 0.3
     layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)    
@@ -98,12 +127,9 @@ def draw_graph(graph):
         v['label'] = None
       
 def write_graph(graph):
-    print 'write_graph'
     if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs'):
         os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs')
-        print 'creation folder'
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.gml', format = 'gml')
-    print 'graphe wrote'
     
 def import_graph(folder, ego):
     graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = 'gml')
@@ -125,3 +151,7 @@ def induced_graph(graph, id_status, list_of_vertices):
     place = 'GALLERY/'+folder+'/'+ego+'/statuses/'+id_status+'/induit_friends.svg'
     #plot(induced, place, layout = layout, vertex_size = 10)
     return induced
+
+folder = 'Test'
+ego = '1f58e41ac6b86a8345a9be528541d8e2'
+light_graph(main_jsons.main(folder, ego, 'friends'), folder, ego)

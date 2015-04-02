@@ -25,6 +25,9 @@ def main(dict_friends, dict_commenters, folder, ego):
     
     return (graph_friends, graph_commenters, graph_both)
 
+def light_graph(dict_of_mutual, folder, ego):
+    friends.light_graph(dict_of_mutual, folder, ego)
+
 def import_graph(folder, ego, quality):
     if quality == 'friends' :
         return friends.import_graph(folder, ego)
