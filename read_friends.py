@@ -29,7 +29,7 @@ def list_of_mutual(folder, ego, list_of_friends):
     else:
         gz = "DATA/"+path+"/friends.jsons.gz"
         f = gzip.open(gz, 'rb')
-    result = {}
+    result = []
     
     n = 0
     for line in f:
@@ -46,7 +46,7 @@ def list_of_mutual(folder, ego, list_of_friends):
 def list_of_friends(folder, ego):
     path = folder +'/' + ego
     result = []
-    f = open('GALLERY/'+path+'/correspondence_table', 'r')
+    f = open('GALLERY/'+path+'/Graphs/correspondence_table', 'r')
     for line in f:
         result.append(line)
     return result
