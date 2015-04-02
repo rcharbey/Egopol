@@ -38,14 +38,12 @@ def create_folders(folder, ego):
             os.mkdir(path)
 
 def init_light(args):
-    create_folders(folder, ego)
-    main_jsons.create_correspondence_table(folder, ego)
+    main_jsons.create_correspondence_table(args.folder, args.ego)
     list_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
     main_graphs.light_graph(list_of_mutual_friends, args.folder, args.ego)
 
 def init(args):
-    create_folders(folder, ego)
-    main_jsons.create_correspondence_table(folder, ego)
+    main_jsons.create_correspondence_table(args.folder, args.ego)
     #if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
         #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     #print 'initialisé'
@@ -72,7 +70,8 @@ def enumerate(args, quality):
     return enumeration
   
 print str(args.folder) + ' ' + str(args.ego) + ' ' + str(args.options)
-  
+create_folders(args.folder, args.ego)
+
 if args.options != None:
     if 'light' in args.options:
         init_light(args)
