@@ -59,7 +59,7 @@ def light_graph(dict_of_mutual, folder, ego):
     n = 0
     for friend in dict_of_mutual:
         correspondence_table[friend] = n
-        table_to_write.write(friend + '\n')
+        table_to_write.write((friend + u'\n').encode('utf8'))
         n += 1
     table_to_write.close()
     for friend in dict_of_mutual:
@@ -151,7 +151,3 @@ def induced_graph(graph, id_status, list_of_vertices):
     place = 'GALLERY/'+folder+'/'+ego+'/statuses/'+id_status+'/induit_friends.svg'
     #plot(induced, place, layout = layout, vertex_size = 10)
     return induced
-
-folder = 'Test'
-ego = '1f58e41ac6b86a8345a9be528541d8e2'
-light_graph(main_jsons.main(folder, ego, 'friends'), folder, ego)
