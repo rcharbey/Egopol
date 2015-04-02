@@ -39,11 +39,13 @@ def create_folders(folder, ego):
 
 def init_light(args):
     create_folders(folder, ego)
-    dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
-    main_graphs.light_graph(dict_of_mutual_friends, args.folder, args.ego)
+    main_jsons.create_correspondence_table(folder, ego)
+    list_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
+    main_graphs.light_graph(list_of_mutual_friends, args.folder, args.ego)
 
 def init(args):
     create_folders(folder, ego)
+    main_jsons.create_correspondence_table(folder, ego)
     #if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
         #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     #print 'initialisé'
