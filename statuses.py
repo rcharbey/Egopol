@@ -45,10 +45,6 @@ def draw_graph(graph):
             e['color'] = 'rgba(0,0,0,0)'
         
     layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)    
-    if not os.path.isdir('GALERY/'+graph['folder']):
-        os.mkdir('GALERY/'+graph['folder'])
-    if not os.path.isdir('GALERY/'+graph['folder']+'/'+graph['ego']):
-        os.mkdir('GALERY/'+graph['folder']+'/'+graph['ego'])
     place = 'GALERY/'+graph['folder']+'/'+graph['ego']+'/commenters.svg'
     plot(graph, place, layout = layout, vertex_size = 10)
       
@@ -73,10 +69,8 @@ def induced_graph(graph, id_status, list_of_vertices):
             #e['width'] = 2*math.log(e['nb_st'] + 1, 2)
         
     layout = induced.layout_fruchterman_reingold(repulserad = len(induced.vs)**3)
-    if not os.path.isdir('GALERY/'+folder+'/'+ego+'/statuses/'):
-        os.mkdir('GALERY/'+folder+'/'+ego+'/statuses')    
-    if not os.path.isdir('GALERY/'+folder+'/'+ego+'/statuses/'+id_status):
-        os.mkdir('GALERY/'+folder+'/'+ego+'/statuses/'+id_status)
-    place = 'GALERY/'+folder+'/'+ego+'/statuses/'+id_status+'/induit_commenters.svg'
+    if not os.path.isdir('GALERY/'+folder+'/'+ego+'/Statuses/'+id_status):
+        os.mkdir('GALERY/'+folder+'/'+ego+'/Statuses/'+id_status)
+    place = 'GALERY/'+folder+'/'+ego+'/Statuses/'+id_status+'/induit_commenters.svg'
     plot(induced, place, layout = layout, vertex_size = 10)
     return induced

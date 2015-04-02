@@ -40,18 +40,12 @@ def draw_graph(graph):
     for e in graph.es:
         e['width'] = 2*math.log(e['nbst'], 2) + 1
         
-    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)    
-    if not os.path.isdir('GALLERY/'+graph['folder']):
-        os.mkdir('GALLERY/'+graph['folder'])
-    if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']):
-        os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego'])
+    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
     place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/commenters.svg'
     if socket.gethostname() != 'ccadovir01':
         plot(graph, place, layout = layout, vertex_size = 10)
       
 def write_graph(graph):
-    if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs'):
-        os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs')
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/commenters.gml', format = 'gml')
     
 def import_graph(folder, ego, graph_format):
@@ -72,10 +66,8 @@ def induced_graph(graph, id_status, list_of_vertices):
             #e['width'] = 2*math.log(e['nbst'] + 1, 2)
         
     layout = induced.layout_fruchterman_reingold(repulserad = len(induced.vs)**3)
-    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/statuses/'):
-        os.mkdir('GALLERY/'+folder+'/'+ego+'/statuses')    
-    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/statuses/'+id_status):
-        os.mkdir('GALLERY/'+folder+'/'+ego+'/statuses/'+id_status)
-    place = 'GALLERY/'+folder+'/'+ego+'/statuses/'+id_status+'/induit_commenters.svg'
+    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/Statuses/'+id_status):
+        os.mkdir('GALLERY/'+folder+'/'+ego+'/Statuses/'+id_status)
+    place = 'GALLERY/'+folder+'/'+ego+'/Statuses/'+id_status+'/induit_commenters.svg'
     #plot(induced, place, layout = layout, vertex_size = 10)
     return induced

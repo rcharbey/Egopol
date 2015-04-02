@@ -47,12 +47,6 @@ def light_graph(dict_of_mutual, folder, ego):
     this function create a file representing the frienship graph with an edge per line 
     and a correspondence_table between the friends and their id
     '''
-    if not os.path.isdir('GALLERY/'+folder):
-        os.mkdir('GALLERY/'+folder)
-    if not os.path.isdir('GALLERY/'+folder+'/'+ego):
-        os.mkdir('GALLERY/'+folder+'/'+ego)
-    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/Graphs'):
-        os.mkdir('GALLERY/'+folder+'/'+ego+'/Graphs')
     table_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/correspondence_table', 'w')
     graph_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', 'w')
     correspondence_table = {}
@@ -73,12 +67,7 @@ def light_graph(dict_of_mutual, folder, ego):
 
 def draw_graph(graph):
     graph.es['curved'] = 0.3
-    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)    
-    if not os.path.isdir('GALLERY/'+graph['folder']):
-        os.mkdir('GALLERY/'+graph['folder'])
-    if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']):
-        os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego'])
-        
+    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)         
     place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends_comments_likes.svg'
     for v in graph.vs:
         v['size'] = 10*math.log(2+v['sum_comments_likes'])
@@ -127,8 +116,6 @@ def draw_graph(graph):
         v['label'] = None
       
 def write_graph(graph):
-    if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs'):
-        os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs')
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.gml', format = 'gml')
     
 def import_graph(folder, ego, graph_format):
@@ -144,10 +131,8 @@ def induced_graph(graph, id_status, list_of_vertices):
     ego = graph['ego']
         
     layout = induced.layout_fruchterman_reingold(repulserad = len(induced.vs)**3)
-    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/statuses/'):
-        os.mkdir('GALLERY/'+folder+'/'+ego+'/statuses')    
-    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/statuses/'+id_status):
-        os.mkdir('GALLERY/'+folder+'/'+ego+'/statuses/'+id_status)
-    place = 'GALLERY/'+folder+'/'+ego+'/statuses/'+id_status+'/induit_friends.svg'
+    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/Statuses/'+id_status):
+        os.mkdir('GALLERY/'+folder+'/'+ego+'/Statuses/'+id_status)
+    place = 'GALLERY/'+folder+'/'+ego+'/Statuses/'+id_status+'/induit_friends.svg'
     #plot(induced, place, layout = layout, vertex_size = 10)
     return induced
