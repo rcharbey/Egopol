@@ -55,7 +55,7 @@ def enumerate(args, quality):
         writer_positions.writerow(enumeration[1][i])
     return enumeration
   
-print str(args.folde)r + ' ' + str(args.ego) + ' ' + str(args.options)
+print str(args.folder) + ' ' + str(args.ego) + ' ' + str(args.options)
 
 if not os.path.isdir('GALLERY/'+args.folder):
     os.mkdir('GALLERY/'+args.folder)
