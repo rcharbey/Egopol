@@ -32,7 +32,8 @@ def create_folders(folder, ego):
         'GALLERY/' + folder + '/'+ ego + '/CSV',
         'GALLERY/' + folder + '/'+ ego + '/Statuses',
         'GALLERY_STATUSES',
-        'GALLERY_STATUSES/'+folder]:
+        'GALLERY_STATUSES/'+folder,
+        'GALLERY/General']:
         if not os.path.isdir(path):
             os.mkdir(path)
 
