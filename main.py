@@ -30,7 +30,9 @@ def create_folders(folder, ego):
         'GALLERY/' + folder + '/'+ ego + '/Enumeration/CSV',
         'GALLERY/' + folder + '/'+ ego + '/Enumeration/HTML',
         'GALLERY/' + folder + '/'+ ego + '/CSV',
-        'GALLERY/' + folder + '/'+ ego + '/Statuses']:
+        'GALLERY/' + folder + '/'+ ego + '/Statuses',
+        'GALLERY_STATUSES',
+        'GALLERY_STATUSES/'+folder]:
         if not os.path.isdir(path):
             os.mkdir(path)
 
@@ -59,11 +61,6 @@ def enumerate(args, quality):
     """
     graph = main_graphs.import_graph(args.folder, args.ego, quality)
     enumeration = main_enumeration.main(graph, {})
-    if not os.path.isdir('GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/'):
-        os.mkdir('GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/')
-    if not os.path.isdir('GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/'):
-        os.mkdir('GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/')
-    path = 'GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/'
     writer_patterns = csv.writer(open(path+'patterns_'+quality+'.csv', 'wb'), delimiter=';')
     writer_patterns.writerow(enumeration[0])
     writer_positions= csv.writer(open(path+'positions_'+quality+'.csv', 'wb'), delimiter = ';')
@@ -72,11 +69,6 @@ def enumerate(args, quality):
     return enumeration
   
 print str(args.folder) + ' ' + str(args.ego) + ' ' + str(args.options)
-
-if not os.path.isdir('GALLERY/'+args.folder):
-    os.mkdir('GALLERY/'+args.folder)
-if not os.path.isdir('GALLERY/'+args.folder+'/'+args.ego):
-    os.mkdir('GALLERY/'+args.folder+'/'+args.ego)  
   
 if args.options != None:
     if 'light' in args.options:
