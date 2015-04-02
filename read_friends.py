@@ -28,7 +28,6 @@ def dict_of_mutual(folder, ego):
 
 
 def list_of_friends(folder, ego):
-    
     path = folder +'/' + ego
     if os.path.isfile("DATA/"+path+"/friends.jsons"):
         f = open("DATA/"+path+"/friends.jsons", 'rb')
