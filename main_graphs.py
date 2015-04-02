@@ -28,11 +28,11 @@ def main(dict_friends, dict_commenters, folder, ego):
 def light_graph(dict_of_mutual, folder, ego):
     friends.light_graph(dict_of_mutual, folder, ego)
 
-def import_graph(folder, ego, quality):
+def import_graph(folder, ego, quality, graph_format = 'gml'):
     if quality == 'friends' :
-        return friends.import_graph(folder, ego)
+        return friends.import_graph(folder, ego, graph_format)
     elif quality == 'commenters' :
-        return commenters.import_graph(folder, ego)
+        return commenters.import_graph(folder, ego, graph_format)
     
 def induced_subgraph(graph, id_status, list_of_vertices, quality):
     if quality == 'friends' :

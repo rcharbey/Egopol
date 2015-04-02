@@ -131,8 +131,8 @@ def write_graph(graph):
         os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs')
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.gml', format = 'gml')
     
-def import_graph(folder, ego):
-    graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = 'gml')
+def import_graph(folder, ego, graph_format):
+    graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = graph_format)
     graph['folder'] = folder
     graph['ego'] = ego
     return graph
