@@ -42,7 +42,6 @@ def light_graph(dict_of_mutual, folder, ego):
     this function create a file representing the frienship graph with an edge per line 
     and a correspondence_table between the friends and their id
     """
-    table_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/correspondence_table', 'w')
     graph_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', 'w')
     id_friend = 0
     for friend_neighbors in dict_of_mutual:
