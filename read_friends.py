@@ -4,14 +4,19 @@ import gzip
 import json
 import os
 
-def create_correspondence_table(folder, ego):
+def open_json(folder, ego):
     path = folder +'/' + ego
-    table_to_write = open('GALLERY/'+path+'/Graphs/correspondence_table', 'w')
     if os.path.isfile("DATA/"+path+"/friends.jsons"):
         f = open("DATA/"+path+"/friends.jsons", 'rb')
     else:
         gz = "DATA/"+path+"/friends.jsons.gz"
         f = gzip.open(gz, 'rb')
+    return f
+
+def create_correspondence_table(folder, ego):
+    path = folder +'/' + ego
+    table_to_write = open('GALLERY/'+path+'/Graphs/correspondence_table', 'w')
+    f = open_json(folder, ego)
     for line in f:
         friend = json.loads(line)
         if 'name' in friend:
@@ -23,12 +28,7 @@ def create_correspondence_table(folder, ego):
     
 
 def list_of_mutual(folder, ego, list_of_friends):
-    path = folder +'/' + ego
-    if os.path.isfile("DATA/"+path+"/friends.jsons"):
-        f = open("DATA/"+path+"/friends.jsons", 'rb')
-    else:
-        gz = "DATA/"+path+"/friends.jsons.gz"
-        f = gzip.open(gz, 'rb')
+    f = open_json(folder, ego)
     result = []
     
     n = 0
@@ -52,12 +52,7 @@ def list_of_friends(folder, ego):
     return result
 
 def find_friend(folder, ego, id):
-    path = folder +'/' + ego
-    if os.path.isfile("DATA/"+path+"/friends.jsons"):
-        f = open("DATA/"+path+"/friends.jsons", 'rb')
-    else:
-        gz = "DATA/"+path+"/friends.jsons.gz"
-        f = gzip.open(gz, 'rb')
+    f = open_json(folder, ego)
     for line in f:
         friend = json.loads(line)
         if ('name' in friend and friend['name'] == id) or friend['id'] == id:
