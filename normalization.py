@@ -94,6 +94,7 @@ def count_number_of_patterns_to_delete():
 if __name__ == '__main__':
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders:
+        print folder
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
             path = 'GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'
