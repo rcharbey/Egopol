@@ -48,6 +48,7 @@ def light_graph(dict_of_mutual, folder, ego):
         for id_neighbor in friend_neighbors:
             if id_neighbor > id_friend:
                 graph_to_write.write(str(id_friend) + ' ' + str(id_neighbor) + '\n')
+        id_friend += 1
     graph_to_write.close()         
 
 def draw_graph(graph):
