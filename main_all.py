@@ -37,6 +37,8 @@ def main():
     
     list_folders = [f for f in os.listdir('DATA') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
+        if 'all_2014' in folder:
+            continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
             sys.argv = ['main.py', folder, ego]
