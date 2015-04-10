@@ -6,12 +6,45 @@ import os
 
 def open_json(folder, ego):
     path = folder +'/' + ego
-    if os.path.isfile("DATA/"+path+"/friends.jsons"):
-        f = open("DATA/"+path+"/friends.jsons", 'rb')
+    if os.path.isfile("DATA/"+path+"/statuses.jsons"):
+        f = open("DATA/"+path+"/statuses.jsons", 'rb')
     else:
-        gz = "DATA/"+path+"/friends.jsons.gz"
+        gz = "DATA/"+path+"/statuses.jsons.gz"
         f = gzip.open(gz, 'rb')
     return f
+
+def print_list_of_commenters(folder, ego):
+    f = open_json(folder, ego)
+    to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/list_of_commenters.json', 'w')
+    cmters_already_seen = set()
+    
+    for line in f:
+        status = json.loads(line)
+        if 'comments' in status:
+            for comment in status['comments']:
+                if 'name' in comment['from']:
+                    if comment['from']['name'] == None:
+                        commenter = u'None'
+                    else:
+                        commenter = comment['from']['name']
+                else:
+                    commenter = comment["from"]["id"]
+                if commenter == ego:
+                    commenter = 0
+                else:
+                    if commenter not in cmters_already_seen:
+                        cmters_already_seen.add(commenter)
+    to_write.write(json.dumps([e.encode('utf-8') for e in list(cmters_already_seen)]))
+    to_write.close()   
+    
+def read_list_of_commenters(folder, ego):
+    path = folder + '/' + ego
+    if not os.path.isfile("GALLERY/"+path+"/Graphs/list_of_commenters.json"):
+       print_list_of_commenters(folder, ego) 
+    f = open("GALLERY/"+path+"/Graphs/list_of_commenters.json", 'rb')
+    for line in f:
+        list_of_commenters = json.loads(line)
+        return list_of_commenters
 
 def dict_of_commenters_per_status(folder, ego):
     f = open_json(folder, ego)    

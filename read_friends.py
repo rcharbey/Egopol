@@ -27,13 +27,19 @@ def create_correspondence_table(folder, ego):
     table_to_write.close()
     
 
-def list_of_mutual(folder, ego, list_of_friends):
+def list_of_mutual(folder, ego, list_of_friends, list_of_commenters = None):
     f = open_json(folder, ego)
     result = []
     n = 0
     for line in f:
         jr = json.loads(line)
         result.append([])
+        if list_of_commenters != None:
+            if 'name' in jr:
+                if jr['name'] not in list_of_commenters:
+                    continue
+            elif jr['id'] not in list_of_commenters:
+                continue
         if 'mutual' in jr:
             for neighbor in jr['mutual']:
                 if 'name' in neighbor:
