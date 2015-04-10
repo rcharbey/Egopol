@@ -36,6 +36,13 @@ def create_folders(folder, ego):
         'GALLERY/General']:
         if not os.path.isdir(path):
             os.mkdir(path)
+            
+def induced_graph_friends(args):
+    folder = args.folder
+    ego = args.ego
+    list_of_commenters = main_jsons.read_list_of_commenters(folder, ego)
+    list_friends = main_jsons.main(folder, ego, 'friends', list_of_commenters)
+    main_graphs.light_graph(list_friends, folder, ego, True)
 
 def init_light(args):
     main_jsons.create_correspondence_table(args.folder, args.ego)
@@ -80,6 +87,8 @@ if args.options != None:
     elif 'enumerate' in args.options:
         enumerate(args, 'friends')
         enumerate(args, 'commenters')
+    if 'indu' in args.options:
+        induced_graph_friends(args)
     
 else:
     triple = init(args)
