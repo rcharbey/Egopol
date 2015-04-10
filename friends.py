@@ -37,12 +37,15 @@ def create_graph(dict_of_mutual, folder, ego):
     graph['ego'] = ego.encode('utf8')
     return graph
 
-def light_graph(dict_of_mutual, folder, ego):
+def light_graph(dict_of_mutual, folder, ego, induced = False):
     """
     this function create a file representing the frienship graph with an edge per line 
     and a correspondence_table between the friends and their id
     """
-    graph_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', 'w')
+    patch = ''
+    if induced:
+        patch = '_fc'
+    graph_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph'+patch, 'w')
     id_friend = 0
     for friend_neighbors in dict_of_mutual:
         for id_neighbor in friend_neighbors:
@@ -101,7 +104,7 @@ def draw_graph(graph):
         v['size'] = 10
         v['label'] = None
       
-def write_graph(graph):
+def write_graph(graph, induced = False):
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.gml', format = 'gml')
     
 def import_graph(folder, ego, graph_format):
