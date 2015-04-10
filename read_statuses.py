@@ -34,7 +34,7 @@ def print_list_of_commenters(folder, ego):
                 else:
                     if commenter not in cmters_already_seen:
                         cmters_already_seen.add(commenter)
-    to_write.write(json.dumps([e.encode('utf-8') for e in list(cmters_already_seen)]))
+    to_write.write(json.dumps([e.encode('utf-8') for e in list(cmters_already_seen) if e != None]))
     to_write.close()   
     
 def read_list_of_commenters(folder, ego):
