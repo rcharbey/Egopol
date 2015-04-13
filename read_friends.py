@@ -47,6 +47,9 @@ def list_of_mutual(folder, ego, list_of_friends, list_of_commenters = None):
                 else:
                     neighbor = neighbor['id']
                 if neighbor in list_of_friends:
+                    if list_of_commenters:
+                        if neighbor not in list_of_commenters:
+                            continue
                     result[n].append(list_of_friends.index(neighbor))
         n += 1
     f.close()
