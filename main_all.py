@@ -30,6 +30,8 @@ def main():
         elif 'indicators' in args.options:
             if 'light' in args.options:
                 tab_options = ['light']
+            elif 'light_com' in args.options:
+                tab_options = ['lightcom']
             else:
                 tab_options = None
             indicators.main(options = tab_options)        
