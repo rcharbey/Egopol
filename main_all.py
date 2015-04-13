@@ -30,11 +30,11 @@ def main():
         elif 'indicators' in args.options:
             if 'light' in args.options:
                 tab_options = ['light']
-            elif 'light_com' in args.options:
+            elif 'lightcom' in args.options:
                 tab_options = ['lightcom']
             else:
                 tab_options = None
-            indicators.main(options = tab_options)        
+            indicators.main(None, None, tab_options)        
             return
     
     list_folders = [f for f in os.listdir('DATA') if os.path.isdir(os.path.join('DATA', f))]
