@@ -26,9 +26,9 @@ def main(dict_friends, dict_commenters, folder, ego):
 def light_graph(dict_of_mutual, folder, ego, induced = False):
     friends.light_graph(dict_of_mutual, folder, ego, induced)
 
-def import_graph(folder, ego, quality, graph_format = 'gml'):
+def import_graph(folder, ego, quality, graph_format = 'gml', fc = False):
     if quality == 'friends' :
-        return friends.import_graph(folder, ego, graph_format)
+        return friends.import_graph(folder, ego, graph_format, fc)
     elif quality == 'commenters' :
         return commenters.import_graph(folder, ego, graph_format)
     
