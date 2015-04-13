@@ -109,7 +109,7 @@ def write_graph(graph, induced = False):
     
 def import_graph(folder, ego, graph_format, fc = False):
     if graph_format == 'edgelist':
-        if graph_format:
+        if fc:
             graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph_fc', format = graph_format)
         else:
             graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', format = graph_format)
