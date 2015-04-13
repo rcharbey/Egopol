@@ -107,10 +107,14 @@ def draw_graph(graph):
 def write_graph(graph, induced = False):
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.gml', format = 'gml')
     
-def import_graph(folder, ego, graph_format):
+def import_graph(folder, ego, graph_format, fc = False):
     if graph_format == 'edgelist':
-        graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', format = graph_format)
-    graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = graph_format)
+        if graph_format:
+            graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph_fc', format = graph_format)
+        else:
+            graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', format = graph_format)
+    else:
+        graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = graph_format)
     graph['folder'] = folder
     graph['ego'] = ego
     return graph
