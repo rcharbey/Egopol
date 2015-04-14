@@ -46,12 +46,18 @@ def light_graph(dict_of_mutual, folder, ego, induced = False):
     if induced:
         patch = '_fc'
     graph_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph'+patch, 'w')
-    id_friend = 0
-    for friend_neighbors in dict_of_mutual:
-        for id_neighbor in friend_neighbors:
+    file_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/correspondence_table_com', 'w')
+    table = []
+    for id_friend in dict_of_mutual.keys():
+        if not id_friend in table:
+            table.append(id_friend)
+            file_to_write.write(str(id_friend)+'\n')
+        for id_neighbor in dict_of_mutual[id_friend]:
+            if not id_neighbor in table:
+                table.append(id_neighbor)
+                file_to_write.write(str(id_neighbor)+'\n')
             if id_neighbor > id_friend:
-                graph_to_write.write(str(id_friend) + ' ' + str(id_neighbor) + '\n')
-        id_friend += 1
+                graph_to_write.write(str(table.index(id_friend)) + ' ' + str(table.index(id_neighbor)) + '\n')
     graph_to_write.close()         
 
 def draw_graph(graph):
