@@ -40,25 +40,38 @@ def create_folders(folder, ego):
 def induced_graph_friends(args):
     folder = args.folder
     ego = args.ego
+    main_jsons.create_correspondence_table(args.folder, args.ego)
     list_of_commenters = main_jsons.read_list_of_commenters(folder, ego)
-    list_friends = main_jsons.main(folder, ego, 'friends', list_of_commenters)
-    main_graphs.light_graph(list_friends, folder, ego, True)
+    mutual_friends = main_jsons.dict_of_mutual_friends(folder, ego)
+    list_of_commenters.sort(reverse = True)
+    i = len(mutual_friends) - 1
+    for i in mutual_friends.keys():
+        if i not in list_of_commenters:
+            del mutual_friends[i]
+    for i in mutual_friends:
+        to_del = []
+        for mutual in mutual_friends[i]:
+            if mutual not in list_of_commenters:
+                to_del.append(mutual)
+        for elem in to_del:
+            mutual_friends[i].remove(elem)
+    main_graphs.light_graph(mutual_friends, folder, ego, True)
 
 def init_light(args):
     main_jsons.create_correspondence_table(args.folder, args.ego)
-    list_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
-    main_graphs.light_graph(list_of_mutual_friends, args.folder, args.ego)
+    mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
+    main_graphs.light_graph(mutual_friends, args.folder, args.ego)
 
 def init(args):
     main_jsons.create_correspondence_table(args.folder, args.ego)
     #if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
         #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     #print 'initialisé'
-    dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
+    mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
     dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
     #dict_of_mutual_commenters = None
-    if len(dict_of_mutual_friends) > 0:
-        return main_graphs.main(dict_of_mutual_friends, dict_of_mutual_commenters, args.folder, args.ego)
+    if len(mutual_friends) > 0:
+        return main_graphs.main(mutual_friends, dict_of_mutual_commenters, args.folder, args.ego)
     else:
         return None
     
