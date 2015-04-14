@@ -2,23 +2,24 @@ import read_friends
 import read_statuses
 import read_ego
 import read_qualify
-
-def main(folder, ego, options, list_of_commenters = None):
-    list_of_friends = read_friends.list_of_friends(folder, ego)
-    if options == 'friends' :
-        return read_friends.list_of_mutual(folder, ego, list_of_friends, list_of_commenters)
-    elif options == 'statuses' :
-        return read_statuses.dict_of_mutual_commenters(folder, ego, list_of_friends)
-    elif options == 'commenters':
-        return read_statuses.dict_of_commenters_per_status(folder, ego)
+import os
+from os import path
+        
+def dict_of_mutual_friends(folder, ego):
+    return read_friends.dict_of_mutual(folder, ego)
     
 def print_list_of_commenters(folder, ego):
-    read_statuses.print_list_of_commenters(folder, ego)
+    list_of_friends = read_friends.list_of_friends(folder, ego)
+    read_statuses.print_list_of_commenters(folder, ego, list_of_friends)
     
 def read_list_of_commenters(folder, ego):
+    if not os.path.isfile("GALLERY/"+folder+'/'+ego+"/Graphs/list_of_commenters.json"):
+       print_list_of_commenters(folder, ego) 
     return read_statuses.read_list_of_commenters(folder, ego)
     
 def create_correspondence_table(folder, ego):
+    if os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/correspondence_table'):
+        return
     read_friends.create_correspondence_table(folder, ego)
     
 def list_of_friends(folder, ego):

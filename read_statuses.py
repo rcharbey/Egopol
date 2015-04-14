@@ -13,7 +13,7 @@ def open_json(folder, ego):
         f = gzip.open(gz, 'rb')
     return f
 
-def print_list_of_commenters(folder, ego):
+def print_list_of_commenters(folder, ego, list_of_friends):
     f = open_json(folder, ego)
     to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/list_of_commenters.json', 'w')
     cmters_already_seen = set()
@@ -32,15 +32,13 @@ def print_list_of_commenters(folder, ego):
                 if commenter == ego:
                     commenter = 0
                 else:
-                    if commenter not in cmters_already_seen:
+                    if commenter not in cmters_already_seen and commenter in list_of_friends:
                         cmters_already_seen.add(commenter)
-    to_write.write(json.dumps([e.encode('utf-8') for e in list(cmters_already_seen) if e != None]))
+    to_write.write(json.dumps([list_of_friends.index(e) for e in list(cmters_already_seen) if e != None]))
     to_write.close()   
     
 def read_list_of_commenters(folder, ego):
     path = folder + '/' + ego
-    if not os.path.isfile("GALLERY/"+path+"/Graphs/list_of_commenters.json"):
-       print_list_of_commenters(folder, ego) 
     f = open("GALLERY/"+path+"/Graphs/list_of_commenters.json", 'rb')
     for line in f:
         list_of_commenters = json.loads(line)
