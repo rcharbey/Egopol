@@ -13,13 +13,10 @@ def print_list_of_commenters(folder, ego):
     read_statuses.print_list_of_commenters(folder, ego, list_of_friends)
     
 def read_list_of_commenters(folder, ego):
-    if not os.path.isfile("GALLERY/"+folder+'/'+ego+"/Graphs/list_of_commenters.json"):
-       print_list_of_commenters(folder, ego) 
+    print_list_of_commenters(folder, ego) 
     return read_statuses.read_list_of_commenters(folder, ego)
     
 def create_correspondence_table(folder, ego):
-    if os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/correspondence_table'):
-        return
     read_friends.create_correspondence_table(folder, ego)
     
 def list_of_friends(folder, ego):
