@@ -56,7 +56,7 @@ def dict_of_mutual(folder, ego):
         result[i] = []
         if 'mutual' in jr:
             for neighbor in jr['mutual']:
-                if neighbor in friends:
+                if neighbor[quality] in friends:
                     result[i].append(friends.index(neighbor[quality]))
         i += 1
     f.close()
