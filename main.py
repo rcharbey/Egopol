@@ -44,6 +44,11 @@ def induced_graph_friends(args):
     list_of_commenters = main_jsons.read_list_of_commenters(folder, ego)
     mutual_friends = main_jsons.dict_of_mutual_friends(folder, ego)
     list_of_commenters.sort(reverse = True)
+    print list_of_commenters
+    for mutual in mutual_friends:
+        print mutual,
+        print ' : ',
+        print mutual_friends[mutual]
     i = len(mutual_friends) - 1
     for i in mutual_friends.keys():
         if i not in list_of_commenters:
@@ -67,8 +72,8 @@ def init(args):
     #if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
         #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     #print 'initialisé'
-    mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
-    dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
+    mutual_friends = main_jsons.dict_of_mutual_friends(args.folder, args.ego)
+    #dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
     #dict_of_mutual_commenters = None
     if len(mutual_friends) > 0:
         return main_graphs.main(mutual_friends, dict_of_mutual_commenters, args.folder, args.ego)
