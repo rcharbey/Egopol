@@ -44,11 +44,6 @@ def induced_graph_friends(args):
     list_of_commenters = main_jsons.read_list_of_commenters(folder, ego)
     mutual_friends = main_jsons.dict_of_mutual_friends(folder, ego)
     list_of_commenters.sort(reverse = True)
-    print list_of_commenters
-    for mutual in mutual_friends:
-        print mutual,
-        print ' : ',
-        print mutual_friends[mutual]
     i = len(mutual_friends) - 1
     for i in mutual_friends.keys():
         if i not in list_of_commenters:
@@ -74,22 +69,27 @@ def init(args):
     #print 'initialisé'
     mutual_friends = main_jsons.dict_of_mutual_friends(args.folder, args.ego)
     #dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
-    #dict_of_mutual_commenters = None
+    dict_of_mutual_commenters = None
     if len(mutual_friends) > 0:
         return main_graphs.main(mutual_friends, dict_of_mutual_commenters, args.folder, args.ego)
     else:
         return None
     
-def enumerate(args, quality):
+def enumerate(args, quality, graph_format = 'gml', induced = False):
     """
        enumerate imports the graph from the ml file created by init and runs the enumeration algo on it.
        once the result shows up, it prints it in two differents csv files. One for the patterns and the other for the positions.
     """
-    graph = main_graphs.import_graph(args.folder, args.ego, quality)
+    graph = main_graphs.import_graph(args.folder, args.ego, quality, graph_format, induced)
     enumeration = main_enumeration.main(graph, {})
-    writer_patterns = csv.writer(open(path+'patterns_'+quality+'.csv', 'wb'), delimiter=';')
+    path = 'GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/'
+    if induced:
+        patch = '_fc'
+    else:
+        patch = ''
+    writer_patterns = csv.writer(open(path+'patterns_'+quality+patch+'.csv', 'wb'), delimiter=';')
     writer_patterns.writerow(enumeration[0])
-    writer_positions= csv.writer(open(path+'positions_'+quality+'.csv', 'wb'), delimiter = ';')
+    writer_positions= csv.writer(open(path+'positions_'+quality+patch+'.csv', 'wb'), delimiter = ';')
     for i in range(0, len(graph.vs)):
         writer_positions.writerow(enumeration[1][i])
     return enumeration
@@ -103,10 +103,16 @@ if args.options != None:
     if 'init' in args.options:
         init(args)
     elif 'enumerate' in args.options:
-        enumerate(args, 'friends')
-        enumerate(args, 'commenters')
-    if 'indu' in args.options:
+        if 'indu' in args.options:
+            enumerate(args, 'friends', 'edgelist', True)
+        else:
+            enumerate(args, 'friends')
+            enumerate(args, 'commenters')
+            
+    elif 'indu' in args.options:
         induced_graph_friends(args)
+    if 'indicators' in args.options:
+        indicators.main(args.folder, args.ego)
     
 else:
     triple = init(args)
