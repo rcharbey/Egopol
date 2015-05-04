@@ -1,16 +1,5 @@
-<<<<<<< HEAD
 DATA
 GALLERY
-DATA
-Enumeration
-Graphs
-Indicators
-Jsons
-Patterns_static
-=======
-*~
-presentation
-.*
-DATA
->>>>>>> Enumeration/master
+GALLERY_STATUSES
 *.pyc
+

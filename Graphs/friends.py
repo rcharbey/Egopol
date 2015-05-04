@@ -58,7 +58,18 @@ def light_graph(dict_of_mutual, folder, ego, induced = False):
                 file_to_write.write(str(id_neighbor)+'\n')
             if id_neighbor > id_friend:
                 graph_to_write.write(str(table.index(id_friend)) + ' ' + str(table.index(id_neighbor)) + '\n')
-    graph_to_write.close()         
+    graph_to_write.close()   
+    
+def display_light(graph):
+    graph.es['curved'] = 0.3
+    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)   
+    for v in graph.vs:
+        v['size'] = 10
+        v['label'] = None   
+    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/light_graph.svg'
+    if socket.gethostname() != 'ccadovir01':
+        plot(graph, place, layout = layout)  
+    plot(graph, layout = layout)
 
 def draw_graph(graph):
     graph.es['curved'] = 0.3
@@ -116,11 +127,11 @@ def write_graph(graph, induced = False):
 def import_graph(folder, ego, graph_format, fc = False):
     if graph_format == 'edgelist':
         if fc:
-            graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph_fc', format = graph_format)
+            graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph_fc', format = graph_format, directed = False)
         else:
-            graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', format = graph_format)
+            graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', format = graph_format, directed = False)
     else:
-        graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = graph_format)
+        graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = graph_format, directed = False)
     graph['folder'] = folder
     graph['ego'] = ego
     return graph
