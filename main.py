@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import argparse
 parser = argparse.ArgumentParser(description="main")
 parser.add_argument('folder', help="ego's folder")
@@ -17,76 +19,126 @@ import main_jsons
 import csv
 import pretty_print
 import indicators
-import status
+
+def create_folders(folder, ego):
+    for path in [
+        'GALLERY/', 
+        'GALLERY/' + folder,
+        'GALLERY/' + folder + '/'+ ego,
+        'GALLERY/' + folder + '/'+ ego + '/Graphs',
+        'GALLERY/' + folder + '/'+ ego + '/Enumeration',
+        'GALLERY/' + folder + '/'+ ego + '/Enumeration/CSV',
+        'GALLERY/' + folder + '/'+ ego + '/Enumeration/HTML',
+        'GALLERY/' + folder + '/'+ ego + '/CSV',
+        'GALLERY/' + folder + '/'+ ego + '/Statuses',
+        'GALLERY_STATUSES',
+        'GALLERY_STATUSES/'+folder,
+        'GALLERY/General']:
+        if not os.path.isdir(path):
+            os.mkdir(path)
+            
+def induced_graph_friends(args):
+    folder = args.folder
+    ego = args.ego
+    main_jsons.create_correspondence_table(args.folder, args.ego)
+    list_of_commenters = main_jsons.read_list_of_commenters(folder, ego)
+    mutual_friends = main_jsons.dict_of_mutual_friends(folder, ego)
+    list_of_commenters.sort(reverse = True)
+    i = len(mutual_friends) - 1
+    for i in mutual_friends.keys():
+        if i not in list_of_commenters:
+            del mutual_friends[i]
+    for i in mutual_friends:
+        to_del = []
+        for mutual in mutual_friends[i]:
+            if mutual not in list_of_commenters:
+                to_del.append(mutual)
+        for elem in to_del:
+            mutual_friends[i].remove(elem)
+    main_graphs.light_graph(mutual_friends, folder, ego, True)
+
+def init_light(args):
+    main_jsons.create_correspondence_table(args.folder, args.ego)
+    mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
+    main_graphs.light_graph(mutual_friends, args.folder, args.ego)
 
 def init(args):
-    print args
-    dict_of_mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
-    dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
-    if len(dict_of_mutual_friends) > 0:
-        return main_graphs.main(dict_of_mutual_friends, dict_of_mutual_commenters, args.folder, args.ego)
+    main_jsons.create_correspondence_table(args.folder, args.ego)
+    #if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
+        #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
+    #print 'initialisé'
+    mutual_friends = main_jsons.dict_of_mutual_friends(args.folder, args.ego)
+    #dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
+    dict_of_mutual_commenters = None
+    if len(mutual_friends) > 0:
+        return main_graphs.main(mutual_friends, dict_of_mutual_commenters, args.folder, args.ego)
     else:
         return None
     
-def enumerate(args, quality):
-    graph = main_graphs.import_graph(args.folder, args.ego, quality)
+def enumerate(args, quality, graph_format = 'gml', induced = False):
+    """
+       enumerate imports the graph from the ml file created by init and runs the enumeration algo on it.
+       once the result shows up, it prints it in two differents csv files. One for the patterns and the other for the positions.
+    """
+    graph = main_graphs.import_graph(args.folder, args.ego, quality, graph_format, induced)
+    return
     enumeration = main_enumeration.main(graph, {})
-    path = 'GALLERY/'+args.folder+'/'+args.ego+'/'
-    csv_file = open(path+'patterns_'+quality+'.csv', 'wb')
-    writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(enumeration[0])
-    return enumeration[0]
-    
-def study_statuses(args):
-    dict_of_commenters_per_status = main_jsons.main(args.folder, args.ego, 'commenters')
-    dict_of_number_of_comments_by_ego = status.dict_of_number_of_comments_by_ego(dict_of_commenters_per_status)
-    dict_of_number_of_commenters = status.dict_of_number_of_commenters(dict_of_commenters_per_status)
-    sorted_list = status.sorted_list_of_status(dict_of_number_of_comments_by_ego, dict_of_number_of_commenters)
-    list_of_printed_statuses = pretty_print.status(args.folder, args.ego, sorted_list)
-    return list_of_printed_statuses
-    
-def study_status(args, id_status):
-    dict_of_commenters_per_status = main_jsons.main(args.folder, args.ego, 'commenters')
-    list_of_commenters = dict_of_commenters_per_status[id_status]
-    graph_friends = main_graphs.import_graph(args.folder, args.ego, 'friends')
-    induced_graph_friends = main_graphs.induced_subgraph(graph_friends, id_status, list_of_commenters, 'friends')
-    patterns_enumeration = main_enumeration.main(induced_graph_friends, {})
-    path = 'GALLERY/'+args.folder+'/'+args.ego+'/statuses/'+id_status+'/'
-    csv_file = open(path+'patterns_induced_friends.csv', 'wb')
-    writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(patterns_enumeration[0])
-    return patterns_enumeration[0]
-    
-    #graph_commenters = main_graphs.import_graph(args.folder, args.ego, 'statuses')
-    #induced_graph_commenters = main_graphs.induced_subgraph(graph_commenters, id_status, list_of_commenters, 'statuses')
-    #enumeration = main_enumeration.main(induced_graph_commenters, {})
-    #methods_htmls.enumerate_induced(args.folder, args.ego, id_status, enumeration[0], 'status')
+    path = 'GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/'
+    if induced:
+        patch = '_fc'
+    else:
+        patch = ''
+    writer_patterns = csv.writer(open(path+'patterns_'+quality+patch+'.csv', 'wb'), delimiter=';')
+    writer_patterns.writerow(enumeration[0])
+    writer_positions= csv.writer(open(path+'positions_'+quality+patch+'.csv', 'wb'), delimiter = ';')
+    for i in range(0, len(graph.vs)):
+        writer_positions.writerow(enumeration[1][i])
+    return enumeration
+
+def display(args):
+    name = 'GALLERY/'+args.folder+'/'+args.ego+'/Graphs/light_graph'
+    if not os.path.isfile(name):
+        init_light(args)
+    graph = main_graphs.import_graph(args.folder, args.ego, 'friends', 'edgelist')
+    main_graphs.display_light(graph)
+  
+print str(args.folder) + ' ' + str(args.ego) + ' ' + str(args.options)
+create_folders(args.folder, args.ego)
 
 if args.options != None:
+    if 'light' in args.options:
+        init_light(args)
     if 'init' in args.options:
-        init()
+        init(args)
+    if 'display' in args.options:
+        display(args)
     elif 'enumerate' in args.options:
-        enumerate(args, 'friends')
-        enumerate(args, 'commenters')
-    elif 'status' in args.options:
-        if len(args.options) > 1:
-            study_status(args, args.options[1])
+        if 'indu' in args.options:
+            enumerate(args, 'friends', 'edgelist', True)
         else:
-            study_statuses(args)
+            enumerate(args, 'friends')
+            enumerate(args, 'commenters')
+            
+    elif 'indu' in args.options:
+        induced_graph_friends(args)
+    if 'indicators' in args.options:
+        indicators.main(args.folder, args.ego)
     
 else:
     triple = init(args)
     if triple != None :
         graph_friends = triple[0]
         graph_commenters = triple[1]
-        enumeration = None
-        if len(graph_friends.es) < 2000 and len(graph_friends.es) > 0:
-            enumeration = enumerate(args, 'friends')
+        print 'enumeration friends'
+        if len(graph_friends.es) < 3000 and len(graph_friends.es) > 0:
+            enumerate(args, 'friends')[0]
+            print 'done'
+        else:
+            print 'squeezed'
+        print 'enumeration commenters done'
         if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
             enumerate(args, 'commenters')
-        list_of_statuses = study_statuses(args)
-        if enumeration == None:
-            enumeration_status = [0]*30
+            print 'done'
         else:
             enumeration_status = [0]*len(enumeration)
         #for status in list_of_statuses:
@@ -96,4 +148,3 @@ else:
         #if len(list_of_statuses) > 0:
             #print_result_all_induced(enumeration_status)
         indicators.main(args.folder, args.ego)
-    

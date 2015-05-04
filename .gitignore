@@ -1,9 +1,5 @@
 DATA
 GALLERY
-DATA
-Enumeration
-Graphs
-Indicators
-Jsons
-Patterns_static
+GALLERY_STATUSES
 *.pyc
+
