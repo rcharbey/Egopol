@@ -33,10 +33,10 @@ def aggregate(quality):
     for folder in list_folders: 
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
-            if os.path.isfile('GALLERY/'+folder+'/'+ego + '/patterns_'+quality+'.csv'):
-                patterns_enumeration = read_csv('GALLERY/'+folder+'/'+ego + '/patterns_'+quality+'.csv')
+            if os.path.isfile('GALLERY/'+folder+'/'+ego + '/Enumeration/CSV/patterns_'+quality+'.csv'):
+                patterns_enumeration = read_csv('GALLERY/'+folder+'/'+ego + '/Enumeration/CSV//patterns_'+quality+'.csv')
             else:
-                return
+                continue
             refresh_aggregation('GALLERY/aggregation_patterns_'+quality+'.csv', patterns_enumeration)
        
 def aggregate_status(quality):
@@ -87,8 +87,8 @@ def add_aggregation_data(folder, ego, quality, statuses = False):
         patch = 'statuses/aggregation_'
     else:
         patch = ''
-    if os.path.isfile('GALLERY/'+folder+'/'+ego+'/'+patch+'patterns_'+quality+'.csv'):
-        enumeration = read_csv('GALLERY/'+folder+'/'+ego+'/'+patch+'patterns_'+quality+'.csv')
+    if os.path.isfile('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'+patch+'patterns_'+quality+'.csv'):
+        enumeration = read_csv('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'+patch+'patterns_'+quality+'.csv')
     else:
         return
     if os.path.isfile('GALLERY/aggregation_patterns_'+quality+'.csv'):
@@ -96,7 +96,7 @@ def add_aggregation_data(folder, ego, quality, statuses = False):
     else:
         aggregation = [0]*len(enumeration)
     proportion = calculate_proportion(aggregation, enumeration)
-    csv_enumeration = open('GALLERY/'+folder+'/'+ego+'/'+patch+'patterns_'+quality+'.csv', 'wb')
+    csv_enumeration = open('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'+patch+'patterns_'+quality+'.csv', 'wb')
     writer = csv.writer(csv_enumeration, delimiter = ';')
     writer.writerow(enumeration)
     writer.writerow(proportion)
@@ -109,11 +109,15 @@ def add_aggregation_data_all():
         for ego in list_ego:
             add_aggregation_data(folder, ego, 'friends')
             add_aggregation_data(folder, ego, 'statuses')
+            add_aggregation_data(folder, ego, 'friends_fc')
             if os.path.isdir(dirname+'/'+ego+'/statuses'):
                 add_aggregation_data(folder, ego, 'induced_friends', True)
 
 def main():
-    aggregate('friends')
-    aggregate('statuses')
-    aggregate_status('induced_friends')
+    #aggregate('friends')
+    aggregate('friends_fc')
+    #aggregate('statuses')
+    #aggregate_status('induced_friends')
     add_aggregation_data_all()
+    
+main()

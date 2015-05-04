@@ -35,14 +35,12 @@ def aggregate(quality):
     for folder in list_folders: 
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
-            if os.path.isfile('GALLERY/'+folder+'/'+ego + '/positions_'+quality+'.csv'):
-                print folder,
-                print ' ',
-                print ego
-                positions_enumeration = read_csv('GALLERY/'+folder+'/'+ego + '/positions_'+quality+'.csv')
+            if os.path.isfile('GALLERY/'+folder+'/'+ego + '/Enumeration/CSV/positions_'+quality+'.csv'):
+                positions_enumeration = read_csv('GALLERY/'+folder+'/'+ego + '/Enumeration/CSV/positions_'+quality+'.csv')
             else:
                 continue
             refresh_aggregation('GALLERY/aggregation_positions_'+quality+'.csv', positions_enumeration)
 
-aggregate('friends')
-aggregate('commenters')
+#aggregate('friends')
+#aggregate('commenters')
+aggregate('friends_fc')

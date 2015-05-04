@@ -81,6 +81,7 @@ def enumerate(args, quality, graph_format = 'gml', induced = False):
        once the result shows up, it prints it in two differents csv files. One for the patterns and the other for the positions.
     """
     graph = main_graphs.import_graph(args.folder, args.ego, quality, graph_format, induced)
+    return
     enumeration = main_enumeration.main(graph, {})
     path = 'GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/'
     if induced:
@@ -93,6 +94,13 @@ def enumerate(args, quality, graph_format = 'gml', induced = False):
     for i in range(0, len(graph.vs)):
         writer_positions.writerow(enumeration[1][i])
     return enumeration
+
+def display(args):
+    name = 'GALLERY/'+args.folder+'/'+args.ego+'/Graphs/light_graph'
+    if not os.path.isfile(name):
+        init_light(args)
+    graph = main_graphs.import_graph(args.folder, args.ego, 'friends', 'edgelist')
+    main_graphs.display_light(graph)
   
 print str(args.folder) + ' ' + str(args.ego) + ' ' + str(args.options)
 create_folders(args.folder, args.ego)
@@ -102,6 +110,8 @@ if args.options != None:
         init_light(args)
     if 'init' in args.options:
         init(args)
+    if 'display' in args.options:
+        display(args)
     elif 'enumerate' in args.options:
         if 'indu' in args.options:
             enumerate(args, 'friends', 'edgelist', True)

@@ -13,7 +13,7 @@ def main():
             print 'pretty print : ',
             print ego
             path = 'GALLERY/'+folder+'/'+ego+'/'
-            for quality in ['friends', 'commenters']:
+            for quality in ['friends', 'commenters', 'friends_fc']:
                 pp_patterns.pretty_print(path+'Enumeration/', quality, '../../../../PATTERNS')
                 pp_positions.pretty_print(path+'Enumeration/', quality, '../../../../PATTERNS')
             if not os.path.isdir(path+'Statuses'):
