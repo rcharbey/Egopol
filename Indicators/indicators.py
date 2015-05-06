@@ -297,7 +297,11 @@ def print_info_qualify(folder, ego):
                 new_info.append(i)
         writer.writerow(new_info)
     csv_file.close()
-        
+    
+def print_nb_of_friends(folder, ego, graph):
+    file_to_write = open('GALLERY/'+folder+'/'+ego+'/nb_of_friends', 'wb')
+    file_to_write.write(str(len(graph.vs)))
+    file_to_write.close()        
 
 def main(folder_arg = None, ego_arg = None, options = None):
     if folder_arg != None and ego_arg != None:
@@ -339,6 +343,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
     file.close()
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
+        print folder
         if 'all_2014' in folder or 'entre' in folder:
             continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
@@ -384,6 +389,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
             #print_info_statuses(folder, ego, clusters_list)
             #print_info_commenters_likers(folder, ego, clusters_list)
             #print_info_pages(folder, ego)
-            if ego in ego_already_done:
-                continue
-            indicators_classic.main(folder, ego, graph.as_undirected(), graph_format)
+            #if ego in ego_already_done:
+                #continue
+            #indicators_classic.main(folder, ego, graph.as_undirected(), graph_format)
+            print_nb_of_friends(folder, ego, graph)

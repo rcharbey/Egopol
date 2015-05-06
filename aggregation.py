@@ -113,11 +113,9 @@ def add_aggregation_data_all():
             if os.path.isdir(dirname+'/'+ego+'/statuses'):
                 add_aggregation_data(folder, ego, 'induced_friends', True)
 
-def main():
+if __name__ == '__main__':
     #aggregate('friends')
     aggregate('friends_fc')
     #aggregate('statuses')
     #aggregate_status('induced_friends')
     add_aggregation_data_all()
-    
-main()
