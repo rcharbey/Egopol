@@ -127,11 +127,11 @@ def write_graph(graph, induced = False):
 def import_graph(folder, ego, graph_format, fc = False):
     if graph_format == 'edgelist':
         if fc:
-            graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph_fc', format = graph_format, directed = False)
+            graph = Graph.Read_Edgelist('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph_fc', directed = False)
         else:
-            graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', format = graph_format, directed = False)
+            graph = Graph.Read_Edgelist('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', directed = False)
     else:
-        graph = Graph.Read('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml', format = graph_format, directed = False)
+        graph = Graph.Read_GML('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml')
     graph['folder'] = folder
     graph['ego'] = ego
     return graph

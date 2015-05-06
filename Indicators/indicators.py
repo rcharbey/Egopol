@@ -299,7 +299,7 @@ def print_info_qualify(folder, ego):
     csv_file.close()
     
 def print_nb_of_friends(folder, ego, graph):
-    file_to_write = open('GALLERY/'+folder+'/'+ego+'/nb_of_friends', 'wb')
+    file_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/nb_of_friends', 'wb')
     file_to_write.write(str(len(graph.vs)))
     file_to_write.close()        
 
@@ -343,7 +343,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
     file.close()
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
-        if 'all_2014' in folder or 'entre' in folder:
+        if 'all_2014' in folder:
             continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
@@ -383,6 +383,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
                     continue
                 else:
                     graph = main_graphs.import_graph(folder, ego, 'friends')
+                    print
             #print_info_qualify(folder, ego)
             #clusters_list = print_info_communities(folder, ego, graph)
             #print_info_statuses(folder, ego, clusters_list)

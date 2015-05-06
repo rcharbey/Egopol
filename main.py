@@ -9,10 +9,6 @@ args = parser.parse_args()
 
 import os
 import sys
-sys.path.append("./Graphs")
-sys.path.append("./Enumeration")
-sys.path.append("./Jsons")
-sys.path.append("./Indicators")
 import main_enumeration
 import main_graphs
 import main_jsons
