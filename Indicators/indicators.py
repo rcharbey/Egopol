@@ -313,7 +313,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
         print_info_pages(folder_arg, ego_arg)
         return
     file_to_write_classic = 'GALLERY/General/indicators_classics.csv'
-    if 'lightcom' in options:
+    if options != None and 'lightcom' in options:
         file_to_write_classic = 'GALLERY/General/indicators_classics_com.csv'
     if not os.path.isfile(file_to_write_classic):
         file = open(file_to_write_classic, 'wb')
@@ -343,7 +343,6 @@ def main(folder_arg = None, ego_arg = None, options = None):
     file.close()
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
-        print folder
         if 'all_2014' in folder or 'entre' in folder:
             continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
