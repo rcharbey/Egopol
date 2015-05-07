@@ -53,6 +53,8 @@ library(caret)
 library(sna)
 library(arules)
 
+print('hello')
+
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/csa"
 outputPath = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/seventyfive"
