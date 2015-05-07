@@ -14,7 +14,6 @@ import main_graphs
 import main_jsons
 import csv
 import pretty_print
-import indicators
 
 def create_folders(folder, ego):
     for path in [
