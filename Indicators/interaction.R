@@ -84,6 +84,7 @@ for (findex in 1: length(fnames)){
   for (i in 1:lengthStatus)
   {
     statuses = fromJSON( statusesFile[i], method = "C", unexpected.escape = "error" )
+    print(statuses)
     
     comment = matrix(0,0,length(statuses$comments))
     
