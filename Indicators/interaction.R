@@ -65,6 +65,7 @@ sink("status.csv")
 setwd(workingDir)
 fnames = list.files(workingDir)
 print(fnames)
+print('ola')
 
 
 for (findex in 1: length(fnames)){
