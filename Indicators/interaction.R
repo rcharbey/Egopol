@@ -62,6 +62,7 @@ setwd(outputPath)
 sink("status.csv")
 setwd(workingDir)
 fnames = list.files(workingDir)
+print(fnames)
 
 
 for (findex in 1: length(fnames)){
