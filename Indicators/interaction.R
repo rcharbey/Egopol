@@ -54,8 +54,8 @@ library(sna)
 library(arules)
 
 
-#workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa"
-#outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/seventyfive"
+workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa"
+outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/seventyfive"
 #workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
 #outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
 setwd(outputPath)
