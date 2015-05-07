@@ -74,6 +74,7 @@ for (findex in 1: length(fnames)){
   statusesFile <- readLines("statuses.jsons.gz")
   
   lengthStatus = length(statusesFile)
+  print(lengthStatus)
   m=matrix(1, 0,lengthStatus)
   
   tempcommentLinkList = matrix(0,0,2)
