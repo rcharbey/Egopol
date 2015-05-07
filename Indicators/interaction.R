@@ -63,6 +63,7 @@ outputPath = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/seventyfiv
 setwd(outputPath)
 sink("status.csv")
 setwd(workingDir)
+print('bonjour')
 fnames = list.files(workingDir)
 print(fnames)
 print('ola')
