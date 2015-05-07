@@ -53,22 +53,16 @@ library(caret)
 library(sna)
 library(arules)
 
-print('hello')
-
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/csa"
 outputPath = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/seventyfive"
 #workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
 #outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
 setwd(outputPath)
-print('gutentag')
 sink("status.csv")
-print('ciao')
 setwd(workingDir)
-print('bonjour')
 fnames = list.files(workingDir)
 print(fnames)
-print('ola')
 
 
 for (findex in 1: length(fnames)){
@@ -109,7 +103,7 @@ for (findex in 1: length(fnames)){
       
       
     }
-    
+    cat("\n")
   }
  
  
