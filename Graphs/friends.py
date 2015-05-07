@@ -60,16 +60,21 @@ def light_graph(dict_of_mutual, folder, ego, induced = False):
                 graph_to_write.write(str(table.index(id_friend)) + ' ' + str(table.index(id_neighbor)) + '\n')
     graph_to_write.close()   
     
-def display_light(graph):
+def display_light(graph, show = True, fc = False):
     graph.es['curved'] = 0.3
     layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)   
     for v in graph.vs:
         v['size'] = 10
         v['label'] = None   
-    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/light_graph.svg'
+    if fc:
+        patch = '_fc'
+    else:
+        patch = ''
+    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/light_graph'+patch+'.svg'
     if socket.gethostname() != 'ccadovir01':
         plot(graph, place, layout = layout)  
-    plot(graph, layout = layout)
+    if show == True:
+        plot(graph, layout = layout)
 
 def draw_graph(graph):
     graph.es['curved'] = 0.3

@@ -38,7 +38,7 @@ def induced_subgraph(graph, id_status, list_of_vertices, quality):
     elif quality == 'commenters' :
         return commenters.induced_graph(graph, id_status, list_of_vertices)
     
-def display_light(graph):
-    friends.display_light(graph)
+def display_light(graph, show = True, fc = False):
+    friends.display_light(graph, show, fc)
 
 
