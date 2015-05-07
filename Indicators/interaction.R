@@ -103,7 +103,7 @@ for (findex in 1: length(fnames)){
       
       
     }
-    cat("\n")
+   
   }
  
  
@@ -112,6 +112,7 @@ for (findex in 1: length(fnames)){
   cat(fnames[findex])
   cat(",")
   cat(counter)
+   cat("\n")
   
 
   }, error = function(e){e})
