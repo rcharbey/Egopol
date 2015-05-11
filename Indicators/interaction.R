@@ -23,109 +23,85 @@ pkgLoad <- function(x)
 }
 
 
-pkgLoad("calibrate")
-pkgLoad("igraph")
-pkgLoad("aod")
-pkgLoad("boot")
-pkgLoad("ROSE")
-pkgLoad("ggplot2")
-pkgLoad("pamr")
-pkgLoad("vecsets")
-pkgLoad("pROC")
-pkgLoad("randomForest")
-pkgLoad("rjson")
-pkgLoad("caret")
-pkgLoad("sna")
-pkgLoad("arules")
 
-library(calibrate)
-library(igraph)
-library(aod)
-library(boot)
-library(ROSE)
-library(ggplot2)
-library(pamr)
-library(vecsets)
-library(pROC)
-library(randomForest)
+
+pkgLoad("rjson")
 library(rjson)
-library(caret)
-library(sna)
-library(arules)
+
 
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/csa"
 outputPath = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/Mehwish"
 #workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
 #outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
-setwd(outputPath)
-sink("status.csv")
+
+
 setwd(workingDir)
 fnames = list.files(workingDir)
-print(fnames)
 
+result = matrix(0,0,2)
+u = matrix (0,1,2)
 
 for (findex in 1: length(fnames)){
   possibleError <- tryCatch({
     
     
-  setwd(paste(workingDir,fnames[findex], sep="/"))
-  ###############read statuses
-  
-  statusesFile <- readLines("statuses.jsons.gz")
-  
-  lengthStatus = length(statusesFile)
-  print(lengthStatus)
-  m=matrix(1, 0,lengthStatus)
-  
-  tempcommentLinkList = matrix(0,0,2)
-  
-  commentLinkList = matrix(0,0,2)
-  counter=0
-  
-  for (i in 1:lengthStatus)
-  {
-    statuses = fromJSON( statusesFile[i], method = "C", unexpected.escape = "error" )
-    print(statuses)
+    setwd(paste(workingDir,fnames[findex], sep="/"))
+    ###############read statuses
     
-    comment = matrix(0,0,length(statuses$comments))
+    statusesFile <- readLines("statuses.jsons.gz")
     
-    if(length(statuses$comments )== 0)
-    {next}
+    lengthStatus = length(statusesFile)
+    print(lengthStatus)
+    m=matrix(1, 0,lengthStatus)
     
-    for(j in 1:length(statuses$comments))
+    tempcommentLinkList = matrix(0,0,2)
+    
+    commentLinkList = matrix(0,0,2)
+    counter=0
+    
+    for (i in 1:lengthStatus)
     {
+      statuses = fromJSON( statusesFile[i], method = "C", unexpected.escape = "error" )
       
-      if(length(statuses$comments[[j]]$from$id) != 0)
+      comment = matrix(0,0,length(statuses$comments))
+      
+      if(length(statuses$comments )== 0)
+      {next}
+      
+      for(j in 1:length(statuses$comments))
       {
-        counter= counter+1
+        
+        if(length(statuses$comments[[j]]$from$id) != 0)
+        {
+          counter= counter+1
+        }
+        
+        
       }
-      
       
     }
-   
-  }
- 
- 
-  # write dataframe to a file
-  setwd(outputPath)
-  cat(fnames[findex])
-  cat(",")
-  cat(counter)
-  cat("\n")
-  
+    u[1,1]=fnames[findex]
+    u[1,2] =counter
+    
+    result = rbind(result,u)
+    
 
+    
+    
   }, error = function(e){e})
-
-      if(inherits(possibleError, "error")){
-        #print("error")
-        next
-      } else{    
-        #print("no error")
-      }
-
-
+  
+  if(inherits(possibleError, "error")){
+    #print("error")
+    next
+  } else{    
+    #print("no error")
+  }
+  
+  
 }
 
 
-sink()
+setwd(outputPath)
+write.csv(result, file ="number_of_statuses.csv")
+
