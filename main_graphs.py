@@ -1,3 +1,6 @@
+import sys
+sys.path.append('./Graphs')
+
 import friends
 import commenters
 import both_friends_status

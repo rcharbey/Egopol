@@ -55,7 +55,7 @@ library(arules)
 
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/csa"
-outputPath = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/seventyfive"
+outputPath = "/home/data/algopol/algopolapp"
 #workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
 #outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
 setwd(outputPath)
@@ -112,7 +112,7 @@ for (findex in 1: length(fnames)){
   cat(fnames[findex])
   cat(",")
   cat(counter)
-   cat("\n")
+  cat("\n")
   
 
   }, error = function(e){e})
