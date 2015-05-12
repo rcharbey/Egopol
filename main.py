@@ -54,7 +54,7 @@ def induced_graph_friends(args):
 
 def init_light(args):
     main_jsons.create_correspondence_table(args.folder, args.ego)
-    mutual_friends = main_jsons.main(args.folder, args.ego, 'friends')
+    mutual_friends = main_jsons.dict_of_mutual_friends(args.folder, args.ego)
     main_graphs.light_graph(mutual_friends, args.folder, args.ego)
 
 def init(args):
