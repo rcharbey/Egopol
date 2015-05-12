@@ -44,7 +44,7 @@ for (findex in 1: length(fnames)){
   possibleError <- tryCatch({
     
     
-    setwd(paste(workingDir,fnames[findex], sep=""))
+  setwd(paste(workingDir,fnames[findex], sep="/"))
 
   ###############read statuses
   
