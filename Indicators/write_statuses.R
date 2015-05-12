@@ -31,8 +31,8 @@ library(rjson)
 
 
 
-workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa"
-outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/Mehwish"
+workingDir = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/csa"
+outputPath = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/Mehwish"
 #workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\temp\\"
 #outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\writestatuses\\"
 
