@@ -9,6 +9,7 @@ outputPath = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/Mehwish"
 
 setwd(workingDir)
 fnames = list.files(workingDir)
+print(fnames)
 
 
 for (findex in 1: length(fnames)){
