@@ -2,10 +2,10 @@ library(igraph)
 
 
 
-#workingDir = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/csa"
-#outputPath = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/Mehwish"
-workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\writestatuses\\"
-outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\graphml\\"
+workingDir = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/csa"
+outputPath = "/home/data/algopol/algopolapp/Raphael/Egopol/Indicators/Mehwish"
+#workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\writestatuses\\"
+#outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\graphml\\"
 
 setwd(workingDir)
 fnames = list.files(workingDir)
