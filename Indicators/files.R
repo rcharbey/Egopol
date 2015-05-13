@@ -13,8 +13,8 @@ fnames = list.files(workingDir)
 for (findex in 1: length(fnames)){
   possibleError <- tryCatch({    
     
-    print(fnames[findex])
     setwd(paste(workingDir,fnames[findex],"Graphs",sep="/"))
+    print(paste(workingDir,fnames[findex],"Graphs",sep="/"))
     
     file.copy("friends.gml",outputPath )
     
