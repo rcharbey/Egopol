@@ -84,7 +84,6 @@ for ego in list_ego:
 
     sorted_info = []
     enumeration = main_enumeration.main(graph, [])
-    print enumeration[0]
     path = 'GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'
     writer_patterns = csv.writer(open(path+'patterns_friends.csv', 'wb'), delimiter=';')
     writer_patterns.writerow(enumeration[0])
@@ -137,19 +136,24 @@ for ego in list_ego:
 
         
         infos_list = ((friend, 
-                            info_commenter['nb_of_comments'], 
-                            info_commenter['nb_of_statuses'], 
-                            info_liker, 
-                            ps[19],
-                            ps[48],
-                            ps[72],
-                            ps[27],
-                            ps[25],
-                            since,
-                            close,
-                            affect,
-                            begin,
-                            link))
+                        info_commenter['nb_of_comments'], 
+                        info_commenter['nb_of_statuses'], 
+                        info_liker, 
+                        ps[19],
+                        ps[48],
+                        ps[72],
+                        ps[27],
+                        ps[25],
+                        since,
+                        close,
+                        affect,
+                        begin,
+                        link))
+        
+        for s in infos_list:
+            print s
+            print unicode(s)
+            print unicode(s).encode('utf-8')
         
         sorted_info.append([unicode(s).encode("utf-8") for s in infos_list])
         
