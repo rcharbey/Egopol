@@ -29,10 +29,11 @@ def create_graph(dict_of_mutual, folder, ego):
         graph.add_vertex()
     id_friend = 0
     for friend_neighbors in dict_of_mutual:
-        for id_neighbor in friend_neighbors:
+        for id_neighbor in dict_of_mutual[friend_neighbors]:
             if id_neighbor > id_friend:
                 graph.add_edge(id_friend, id_neighbor)
-    add_graph_infos(graph, folder, ego)
+        id_friend += 1
+    #add_graph_infos(graph, folder, ego)
     graph['folder'] = folder
     graph['ego'] = ego.encode('utf8')
     return graph

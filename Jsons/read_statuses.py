@@ -194,6 +194,7 @@ def calculate_info_likers(folder, ego):
 
 def calculate_info_likers_of_comment(folder, ego):
     f = open_json(folder, ego) 
+    result = {}
     for line in f:
         status = json.loads(line)
         if 'comments' in status:
