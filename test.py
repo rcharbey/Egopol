@@ -40,8 +40,8 @@ def read_qualified(folder, ego):
         result[friend['user_id']] = friend['data'] 
     return result
 
-folder = 'all_2015-15-05'
-list_ego = [f for f in os.listdir('DATA/all_2015-15-05') if os.path.isdir(os.path.join('DATA/all_2015-15-05', f))]
+folder = 'all_2015-05-15'
+list_ego = [f for f in os.listdir('DATA/all_2015-05-15') if os.path.isdir(os.path.join('DATA/all_2015-05-15', f))]
 for ego in list_ego:
     create_folders(folder, ego)
     main_jsons.create_correspondence_table(folder, ego)
