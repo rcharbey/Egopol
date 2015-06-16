@@ -150,11 +150,6 @@ for ego in list_ego:
                         begin,
                         link))
         
-        for s in infos_list:
-            print s
-            print unicode(s)
-            print unicode(s).encode('utf-8')
-        
         sorted_info.append([unicode(s).encode("utf-8") for s in infos_list])
         
     sorted_info.sort(key=lambda tup: 4*tup[1]+2*tup[3], reverse = True) 
