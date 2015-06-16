@@ -93,9 +93,9 @@ for ego in list_ego:
 
     enumeration = enumeration[1]
     qualif = read_qualified(folder, ego)  
-    tab_since = ['toujours',' +5 ans', '1 à 5 ans', 'moins d\'un an']
-    tab_close = ['tous les jours', 'toutes les semaines', 'une fois par mois', 'tous les 3 mois', 'tous les 6 mois', 'une fois par an', 'moins d\'une fois par an']
-    tab_begin = ['tous les jours', 'toutes les semaines', 'une fois par mois', 'tous les 3 mois', 'tous les 6 mois', 'une fois par an', 'moins d\'une fois par an']
+    tab_since = [u'toujours',u' +5 ans', u'1 à 5 ans', u'moins d\'un an']
+    tab_close = [u'tous les jours', u'toutes les semaines', u'une fois par mois', u'tous les 3 mois', u'tous les 6 mois', u'une fois par an', u'moins d\'une fois par an']
+    tab_begin = [u'tous les jours', u'toutes les semaines', u'une fois par mois', u'tous les 3 mois', u'tous les 6 mois', u'une fois par an', u'moins d\'une fois par an']
 
 
     for friend in list_of_friends:
