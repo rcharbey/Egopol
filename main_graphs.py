@@ -6,8 +6,8 @@ import commenters
 import both_friends_status
 import os
     
-def main(dict_friends, dict_commenters, correspondance, folder, ego):
-    graph_friends = friends.create_graph(dict_friends, correspondance, folder, ego)
+def main(dict_friends, dict_commenters, correspondence, folder, ego):
+    graph_friends = friends.create_graph(dict_friends, correspondence, folder, ego)
     if len(graph_friends.es) > 0:
         #friends.draw_graph(graph_friends)
         friends.write_graph(graph_friends)
@@ -25,6 +25,10 @@ def main(dict_friends, dict_commenters, correspondance, folder, ego):
     graph_both = None
     
     return (graph_friends, graph_commenters, graph_both)
+
+def create_friends_graph(dict_friends, correspondence, folder, ego):
+    graph_friends = friends.create_graph(dict_friends, correspondence, folder, ego)
+    return graph_friends
 
 def light_graph(dict_of_mutual, folder, ego, induced = False):
     friends.light_graph(dict_of_mutual, folder, ego, induced)
