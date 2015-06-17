@@ -125,7 +125,7 @@ else:
         #graph_commenters = triple[1]
         print 'enumeration friends'
         if len(graph_friends.es) < 3000 and len(graph_friends.es) > 0:
-            enumerate(args, 'friends')[0]
+            enumerate(args, 'friends', graph_format = 'edgelist')
             print 'done'
         else:
             print 'squeezed'
