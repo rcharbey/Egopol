@@ -58,7 +58,7 @@ def init_light(args):
     main_graphs.light_graph(mutual_friends, args.folder, args.ego)
 
 def init(args):
-    main_jsons.create_correspondence_table(args.folder, args.ego)
+    correspondence = main_jsons.create_correspondence_table(args.folder, args.ego)
     #if os.path.isfile('GALLERY/'+args.folder+'/'+args.ego+'/Graphs/friends.gml'):
         #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     #print 'initialisé'
@@ -66,7 +66,7 @@ def init(args):
     #dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
     dict_of_mutual_commenters = None
     if len(mutual_friends) > 0:
-        return main_graphs.main(mutual_friends, dict_of_mutual_commenters, args.folder, args.ego)
+        return main_graphs.main(mutual_friends, dict_of_mutual_commenters, correspondence, args.folder, args.ego)
     else:
         return None
     
