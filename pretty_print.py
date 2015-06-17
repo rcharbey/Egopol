@@ -59,7 +59,7 @@ def appearance_pattern(pattern_appearance, file_html, color):
     if pattern_appearance == 0:
         file_html.write('(000,0,0)')
     else:
-        file_html.write(color)
+        file_html.write(str(color))
     file_html.write('">'+str(pattern_appearance))
     file_html.write('</td>')
 
