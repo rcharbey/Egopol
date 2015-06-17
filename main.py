@@ -141,4 +141,4 @@ else:
                 #enumeration_status[i] += temp[i]
         #if len(list_of_statuses) > 0:
             #print_result_all_induced(enumeration_status)
-        indicators.main(args.folder, args.ego)
+        #indicators.main(args.folder, args.ego)
