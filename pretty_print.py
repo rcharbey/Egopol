@@ -88,7 +88,7 @@ def enumeration(file_html, infos, path_patterns):
     for i in range(1, len(infos[0])+1):
         file_html.write('<tr>\n')
         image_pattern(path_patterns, i, file_html)
-        appearance_pattern(infos[0], i, file_html, colors)
+        appearance_pattern(infos[0], file_html, colors)
         
         j = 1
         while len(infos) > j:
