@@ -8,20 +8,8 @@ import csv
 import gzip
 import json
 
-def create_folders(folder, ego):
-    for path in [
-        'GALLERY/', 
-        'GALLERY/' + folder,
-        'GALLERY/' + folder + '/'+ ego,
-        'GALLERY/' + folder + '/'+ ego + '/Graphs',
-        'GALLERY/' + folder + '/'+ ego + '/Enumeration',
-        'GALLERY/' + folder + '/'+ ego + '/Enumeration/CSV',
-        'GALLERY/' + folder + '/'+ ego + '/Enumeration/HTML',
-        'GALLERY/' + folder + '/'+ ego + '/CSV',
-        'GALLERY/' + folder + '/'+ ego + '/Statuses',
-        'GALLERY_STATUSES',
-        'GALLERY_STATUSES/'+folder,
-        'GALLERY/General']:
+def create_folders():
+    for path in ['GALLERY/', 'GALLERY/Info-alters/']:
         if not os.path.isdir(path):
             os.mkdir(path)
 
@@ -40,33 +28,28 @@ def read_qualified(folder, ego):
         result[friend['user_id']] = friend['data'] 
     return result
 
+create_folders()
 folder = 'all_2015-05-15'
 list_ego = [f for f in os.listdir('DATA/all_2015-05-15') if os.path.isdir(os.path.join('DATA/all_2015-05-15', f))]
 for ego in list_ego:
-    create_folders(folder, ego)
-    main_jsons.create_correspondence_table(folder, ego)
-    list_of_friends = main_jsons.list_of_friends(folder, ego)
-    if len(list_of_friends) > 100:
-        continue
+    correspondance = main_jsons.create_correspondence_table(folder, ego)
     mutual_friends = main_jsons.dict_of_mutual_friends(folder, ego)
+    if len(mutual_friends) > 100:
+        continue
     dict_of_mutual_commenters = {}
     if len(mutual_friends) > 0:
-        graph =  main_graphs.main(mutual_friends, dict_of_mutual_commenters, folder, ego)[0]
+        graph =  main_graphs.main(mutual_friends, dict_of_mutual_commenters, correspondance, folder, ego)[0]
     else:
         continue
     print ego
 
-    table_to_read = open('GALLERY/'+folder+'/'+ego+'/Graphs/correspondence_table', 'r')
-    correspondance = []
-    for line in table_to_read:
-        correspondance.append(line)
-
     info_commenters = main_jsons.calculate_info_commenters(folder, ego)
     info_likers = main_jsons.calculate_info_likers(folder, ego)
     info_likers_of_comment = main_jsons.calculate_info_likers_of_comment(folder, ego)
-    csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'CSV/info_commenters_likers.csv', 'wb')
+    csv_file = open('GALLERY/Info-alters/'+ego+'.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
     writer.writerow(['id', 
+                    'id graph',
                     'nombre de commentaires', 
                     'nombre de statuts commentés', 
                     'nombre de likes', 
@@ -98,13 +81,9 @@ for ego in list_ego:
     tab_begin = [u'tous les jours', u'toutes les semaines', u'une fois par mois', u'tous les 3 mois', u'tous les 6 mois', u'une fois par an', u'moins d\'une fois par an']
 
 
-    for friend in list_of_friends:
-        
-        if friend+'\n' in correspondance:
-            friend_id_in_graph = correspondance.index(friend+'\n')
-        else:
-            continue
-        ps = enumeration[friend_id_in_graph]
+    for friend in correspondance:
+        short = correspondance.index(friend)
+        ps = enumeration[short]
         
         #nb commentaires + nb status commentés
         if friend in info_commenters:
@@ -135,7 +114,8 @@ for ego in list_ego:
             affect = qualif_friend['affect']
 
         
-        infos_list = ((friend, 
+        infos_list = ((friend,
+                        short,
                         info_commenter['nb_of_comments'], 
                         info_commenter['nb_of_statuses'], 
                         info_liker, 

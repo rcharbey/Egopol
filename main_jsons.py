@@ -21,7 +21,7 @@ def read_list_of_commenters(folder, ego):
     return read_statuses.read_list_of_commenters(folder, ego)
     
 def create_correspondence_table(folder, ego):
-    read_friends.create_correspondence_table(folder, ego)
+    return read_friends.create_correspondence_table(folder, ego)
     
 def list_of_friends(folder, ego):
     return read_friends.list_of_friends(folder, ego)

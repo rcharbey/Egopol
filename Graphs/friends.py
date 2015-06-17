@@ -22,20 +22,20 @@ def add_graph_infos(graph, folder, ego):
         v['sum_comments_likes'] = int(v['nb_comments']) + int(v['nb_likes'])
         v['name'] = v['name'].encode('utf8')
 
-def create_graph(dict_of_mutual, folder, ego):
+def create_graph(dict_of_mutual, correspondance, folder, ego):
     graph = Graph.Full(0)
-    name_to_id = {}
-    for friend_neighbors in dict_of_mutual:
+    for friend in correspondance:
         graph.add_vertex()
-    id_friend = 0
-    for friend_neighbors in dict_of_mutual:
-        for id_neighbor in dict_of_mutual[friend_neighbors]:
+        graph.vs[len(graph.vs) - 1]['name'] = friend
+    for friend in correspondance:
+        id_friend = correspondance.index(friend)
+        for id_neighbor in dict_of_mutual[id_friend]:
             if id_neighbor > id_friend:
                 graph.add_edge(id_friend, id_neighbor)
-        id_friend += 1
     #add_graph_infos(graph, folder, ego)
     graph['folder'] = folder
     graph['ego'] = ego.encode('utf8')
+    graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/light_graph', format = 'edgelist')
     return graph
 
 def light_graph(dict_of_mutual, folder, ego, induced = False):
@@ -66,7 +66,7 @@ def display_light(graph, show = True, fc = False):
     layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)   
     for v in graph.vs:
         v['size'] = 10
-        v['label'] = None   
+        v['label'] = v.index  
     if fc:
         patch = '_fc'
     else:
@@ -74,8 +74,11 @@ def display_light(graph, show = True, fc = False):
     place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/light_graph'+patch+'.svg'
     if socket.gethostname() != 'ccadovir01':
         plot(graph, place, layout = layout)  
+    visual_style = {}
+    visual_style['layout'] = layout
+    visual_style['vertex_label_dist'] = 1
     if show == True:
-        plot(graph, layout = layout)
+        plot(graph, **visual_style)
 
 def draw_graph(graph):
     graph.es['curved'] = 0.3

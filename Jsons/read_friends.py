@@ -28,14 +28,18 @@ def create_correspondence_table(folder, ego):
     path = folder +'/' + ego
     table_to_write = open('GALLERY/'+path+'/Graphs/correspondence_table', 'w')
     f = open_json(folder, ego)
+    result = []
     for line in f:
         friend = json.loads(line)
         if 'name' in friend:
-            table_to_write.write((friend['name'] + u'\n').encode('utf8'))
+            to_write = (friend['name'])
         else:
-            table_to_write.write((friend['id'] + u'\n').encode('utf8'))
+            to_write = (friend['id'])
+        result.append(to_write)
+        table_to_write.write((to_write+ u'\n').encode('utf8'))
     f.close()    
     table_to_write.close()
+    return result
     
 def list_of_friends(folder, ego):
     path = folder +'/' + ego
