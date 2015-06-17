@@ -63,7 +63,7 @@ def init(args):
         #return (main_graphs.import_graph(args.folder, args.ego, 'friends'), None, None)
     #print 'initialisé'
     mutual_friends = main_jsons.dict_of_mutual_friends(args.folder, args.ego)
-    dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
+    #dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
     if len(mutual_friends) > 0:
         return main_graphs.create_friends_graph(mutual_friends, correspondence, args.folder, args.ego)
     else:
@@ -119,22 +119,22 @@ if args.options != None:
         indicators.main(args.folder, args.ego)
     
 else:
-    triple = init(args)
-    if triple != None :
-        graph_friends = triple[0]
-        graph_commenters = triple[1]
+    graph_friends = init(args)
+    if graph_friends != None :
+        #graph_friends = triple[0]
+        #graph_commenters = triple[1]
         print 'enumeration friends'
         if len(graph_friends.es) < 3000 and len(graph_friends.es) > 0:
             enumerate(args, 'friends')[0]
             print 'done'
         else:
             print 'squeezed'
-        print 'enumeration commenters done'
-        if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
-            enumerate(args, 'commenters')
-            print 'done'
-        else:
-            enumeration_status = [0]*len(enumeration)
+        print 'enumeration friends done'
+        #if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
+            #enumerate(args, 'commenters')
+            #print 'done'
+        #else:
+            #enumeration_status = [0]*len(enumeration)
         #for status in list_of_statuses:
             #temp = study_status(args, status[0])
             #for i in range(0, len(temp)):
