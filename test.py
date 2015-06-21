@@ -120,7 +120,7 @@ for ego in list_ego:
         
         infos_list = ((friend,
                         short,
-                        sommet.degree()
+                        sommet.degree(),
                         info_commenter['nb_of_comments'], 
                         info_commenter['nb_of_statuses'], 
                         info_liker, 
