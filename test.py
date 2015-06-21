@@ -50,31 +50,34 @@ for ego in list_ego:
     writer = csv.writer(csv_file, delimiter=';')
     writer.writerow(['id', 
                     'id graph',
+                    'degree',
                     'nombre de commentaires', 
                     'nombre de statuts commentés', 
                     'nombre de likes', 
-                    'centre d\'une croix',
-                    'centre d\'un noeud papillon',
-                    'element d\'une clique',
-                    'centre motif 13',
-                    'bleu motif 13',
+                    #'centre d\'une croix',
+                    #'centre d\'un noeud papillon',
+                    #'element d\'une clique',
+                    #'centre motif 13',
+                    #'bleu motif 13',
                     'since',
                     'close',
                     'affect',
                     'begin',
-                    'link'])
+                    'link',
+                    'betweeness',
+                    'closeness'])
 
 
     sorted_info = []
-    enumeration = main_enumeration.main(graph, [])
-    path = 'GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'
-    writer_patterns = csv.writer(open(path+'patterns_friends.csv', 'wb'), delimiter=';')
-    writer_patterns.writerow(enumeration[0])
-    writer_positions= csv.writer(open(path+'positions_friends.csv', 'wb'), delimiter = ';')
-    for i in range(0, len(graph.vs)):
-        writer_positions.writerow(enumeration[1][i])
+    #enumeration = main_enumeration.main(graph, [])
+    #path = 'GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'
+    #writer_patterns = csv.writer(open(path+'patterns_friends.csv', 'wb'), delimiter=';')
+    #writer_patterns.writerow(enumeration[0])
+    #writer_positions= csv.writer(open(path+'positions_friends.csv', 'wb'), delimiter = ';')
+    #for i in range(0, len(graph.vs)):
+        #writer_positions.writerow(enumeration[1][i])
 
-    enumeration = enumeration[1]
+    #enumeration = enumeration[1]
     qualif = read_qualified(folder, ego)  
     tab_since = [u'toujours',u' +5 ans', u'1 a 5 ans', u'moins d\'un an']
     tab_close = [u'tous les jours', u'toutes les semaines', u'une fois par mois', u'tous les 3 mois', u'tous les 6 mois', u'une fois par an', u'moins d\'une fois par an']
@@ -83,7 +86,7 @@ for ego in list_ego:
 
     for friend in correspondance:
         short = correspondance.index(friend)
-        ps = enumeration[short]
+        #ps = enumeration[short]
         
         #nb commentaires + nb status commentés
         if friend in info_commenters:
@@ -112,23 +115,28 @@ for ego in list_ego:
                 if qualif_friend[type_link] == True:
                     link += type_link + ' '
             affect = qualif_friend['affect']
-
+            
+        sommet = graph.vs[short]
         
         infos_list = ((friend,
                         short,
+                        sommet.degree()
                         info_commenter['nb_of_comments'], 
                         info_commenter['nb_of_statuses'], 
                         info_liker, 
-                        ps[19],
-                        ps[48],
-                        ps[72],
-                        ps[27],
-                        ps[25],
+                        #ps[19],
+                        #ps[48],
+                        #ps[72],
+                        #ps[27],
+                        #ps[25],
                         since,
                         close,
                         affect,
                         begin,
-                        link))
+                        link,
+                        sommet.betweeness()
+                        sommet.closeness()
+                        ))
         
         sorted_info.append([unicode(s).encode("utf-8") for s in infos_list])
         

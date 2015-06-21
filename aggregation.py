@@ -108,14 +108,14 @@ def add_aggregation_data_all():
         list_ego = [f for f in os.listdir(dirname) if os.path.isdir(os.path.join(dirname, f))]
         for ego in list_ego:
             add_aggregation_data(folder, ego, 'friends')
-            add_aggregation_data(folder, ego, 'statuses')
-            add_aggregation_data(folder, ego, 'friends_fc')
-            if os.path.isdir(dirname+'/'+ego+'/statuses'):
-                add_aggregation_data(folder, ego, 'induced_friends', True)
+            #add_aggregation_data(folder, ego, 'statuses')
+            #add_aggregation_data(folder, ego, 'friends_fc')
+            #if os.path.isdir(dirname+'/'+ego+'/statuses'):
+                #add_aggregation_data(folder, ego, 'induced_friends', True)
 
 if __name__ == '__main__':
     #aggregate('friends')
-    aggregate('friends_fc')
+    #aggregate('friends_fc')
     #aggregate('statuses')
     #aggregate_status('induced_friends')
     add_aggregation_data_all()

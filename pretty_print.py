@@ -144,11 +144,12 @@ def main():
         for ego in list_ego:
             print 'pretty print : ',
             print ego
-            path = 'GALLERY/'+folder+'/'+ego+'/'
+            path = 'GALLERY/'+folder+'/'+ego+'/Enumeration/'
             for quality in ['patterns_friends', 'patterns_statuses']:
-                name = path + quality
-                if os.path.isfile(name+'.csv'):
-                    enumeration(open(name + '.html', 'w'), read_csv(name + '.csv'), '../../PATTERNS')
+                name_csv = path + 'CSV/' + quality + '.csv'
+                name_html = path + 'HTML/' + quality + '.html'
+                if os.path.isfile(name_csv):
+                    enumeration(open(name_html, 'w'), read_csv(name_csv), '../../PATTERNS')
             if not os.path.isdir(path+'statuses'):
                 continue
             path = path + 'statuses/'

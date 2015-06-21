@@ -41,6 +41,5 @@ def aggregate(quality):
                 continue
             refresh_aggregation('GALLERY/aggregation_positions_'+quality+'.csv', positions_enumeration)
 
-#aggregate('friends')
+aggregate('friends')
 #aggregate('commenters')
-aggregate('friends_fc')
