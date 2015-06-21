@@ -134,7 +134,7 @@ for ego in list_ego:
                         affect,
                         begin,
                         link,
-                        sommet.betweeness(),
+                        sommet.betweenness(),
                         sommet.closeness()
                         ))
         
