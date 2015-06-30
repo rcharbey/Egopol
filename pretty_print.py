@@ -85,10 +85,10 @@ def enumeration(file_html, infos, path_patterns):
     
     file_html.write('<table style="width:100%">')
     
-    for i in range(1, len(infos[0])+1):
+    for i in range(1, len(infos[0])):
         file_html.write('<tr>\n')
         image_pattern(path_patterns, i, file_html)
-        appearance_pattern(infos[0], file_html, colors)
+        appearance_pattern(infos[0][i], file_html, colors)
         
         j = 1
         while len(infos) > j:
@@ -134,14 +134,20 @@ def status(folder, ego, list_of_statuses):
     return result
     
 def main():
-    for quality in ['aggregation_patterns_induced_friends', 'aggregation_patterns_induced_statuses', 'aggregation_patterns_friends', 'aggregation_patterns_statuses']:
-        name = 'GALLERY/'+quality
-        if os.path.isfile(name+'.csv'):
-            enumeration(open(name + '.html', 'w'), read_csv(name + '.csv'), 'PATTERNS')
+    #for quality in ['aggregation_patterns_induced_friends', 'aggregation_patterns_induced_statuses', 'aggregation_patterns_friends', 'aggregation_patterns_statuses']:
+        #name = 'GALLERY/'+quality
+        #if os.path.isfile(name+'.csv'):
+            #enumeration(open(name + '.html', 'w'), read_csv(name + '.csv'), 'PATTERNS')
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
+    print list_folders
     for folder in list_folders: 
+        if folder != 'all_2015-05-15':
+            continue
+        print folder
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
+            if not 'ea37' in ego:
+                continue
             print 'pretty print : ',
             print ego
             path = 'GALLERY/'+folder+'/'+ego+'/Enumeration/'
@@ -149,17 +155,17 @@ def main():
                 name_csv = path + 'CSV/' + quality + '.csv'
                 name_html = path + 'HTML/' + quality + '.html'
                 if os.path.isfile(name_csv):
-                    enumeration(open(name_html, 'w'), read_csv(name_csv), '../../PATTERNS')
-            if not os.path.isdir(path+'statuses'):
-                continue
-            path = path + 'statuses/'
-            for quality in ['aggregation_patterns_induced_friends', 'aggregation_patterns_induced_statuses']:
-                name = path + quality
-                if os.path.isfile(name+'.csv'):
-                    enumeration(open(name + '.html', 'w'), read_csv(name + '.csv'), '../../../PATTERNS')
-            list_statuses = [f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
-            for status in list_statuses:
-                for quality in ['patterns_induced_friends', 'patterns_induced_statuses']:
-                    name = path + status + '/' + quality
-                    if os.path.isfile(name+'.csv'):
-                        enumeration(open(name + '.html', 'w'), read_csv(name + '.csv'), '../../../../PATTERNS')    
+                    enumeration(open(name_html, 'w'), read_csv(name_csv), '../../../../PATTERNS')
+            #if not os.path.isdir(path+'statuses'):
+                #continue
+            #path = path + 'statuses/'
+            #for quality in ['aggregation_patterns_induced_friends', 'aggregation_patterns_induced_statuses']:
+                #name = path + quality
+                #if os.path.isfile(name+'.csv'):
+                    #enumeration(open(name + '.html', 'w'), read_csv(name + '.csv'), '../../../PATTERNS')
+            #list_statuses = [f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
+            #for status in list_statuses:
+                #for quality in ['patterns_induced_friends', 'patterns_induced_statuses']:
+                    #name = path + status + '/' + quality
+                    #if os.path.isfile(name+'.csv'):
+                        #enumeration(open(name + '.html', 'w'), read_csv(name + '.csv'), '../../../../PATTERNS')    

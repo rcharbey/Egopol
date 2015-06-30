@@ -57,16 +57,17 @@ def aggregate_status(quality):
                 refresh_aggregation(path+'/statuses/aggregation_patterns_'+quality+'.csv', patterns_enumeration)
        
 def calculate_sum(patterns_enumeration):
-    result = 0
-    for elem in patterns_enumeration:
-        result += int(elem)
+    result = [0,0,0,0]
+    result[0] = int(patterns_enumeration[0])
+    result[1] = int(patterns_enumeration[1]) + int(patterns_enumeration[2])
+    for elem in patterns_enumeration[3:8]:
+        result[2] += int(elem)
+    for elem in patterns_enumeration[9:len(patterns_enumeration)]:
+        result[3] += int(elem)
     return result
 
-def calculate_proportion(aggregation, patterns_enumeration):
+def calculate_proportions_list(aggregation, patterns_enumeration, sum_agreg, sum_current):
     result = []
-        
-    sum_agreg = calculate_sum(aggregation)
-    sum_current = calculate_sum(patterns_enumeration)        
         
     if sum_current != 0 and sum_agreg != 0:
         for i in range(0, len(patterns_enumeration)):
@@ -76,10 +77,23 @@ def calculate_proportion(aggregation, patterns_enumeration):
                 result.append(round(prop_pattern_current/prop_pattern_general,2))
             else:
                 result.append(0)
-    
     else:
         result = [0]*len(patterns_enumeration)
-        
+    
+    return result
+
+
+def calculate_proportion(aggregation, patterns_enumeration):
+    result = []
+    
+    tab_agreg = calculate_sum(aggregation)
+    tab_current = calculate_sum(patterns_enumeration)
+    
+    result.extend(calculate_proportions_list([aggregation[0]], [patterns_enumeration[0]], tab_agreg[0], tab_current[0]))
+    result.extend(calculate_proportions_list(aggregation[1:3], patterns_enumeration[1:3], tab_agreg[1], tab_current[1]))
+    result.extend(calculate_proportions_list(aggregation[3:9], patterns_enumeration[3:9], tab_agreg[2], tab_current[2]))
+    result.extend(calculate_proportions_list(aggregation[9:30], patterns_enumeration[9:30], tab_agreg[3], tab_current[3]))
+    
     return result
 
 def add_aggregation_data(folder, ego, quality, statuses = False):
@@ -96,7 +110,7 @@ def add_aggregation_data(folder, ego, quality, statuses = False):
     else:
         aggregation = [0]*len(enumeration)
     proportion = calculate_proportion(aggregation, enumeration)
-    csv_enumeration = open('GALLERY/'+folder+'/'+ego+'/Enumeration/CSV/'+patch+'patterns_'+quality+'.csv', 'wb')
+    csv_enumeration = open('GALLERY/Representativity/'+ego+'.csv', 'wb')
     writer = csv.writer(csv_enumeration, delimiter = ';')
     writer.writerow(enumeration)
     writer.writerow(proportion)
@@ -104,6 +118,8 @@ def add_aggregation_data(folder, ego, quality, statuses = False):
 def add_aggregation_data_all():
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders:
+        if folder in ['PATTERNS', 'Info_per_carac', 'Info-alters', 'Test']:
+            continue
         dirname = 'GALLERY/'+folder
         list_ego = [f for f in os.listdir(dirname) if os.path.isdir(os.path.join(dirname, f))]
         for ego in list_ego:
