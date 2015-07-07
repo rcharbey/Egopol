@@ -28,7 +28,7 @@ def main(dict_friends, dict_commenters, correspondence, folder, ego):
 
 def create_friends_graph(dict_friends, correspondence, folder, ego):
     graph_friends = friends.create_graph(dict_friends, correspondence, folder, ego)
-    write_graph(graph_friends)
+    friends.write_graph(graph_friends)
     return graph_friends
 
 def light_graph(dict_of_mutual, folder, ego, induced = False):
