@@ -26,7 +26,7 @@ def create_graph(dict_of_mutual, correspondance, folder, ego):
     graph = Graph.Full(0)
     for friend in correspondance:
         graph.add_vertex()
-        graph.vs[len(graph.vs) - 1]['name'] = friend
+        graph.vs[len(graph.vs) - 1]['name'] = friend.decode('utf-8')
     for friend in correspondance:
         id_friend = correspondance.index(friend)
         for id_neighbor in dict_of_mutual[id_friend]:
