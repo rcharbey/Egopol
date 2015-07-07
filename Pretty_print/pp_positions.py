@@ -35,7 +35,7 @@ def read_proportion(path, quality):
         result.append(line)
     return result
 
-def pretty_print(path, quality, path_images):
+def pretty_print(path, quality, path_images, list_friends):
     enumeration = read_enumeration(path, quality)
     
     enumeration_sorted = []
@@ -58,17 +58,12 @@ def pretty_print(path, quality, path_images):
         colors_proportion = []
         for elem in proportion:
             colors_proportion.append(utilities.create_list_colors(elem))
-    names = []
     if quality == 'statuses':
         quality_2 = 'commenters'
     else:
         quality_2 = quality
     if os.path.isfile(path+quality_2+'.gml'):
         graph = Graph.Load(path+quality_2+'.gml')
-        for v in graph.vs:
-            names.append(v['name'].decode('utf8').encode('utf8'))
-    else:
-        names = range(1, len(enumeration)+1)
     if not os.path.isdir(path+'HTML'):
         os.mkdir(path+'HTML')
     file_html = open(path+'HTML/positions_'+quality+'.html', 'wb')
@@ -81,7 +76,7 @@ def pretty_print(path, quality, path_images):
     for index_alter in enumeration_sorted:
         if cmpt%10 == 0:
             file_html.write('<td> </td>')
-        file_html.write('<td colspan = "2" align = "center">'+str(names[index_alter])+'</td>')
+        file_html.write('<td colspan = "2" align = "center">'+list_friends[index_alter].encode('utf-8')+'</td>')
         cmpt += 1
     file_html.write('</tr>\n')        
     
@@ -91,10 +86,16 @@ def pretty_print(path, quality, path_images):
             file_html.write('\n<tr>\n')
             file_html.write('   <td colspan = "3" ></td>')
             cmpt = 1
+            print enumeration_sorted
             for index_alter in enumeration_sorted:
+                print index_alter,
+                print ' : ',
+                print graph.vs[index_alter],
+                print ' ',
+                print raph.vs[index_alter].degree() 
                 if cmpt%10 == 0:
                     file_html.write('<td> </td>')
-                file_html.write('<td colspan = "2" align = "center">'+str(names[index_alter])+'</td>')
+                file_html.write('<td colspan = "2" align = "center">'+list_friends[index_alter].encode('utf-8')+'</td>')
                 cmpt += 1
             file_html.write('</tr>\n')
         file_html.write('<tr>\n')
@@ -133,7 +134,7 @@ def pretty_print(path, quality, path_images):
     for index_alter in enumeration_sorted:
         if cmpt%10 == 0:
             file_html.write('<td> </td>')
-        file_html.write('<td colspan = "2" align = "center">'+str(names[index_alter])+'</td>')
+        file_html.write('<td colspan = "2" align = "center">'+list_friends[index_alter].encode('utf-8')+'</td>')
         cmpt += 1
     file_html.write('</tr>\n')
     

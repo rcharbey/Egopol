@@ -120,6 +120,8 @@ def add_aggregation_data_all():
     for folder in list_folders:
         if folder in ['PATTERNS', 'Info_per_carac', 'Info-alters', 'Test']:
             continue
+        if folder != 'entretiens':
+            continue
         dirname = 'GALLERY/'+folder
         list_ego = [f for f in os.listdir(dirname) if os.path.isdir(os.path.join(dirname, f))]
         for ego in list_ego:

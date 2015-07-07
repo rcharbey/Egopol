@@ -25,7 +25,7 @@ def main():
             pretty_print.main()
             return
         elif 'aggregation' in args.options:
-            aggregation.main()
+            aggregation.add_aggregation_data_all()
             return
         elif 'indicators' in args.options:
             if 'light' in args.options:

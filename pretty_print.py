@@ -141,13 +141,11 @@ def main():
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     print list_folders
     for folder in list_folders: 
-        if folder != 'all_2015-05-15':
+        if folder != 'entretiens':
             continue
         print folder
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
-            if not 'ea37' in ego:
-                continue
             print 'pretty print : ',
             print ego
             path = 'GALLERY/'+folder+'/'+ego+'/Enumeration/'

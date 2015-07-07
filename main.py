@@ -14,6 +14,7 @@ import main_graphs
 import main_jsons
 import csv
 import pretty_print
+import main_indicators
 
 def create_folders(folder, ego):
     for path in [
@@ -116,7 +117,7 @@ if args.options != None:
     elif 'indu' in args.options:
         induced_graph_friends(args)
     if 'indicators' in args.options:
-        indicators.main(args.folder, args.ego)
+        main_indicators.main(args.folder, args.ego)
     
 else:
     graph_friends = init(args)

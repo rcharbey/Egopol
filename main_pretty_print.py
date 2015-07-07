@@ -4,18 +4,24 @@ sys.path.append('./Pretty_print')
 
 import pp_patterns
 import pp_positions
+import main_jsons
 
 def main():
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders: 
+        if folder != 'entretiens':
+            continue
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
+            if ego != 'Alexandre Deplais':
+                continue
             print 'pretty print : ',
             print ego
+            list_friends = main_jsons.list_of_friends(folder, ego)
             path = 'GALLERY/'+folder+'/'+ego+'/'
             for quality in ['friends', 'commenters', 'friends_fc']:
                 pp_patterns.pretty_print(path+'Enumeration/', quality, '../../../../PATTERNS')
-                pp_positions.pretty_print(path+'Enumeration/', quality, '../../../../PATTERNS')
+                pp_positions.pretty_print(path+'Enumeration/', quality, '../../../../PATTERNS', list_friends)
             if not os.path.isdir(path+'Statuses'):
                 continue
             path = path + 'Statuses/'
