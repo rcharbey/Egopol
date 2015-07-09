@@ -32,7 +32,7 @@ def create_graph(dict_of_mutual, correspondance, folder, ego):
         for id_neighbor in dict_of_mutual[id_friend]:
             if id_neighbor > id_friend:
                 graph.add_edge(id_friend, id_neighbor)
-    #add_graph_infos(graph, folder, ego)
+    add_graph_infos(graph, folder, ego)
     graph['folder'] = folder
     graph['ego'] = ego.encode('utf8')
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/light_graph', format = 'edgelist')
