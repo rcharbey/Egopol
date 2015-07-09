@@ -20,7 +20,7 @@ def add_graph_infos(graph, folder, ego):
             v['nb_comments'] = 0
     for v in graph.vs:
         v['sum_comments_likes'] = int(v['nb_comments']) + int(v['nb_likes'])
-        v['name'] = v['name'].encode('utf8')
+        #v['name'] = v['name'].encode('utf8')
 
 def create_graph(dict_of_mutual, correspondance, folder, ego):
     graph = Graph.Full(0)
