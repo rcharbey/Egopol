@@ -36,7 +36,8 @@ def create_correspondence_table(folder, ego):
         else:
             to_write = (friend['id'])
         result.append(to_write)
-        table_to_write.write((to_write+ u'\n').encode('utf8'))
+        table_to_write.write(to_write.encode('utf8'))
+        table_to_write.write('\n')
     f.close()    
     table_to_write.close()
     return result
