@@ -31,7 +31,7 @@ def create_correspondence_table(folder, ego):
     result = []
     for line in f:
         friend = json.loads(line)
-        print friend
+        print friend['name']
         if 'name' in friend:
             to_write = (friend['name'])
         else:
