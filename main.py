@@ -65,7 +65,7 @@ def init(args):
     #print 'initialisé'
     mutual_friends = main_jsons.dict_of_mutual_friends(args.folder, args.ego)
     #dict_of_mutual_commenters = main_jsons.main(args.folder, args.ego, 'statuses')
-    print [x.encode('utf-8') for x in mutual_friends]
+    print mutual_friends
     if len(mutual_friends) > 0:
         return main_graphs.create_friends_graph(mutual_friends, correspondence, args.folder, args.ego)
     else:
