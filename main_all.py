@@ -46,6 +46,7 @@ def main():
                 sys.argv.append('-o')
                 for option in args.options:
                     sys.argv.append(option)
+            print 'main all %s %s' % (folder, ego)
             execfile("main.py")
                 
 main()
