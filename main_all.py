@@ -38,16 +38,15 @@ def main():
             return
     
     list_folders = ['csa', 'all', 'p5']
+    print args.options
     for folder in list_folders:
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
-            print ego
             sys.argv = ['main.py', folder, ego]
             if args.options != None:
                 sys.argv.append('-o')
                 for option in args.options:
                     sys.argv.append(option)
-            print 'main all %s %s' % (folder, ego)
             execfile("main.py")
                 
 main()
