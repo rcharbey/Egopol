@@ -41,6 +41,7 @@ def main():
     for folder in list_folders:
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
+            print ego
             sys.argv = ['main.py', folder, ego]
             if args.options != None:
                 sys.argv.append('-o')
