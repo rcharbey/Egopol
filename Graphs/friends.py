@@ -11,6 +11,7 @@ def add_graph_infos(graph, folder, ego):
     infos_likers = main_jsons.calculate_info_likers(folder, ego)
     for v in graph.vs:
         print v['name']
+        print type(['name'])
         print v['name'].encode('utf-8')
         name = v['name'].encode('utf-8')
         v['nb_likes'] = int(infos_likers.get(name, 0))
