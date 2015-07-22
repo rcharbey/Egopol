@@ -11,11 +11,11 @@ def add_graph_infos(graph, folder, ego):
     infos_likers = main_jsons.calculate_info_likers(folder, ego)
     for v in graph.vs:
         if v['name'] in infos_likers:
-            v['nb_likes'] = int(infos_likers[v['name']])
+            v['nb_likes'] = int(infos_likers[v['name'].encode('utf-8')])
         else:
             v['nb_likes'] = 0
         if v['name'] in infos_commenters:
-            v['nb_comments'] = int(infos_commenters[v['name']]['nb_of_comments'])
+            v['nb_comments'] = int(infos_commenters[v['name'].encode('utf-8')]['nb_of_comments'])
         else:
             v['nb_comments'] = 0
     for v in graph.vs:
