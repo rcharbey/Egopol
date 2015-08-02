@@ -32,7 +32,7 @@ def main():
                 tab_options = ['lightcom']
             else:
                 tab_options = None
-            main_indicators.main(None, None, tab_options)        
+            main_indicators.main(args.dataset, None, tab_options)        
             return
     
     list_folders = args.dataset if args.dataset else ['csa', 'all', 'p5']

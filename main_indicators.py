@@ -342,7 +342,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
     for row in csv_reader:
         ego_already_done.append(row[0])
     file.close()
-    list_folders = [f for f in os.listdir('GALLERY/') if os.path.isdir(os.path.join('GALLERY', f))]
+    list_folders = folder_arg if folder_arg else [f for f in os.listdir('GALLERY/') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders:
         if 'all_2014' in folder:
             continue
