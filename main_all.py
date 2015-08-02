@@ -38,8 +38,7 @@ def main():
             indicators.main(None, None, tab_options)        
             return
     
-    print args.dataset
-    list_folders = args.getattr('dataset', ['csa', 'all', 'p5'])
+    list_folders = args.dataset if args.dataset else ['csa', 'all', 'p5']
     print args.options
     for folder in list_folders:
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
