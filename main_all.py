@@ -9,14 +9,11 @@ import os
 import pretty_print
 import aggregation
 import csv
-sys.path.append("./Graphs")
-sys.path.append("./Enumeration")
-sys.path.append("./Jsons")
-sys.path.append("./Indicators")
+
 import main_enumeration
 import main_graphs
 import main_jsons
-import indicators
+import main_indicators
 import tarfile
 import shutil
 
@@ -35,7 +32,7 @@ def main():
                 tab_options = ['lightcom']
             else:
                 tab_options = None
-            indicators.main(None, None, tab_options)        
+            main_indicators.main(None, None, tab_options)        
             return
     
     list_folders = args.dataset if args.dataset else ['csa', 'all', 'p5']
