@@ -1,6 +1,7 @@
 import argparse
 parser = argparse.ArgumentParser(description="main")
 parser.add_argument('--options', '-o', nargs='+')
+parser.add_argument('--dataset', '-d', nargs='+')
 args = parser.parse_args()
 
 import sys
@@ -37,7 +38,7 @@ def main():
             indicators.main(None, None, tab_options)        
             return
     
-    list_folders = ['csa', 'all', 'p5']
+    list_folders = args.getattr('dataset', ['csa', 'all', 'p5'])
     print args.options
     for folder in list_folders:
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
