@@ -38,6 +38,7 @@ def main():
             indicators.main(None, None, tab_options)        
             return
     
+    print args.dataset
     list_folders = args.getattr('dataset', ['csa', 'all', 'p5'])
     print args.options
     for folder in list_folders:
