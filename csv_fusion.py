@@ -41,6 +41,9 @@ for old_file in os.listdir(directory):
         if rarity[3] == '':
             continue
         print old_file
+        if 'fusion' in old_file:
+            print 'pass'
+            continue
         for line in old_csv:
             new_csv.write(line)
     except StopIteration:
