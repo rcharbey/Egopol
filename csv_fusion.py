@@ -29,8 +29,11 @@ for old_file in os.listdir(directory):
     old_csv.close()
     break
     
-# Write the rest from every .csv    
+# Write the rest from every .csv 
+i = 100
 for old_file in os.listdir(directory):
+    if i == 0:
+        break
     if not str(old_file[-4:-1]) + str(old_file)[len(old_file)-1] == '.csv':
         continue
     old_csv =  open('%s/%s' % (directory, old_file), 'rb')
@@ -50,6 +53,7 @@ for old_file in os.listdir(directory):
         old_csv.close()
         continue
     old_csv.close()
+    i = i -1
     
 new_csv.close()
     
