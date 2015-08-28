@@ -278,7 +278,8 @@ def print_info_qualify(folder, ego):
     list_of_qualified = main_jsons.list_of_qualified(folder, ego)
     for qualified_data in list_of_qualified:
         qualified = qualified_data['data']
-        info = (main_jsons.find_friend(folder, ego, qualified_data['user_id'])['name'],
+        temp = main_jsons.find_friend(folder, ego, qualified_data['user_id'])
+        info = temp.get('name', temp['id']),
                 tab_duration[int(qualified['since'])-1],
                 tab_frequency[int(qualified['close'])-1],
                 tab_frequency[int(qualified['begin'])-1],
