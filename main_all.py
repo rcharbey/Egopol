@@ -6,7 +6,6 @@ args = parser.parse_args()
 
 import sys
 import os
-import pretty_print
 import aggregation
 import csv
 
@@ -14,13 +13,14 @@ import main_enumeration
 import main_graphs
 import main_jsons
 import main_indicators
+import main_pretty_print
 import tarfile
 import shutil
 
 def main():
     if args.options != None:
         if 'pretty_print' in args.options:
-            pretty_print.main()
+            main_pretty_print.main()
             return
         elif 'aggregation' in args.options:
             aggregation.add_aggregation_data_all()

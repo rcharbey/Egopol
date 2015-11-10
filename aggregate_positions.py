@@ -32,9 +32,7 @@ def aggregate(quality):
     writer = csv.writer(csv_file, delimiter=';')
     writer.writerow([0]*30)
     csv_file.close()
-    for folder in list_folders: 
-        if folder != 'entretiens':
-            continue
+    for folder in list_folders:
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
             if os.path.isfile('GALLERY/'+folder+'/'+ego + '/Enumeration/CSV/positions_'+quality+'.csv'):

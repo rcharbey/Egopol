@@ -6,15 +6,16 @@ import pp_patterns
 import pp_positions
 import main_jsons
 
+def extract_friends(folder, ego):
+    pp_positions.pretty_print_extraction('GALLERY/%s/%s/Enumeration/' % (folder, ego), '../../../../PATTERNS')
+
 def main():
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
-    for folder in list_folders: 
+    for folder in list_folders:
         if folder != 'entretiens':
             continue
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
-            if ego != 'Alexandre Deplais':
-                continue
             print 'pretty print : ',
             print ego
             list_friends = main_jsons.list_of_friends(folder, ego)
@@ -31,6 +32,4 @@ def main():
             for status in list_statuses:
                 for quality in ['_induced_friends', '_induced_statuses']:
                     pp_patterns.pretty_print(path+status+'/', quality, '../../../../PATTERNS')
-                    
-main()
-                    
+

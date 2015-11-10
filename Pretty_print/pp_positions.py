@@ -11,22 +11,20 @@ def int_to_colors(i):
     colors = [['blue'], ['black', 'red'], ['black', 'green', 'red'], ['black', 'blue', 'green', 'red']]
     return colors[i-1]
 
-def read_enumeration(path, quality):
+def read_enumeration(path, quality, extraction = False):
     """
         read_enumeration returns the enumeration of positions in the file path+quality.csv
         if this file does not exist, it returns [] instead
     """
-    file_to_read = path+'CSV/positions_'+quality+'.csv'
+    file_to_read = '%sCSV/positions_%s.csv' % (path, quality) if not extraction else '%sCSV/extracted_friends.csv' % path
     if not os.path.isfile(file_to_read):
         return []
-    reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
-    result = []
-    for line in reader:
-        result.append(line)
-    return result
+    with open(file_to_read) as f:
+        reader = csv.reader(f, delimiter=';')
+        return [line for line in reader]
 
-def read_proportion(path, quality):
-    file_to_read = path+'CSV/proportion_positions_'+quality+'.csv'
+def read_proportion(path, quality, extraction = False):
+    file_to_read = path+'CSV/proportion_positions_'+quality+'.csv' if not extraction else path+'CSV/proportion_extracted.csv'
     if not os.path.isfile(file_to_read):
         return -1
     reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
@@ -37,7 +35,7 @@ def read_proportion(path, quality):
 
 def pretty_print(path, quality, path_images, list_friends):
     enumeration = read_enumeration(path, quality)
-    
+
     enumeration_sorted = []
     for i in range(0, len(enumeration)):
         added = False
@@ -48,11 +46,11 @@ def pretty_print(path, quality, path_images, list_friends):
                 break
         if added == False:
             enumeration_sorted.append(i)
-    
+
     colors_enumeration = []
     for elem in enumeration:
         colors_enumeration.append(utilities.create_list_colors(elem))
-    
+
     proportion = read_proportion(path, quality)
     if proportion != -1:
         colors_proportion = []
@@ -67,7 +65,7 @@ def pretty_print(path, quality, path_images, list_friends):
     if not os.path.isdir(path+'HTML'):
         os.mkdir(path+'HTML')
     file_html = open(path+'HTML/positions_'+quality+'.html', 'wb')
-    
+
     utilities.print_begin(file_html)
     file_html.write('<table style="width:100%">')
     file_html.write('\n<tr>\n')
@@ -78,21 +76,15 @@ def pretty_print(path, quality, path_images, list_friends):
             file_html.write('<td> </td>')
         file_html.write('<td colspan = "2" align = "center">'+list_friends[index_alter].encode('utf-8')+'</td>')
         cmpt += 1
-    file_html.write('</tr>\n')        
-    
+    file_html.write('</tr>\n')
+
     for index_pattern in range(0, 30):
         nb_of_positions = nb_of_positions_per_pattern[index_pattern]
         if index_pattern%10 == 0 and index_pattern != 0:
             file_html.write('\n<tr>\n')
             file_html.write('   <td colspan = "3" ></td>')
             cmpt = 1
-            print enumeration_sorted
             for index_alter in enumeration_sorted:
-                print index_alter,
-                print ' : ',
-                print graph.vs[index_alter],
-                print ' ',
-                print raph.vs[index_alter].degree() 
                 if cmpt%10 == 0:
                     file_html.write('<td> </td>')
                 file_html.write('<td colspan = "2" align = "center">'+list_friends[index_alter].encode('utf-8')+'</td>')
@@ -113,7 +105,7 @@ def pretty_print(path, quality, path_images, list_friends):
                 index_color = pattern_to_first_position[index_pattern] + index_position
                 file_html.write('   ')
                 utilities.appearance(enumeration[index_alter][index_color], file_html, colors_enumeration[index_alter][index_color])
-            
+
                 if proportion != -1:
                     file_html.write('<td class="ratio" style = "color:rgb')
                     if proportion[index_alter][pattern_to_first_position[index_pattern] + index_position] == 0:
@@ -126,9 +118,9 @@ def pretty_print(path, quality, path_images, list_friends):
                     file_html.write('<td class="ratio"> </td>')
             file_html.write('</tr>')
         file_html.write('<tr><td colspan = "'+str((len(enumeration))*2)+'"></td></tr>')
-            
+
         file_html.write('\n')
-        
+
     cmpt = 1
     file_html.write('   <td colspan = "3" ></td>')
     for index_alter in enumeration_sorted:
@@ -137,5 +129,79 @@ def pretty_print(path, quality, path_images, list_friends):
         file_html.write('<td colspan = "2" align = "center">'+list_friends[index_alter].encode('utf-8')+'</td>')
         cmpt += 1
     file_html.write('</tr>\n')
-    
-    file_html.close() 
+
+    file_html.close()
+
+
+def write_alters_names(file_html, list_names):
+    cmpt = 1
+    for alter in list_names:
+        if cmpt%10 == 0:
+            file_html.write('<td> </td>')
+        file_html.write('<td colspan = "2" align = "center">'+alter+'</td>')
+        cmpt += 1
+    file_html.write('</tr>\n')
+
+
+def pretty_print_extraction(path, path_images):
+    enumeration = read_enumeration(path, '', True)
+
+    list_names = [tab.pop(0) for tab in enumeration]
+
+    colors_enumeration = []
+    for elem in enumeration:
+        colors_enumeration.append(utilities.create_list_colors(elem))
+
+    proportion = read_proportion(path, '', True)
+    if proportion != -1:
+        colors_proportion = []
+        for elem in proportion:
+            colors_proportion.append(utilities.create_list_colors(elem))
+
+    file_html = open(path+'HTML/extracted_friends.html', 'wb')
+
+    utilities.print_begin(file_html)
+    file_html.write('<table style="width:100%">')
+    file_html.write('\n<tr>\n')
+    file_html.write('   <td colspan = "3" ></td>')
+    write_alters_names(file_html, list_names)
+
+    for index_pattern in range(0, 30):
+        nb_of_positions = nb_of_positions_per_pattern[index_pattern]
+        if index_pattern%10 == 0 and index_pattern != 0:
+            file_html.write('\n<tr>\n')
+            file_html.write('   <td colspan = "3" ></td>')
+            write_alters_names(file_html, list_names)
+        file_html.write('<tr>\n')
+        utilities.image(path_images, index_pattern, file_html, nb_of_positions)
+        for index_position in range(0, nb_of_positions):
+            if index_position != 0:
+                file_html.write('\n<tr>')
+            file_html.write('<td>'+str(pattern_to_first_position[index_pattern] + index_position + 1)+'</td>')
+            file_html.write('   <td style="width:20px" bgcolor="'+str(int_to_colors(nb_of_positions)[index_position])+'">\n </td>')
+            cmpt = 1
+            for alter in list_names:
+                if cmpt%10 == 0 and index_position == 0:
+                    utilities.image(path_images, index_pattern, file_html, nb_of_positions)
+                cmpt += 1
+                index_color = pattern_to_first_position[index_pattern] + index_position
+                file_html.write('   ')
+                index_alter = list_names.index(alter)
+                utilities.appearance(enumeration[index_alter][index_color], file_html, colors_enumeration[index_alter][index_color])
+                if proportion != -1:
+                    file_html.write('<td class="ratio" style = "color:rgb')
+                    if proportion[index_alter][pattern_to_first_position[index_pattern] + index_position] == 0:
+                        file_html.write('(000,0,0)')
+                    else:
+                        file_html.write(colors_proportion[index_alter][index_color])
+                    file_html.write('">('+str(proportion[index_alter][pattern_to_first_position[index_pattern] + index_position]))
+                    file_html.write(')</td>')
+                else:
+                    file_html.write('<td class="ratio"> </td>')
+            file_html.write('</tr>')
+        file_html.write('<tr><td colspan = "'+str((len(enumeration))*2)+'"></td></tr>')
+
+        file_html.write('\n')
+
+    write_alters_names(file_html, list_names)
+    file_html.close()
