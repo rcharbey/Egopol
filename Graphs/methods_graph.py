@@ -77,6 +77,7 @@ def gt_coloration(graph):
                 for threshold in quintiles:
                     if value <= threshold:
                         v['color'] = palette.get(threshold)
+            print palette
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 
