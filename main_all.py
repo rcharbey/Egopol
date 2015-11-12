@@ -32,9 +32,9 @@ def main():
                 tab_options = ['lightcom']
             else:
                 tab_options = None
-            main_indicators.main(args.dataset, None, tab_options)        
+            main_indicators.main(args.dataset, None, tab_options)
             return
-    
+
     list_folders = args.dataset if args.dataset else ['csa', 'all', 'p5']
     print args.options
     for folder in list_folders:
@@ -46,5 +46,5 @@ def main():
                 for option in args.options:
                     sys.argv.append(option)
             execfile("main.py")
-                
+
 main()

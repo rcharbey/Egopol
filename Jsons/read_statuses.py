@@ -255,10 +255,7 @@ def gt_and_activity(folder, ego):
     new_result = {}
 
     for elem in result:
-        print result[elem]
         if result[elem][0] >= 5:
             new_result[elem] = result[elem]
 
     return new_result
-
-print gt_and_activity('entretiens', '3eb987f1fd7d298e0548726fc516e8e0')

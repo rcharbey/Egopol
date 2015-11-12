@@ -118,6 +118,10 @@ if args.options != None:
     if 'indicators' in args.options:
         main_indicators.main(args.folder, args.ego)
 
+
+    elif 'gt_coloration' in args.options:
+        main_graphs.gt_coloration(args.folder, args.ego)
+
 else:
     graph_friends = init(args)
     if graph_friends != None :
