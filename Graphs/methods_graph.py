@@ -72,7 +72,6 @@ def gt_coloration(graph):
         for i in range(1,3):
             current_dico = dico[gt][i]
             quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 40, 50, 60, 80, 100]]
-            quintiles = , np.arange(0, 100, 20))
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
                 for threshold in quintile:
