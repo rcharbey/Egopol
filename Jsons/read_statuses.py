@@ -229,6 +229,8 @@ def gt_and_activity(folder, ego):
         for line in csv_reader:
             dict_gt[line[1]] = line[17]
 
+    print dict_gt
+
     result = {}
     for elem in dict_gt:
         result[elem] = (dict_gt[elem], dict_commenters[elem], dict_likers[elem])
