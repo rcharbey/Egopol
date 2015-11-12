@@ -2,7 +2,7 @@ import json
 import gzip
 from igraph import *
 import os
-sys.path.append('../Jsons')
+sys.path.append('./Jsons')
 import read_statuses
 import numpy as np
 
@@ -63,7 +63,7 @@ def gt_coloration(graph):
     if not os.path.isdir(path):
         os.mkdir(path)
 
-    dico = read_statuses.gt_and_activity('entretiens', '3eb987f1fd7d298e0548726fc516e8e0')
+    dico = read_statuses.gt_and_activity(folder, ego)
 
     palette = GradientPalette('grey', 'red', 5)
     quality = ['', 'comments', 'likes']
