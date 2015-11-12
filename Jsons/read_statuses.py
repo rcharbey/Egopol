@@ -234,23 +234,23 @@ def gt_and_activity(folder, ego):
     for elem in dict_gt:
         if not dict_gt[elem] in result:
             result[dict_gt[elem]] = (0, {}, {})
-        ln_sum = result[dict_gt[elem]][0]
         ln_com = result[dict_gt[elem]][1]
         ln_likes = result[dict_gt[elem]][2]
 
         for commenter in dict_commenters.get(elem, []):
+            nb_com = dict_commenters[elem][commenter]
             if not commenter in ln_com:
-                ln_com[commenter] = dict_commenters[elem][commenter]
+                ln_com[commenter] = nb_com
             else:
-                ln_com[commenter] += dict_commenters[elem][commenter]
-            ln_sum += dict_commenters[elem][commenter]
+                ln_com[commenter] += nb_com
+            result[dict_gt[elem]][0 += nb_com
 
         for liker in dict_likers.get(elem, []):
             if not liker in ln_likes:
                 ln_likes[liker] = 1
             else:
                 ln_likes[liker] += 1
-            ln_sum += 1
+            result[dict_gt[elem]][0 += 1
 
     new_result = {}
 
