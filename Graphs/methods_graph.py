@@ -2,7 +2,7 @@ import json
 import gzip
 from igraph import *
 import os
-sys.path.append('../Json')
+sys.path.append('../Jsons')
 import read_statuses
 import numpy as np
 
