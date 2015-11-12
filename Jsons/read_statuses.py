@@ -255,6 +255,7 @@ def gt_and_activity(folder, ego):
     new_result = {}
 
     for elem in result:
+        print result[elem]
         if result[elem][0] != 0:
             new_result[elem] = result[elem]
 
