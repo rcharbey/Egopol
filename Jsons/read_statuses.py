@@ -17,7 +17,7 @@ def print_list_of_commenters(folder, ego, list_of_friends):
     f = open_json(folder, ego)
     to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/list_of_commenters.json', 'w')
     cmters_already_seen = set()
-    
+
     for line in f:
         status = json.loads(line)
         if 'comments' in status:
@@ -35,8 +35,8 @@ def print_list_of_commenters(folder, ego, list_of_friends):
                     if commenter not in cmters_already_seen and commenter in list_of_friends:
                         cmters_already_seen.add(commenter)
     to_write.write(json.dumps([list_of_friends.index(e) for e in list(cmters_already_seen) if e != None]))
-    to_write.close()   
-    
+    to_write.close()
+
 def read_list_of_commenters(folder, ego):
     path = folder + '/' + ego
     f = open("GALLERY/"+path+"/Graphs/list_of_commenters.json", 'rb')
@@ -45,7 +45,7 @@ def read_list_of_commenters(folder, ego):
         return list_of_commenters
 
 def dict_of_commenters_per_status(folder, ego):
-    f = open_json(folder, ego)    
+    f = open_json(folder, ego)
     result = {}
 
     for line in f:
@@ -67,7 +67,7 @@ def dict_of_commenters_per_status(folder, ego):
     return result
 
 def dict_of_likers_per_status(folder, ego):
-    f = open_json(folder, ego)     
+    f = open_json(folder, ego)
     result = {}
 
     for line in f:
@@ -87,7 +87,7 @@ def dict_of_likers_per_status(folder, ego):
 
 def dict_of_likers_of_comments_per_status(folder, ego):
     path = folder +'/' + ego
-    f = open_json(folder, ego) 
+    f = open_json(folder, ego)
     result = {}
 
     for line in f:
@@ -117,12 +117,12 @@ def dict_of_likers_of_comments_per_status(folder, ego):
     return result
 
 def dict_of_mutual_commenters(folder, ego, list_of_friends):
-    f = open_json(folder, ego)    
+    f = open_json(folder, ego)
     result = {}
-    
+
     for friend in list_of_friends:
         result[friend] = []
-    
+
     for line in f:
         status = json.loads(line)
         if 'comments' in status:
@@ -139,13 +139,13 @@ def dict_of_mutual_commenters(folder, ego, list_of_friends):
                             commenter_2 = comment_2['from']['id']
                         if commenter_2 in list_of_friends and commenter_2 != commenter:
                             result[commenter].append(commenter_2)
-                            
+
     return result
 
 def calculate_info_commenters(folder, ego):
-    f = open_json(folder, ego) 
+    f = open_json(folder, ego)
     result = {}
-    
+
     for line in f:
         list_commenters_of_line = []
         status = json.loads(line)
@@ -170,13 +170,13 @@ def calculate_info_commenters(folder, ego):
                 else:
                     result[commenter] = {'nb_of_comments' : 1, 'nb_of_statuses' : 1}
                     list_commenters_of_line.append(commenter)
-                        
+
     return result
 
 def calculate_info_likers(folder, ego):
-    f = open_json(folder, ego) 
+    f = open_json(folder, ego)
     result = {}
-    
+
     for line in f:
         status = json.loads(line)
         if 'likes' in status:
@@ -189,17 +189,17 @@ def calculate_info_likers(folder, ego):
                     result[liker] += 1
                 else:
                     result[liker] = 1
-                        
+
     return result
 
 def calculate_info_likers_of_comment(folder, ego):
-    f = open_json(folder, ego) 
+    f = open_json(folder, ego)
     result = {}
     for line in f:
         status = json.loads(line)
         if 'comments' in status:
             for comment in status['comments']:
-                if 'likes' in comment: 
+                if 'likes' in comment:
                     for like in comment['likes']:
                         if 'name' in like:
                             liker = like['name']
@@ -212,8 +212,26 @@ def calculate_info_likers_of_comment(folder, ego):
     return result
 
 def find_status(folder, ego, id):
-    f = open_json(folder, ego) 
+    f = open_json(folder, ego)
     for line in f:
         status = json.loads(line)
         if status['id'] == id:
             return status
+
+def gt_and_activity(folder, ego):
+    dict_commenters = dict_of_commenters_per_status(folder, ego)
+    dict_likers = dict_of_likers_per_status(folder, ego)
+
+    dict_gt = {}
+    with open('%s/statuses-csv/%s.csv' % (os.path.expanduser("~"), ego), 'r') as reader:
+        csv_reader = csv.reader(reader, delimiter = ';')
+        for line in csv_reader:
+            dict_gt[line[1]] = line[17]
+
+    result = {}
+    for elem in dict_gt:
+        result[elem] = (dict_gt[elem], dict_commenters[elem], dict_likers[elem])
+
+    return result
+
+print gt_and_activity('entretiens', 'Amine')

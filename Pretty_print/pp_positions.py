@@ -11,6 +11,19 @@ def int_to_colors(i):
     colors = [['blue'], ['black', 'red'], ['black', 'green', 'red'], ['black', 'blue', 'green', 'red']]
     return colors[i-1]
 
+def find_index_of_extracted_friends(folder, ego, list_of_names):
+    path = 'GALLERY/%s/%s/Graphs/correspondence_table' % (folder, ego)
+    if not os.path.isfile(path):
+        return
+    i = 0
+    result = []
+    with open(path) as correspondance_table:
+        for line in correspondance_table:
+            if line[0:-1] in list_of_names:
+                result.append(i)
+            i += 1
+    return result
+
 def read_enumeration(path, quality, extraction = False):
     """
         read_enumeration returns the enumeration of positions in the file path+quality.csv
@@ -23,13 +36,20 @@ def read_enumeration(path, quality, extraction = False):
         reader = csv.reader(f, delimiter=';')
         return [line for line in reader]
 
-def read_proportion(path, quality, extraction = False):
-    file_to_read = path+'CSV/proportion_positions_'+quality+'.csv' if not extraction else path+'CSV/proportion_extracted.csv'
+def read_proportion(path, quality, list_of_extracted = []):
+    file_to_read = path+'CSV/proportion_positions_'+quality+'.csv'
     if not os.path.isfile(file_to_read):
         return -1
+    if list_of_extracted:
+        path_list = path.split('/')
+        list_index = find_index_of_extracted_friends(path_list[1], path_list[2], list_of_extracted)
     reader = csv.reader(open(file_to_read, 'rb'), delimiter=';')
     result = []
+    i = -1
     for line in reader:
+        i += 1
+        if list_of_extracted and not i in list_index:
+            continue
         result.append(line)
     return result
 
@@ -152,7 +172,7 @@ def pretty_print_extraction(path, path_images):
     for elem in enumeration:
         colors_enumeration.append(utilities.create_list_colors(elem))
 
-    proportion = read_proportion(path, '', True)
+    proportion = read_proportion(path, 'friends', list_names)
     if proportion != -1:
         colors_proportion = []
         for elem in proportion:

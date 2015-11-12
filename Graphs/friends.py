@@ -34,7 +34,7 @@ def create_graph(dict_of_mutual, correspondance, folder, ego):
 
 def light_graph(dict_of_mutual, folder, ego, induced = False):
     """
-    this function create a file representing the frienship graph with an edge per line 
+    this function create a file representing the frienship graph with an edge per line
     and a correspondence_table between the friends and their id
     """
     patch = ''
@@ -53,21 +53,21 @@ def light_graph(dict_of_mutual, folder, ego, induced = False):
                 file_to_write.write(str(id_neighbor)+'\n')
             if id_neighbor > id_friend:
                 graph_to_write.write(str(table.index(id_friend)) + ' ' + str(table.index(id_neighbor)) + '\n')
-    graph_to_write.close()   
-    
+    graph_to_write.close()
+
 def display_light(graph, show = True, fc = False):
     graph.es['curved'] = 0.3
-    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)   
+    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
     for v in graph.vs:
         v['size'] = 10
-        v['label'] = v.index  
+        v['label'] = v.index
     if fc:
         patch = '_fc'
     else:
         patch = ''
     place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/light_graph'+patch+'.svg'
     if socket.gethostname() != 'ccadovir01':
-        plot(graph, place, layout = layout)  
+        plot(graph, place, layout = layout)
     visual_style = {}
     visual_style['layout'] = layout
     visual_style['vertex_label_dist'] = 1
@@ -76,7 +76,7 @@ def display_light(graph, show = True, fc = False):
 
 def draw_graph(graph):
     graph.es['curved'] = 0.3
-    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)         
+    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
     place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends_comments_likes.svg'
     for v in graph.vs:
         v['size'] = 10*math.log(2+v['sum_comments_likes'])
@@ -87,7 +87,7 @@ def draw_graph(graph):
     for v in graph.vs:
         v['size'] = 10
         v['label'] = None
-        
+
     place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends_degree.svg'
     for v in graph.vs:
         v['size'] = 10*math.log(2+v.degree())
@@ -98,7 +98,7 @@ def draw_graph(graph):
     for v in graph.vs:
         v['size'] = 10
         v['label'] = None
-        
+
     place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends_degree_comments_likes.svg'
     max_sum = 0
     for v in graph.vs:
@@ -123,10 +123,10 @@ def draw_graph(graph):
     for v in graph.vs:
         v['size'] = 10
         v['label'] = None
-      
+
 def write_graph(graph, induced = False):
     graph.write('GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.gml', format = 'gml')
-    
+
 def import_graph(folder, ego, graph_format, fc = False):
     if graph_format == 'edgelist':
         if fc:
@@ -144,7 +144,7 @@ def induced_graph(graph, id_status, list_of_vertices):
     induced.es['curved'] = 0.3
     folder = graph['folder']
     ego = graph['ego']
-        
+
     layout = induced.layout_fruchterman_reingold(repulserad = len(induced.vs)**3)
     if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/Statuses/'+id_status):
         os.mkdir('GALLERY/'+folder+'/'+ego+'/Statuses/'+id_status)

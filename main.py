@@ -13,12 +13,12 @@ import main_enumeration
 import main_graphs
 import main_jsons
 import csv
-import pretty_print
+import main_pretty_print
 import main_indicators
 
 def create_folders(folder, ego):
     for path in [
-        'GALLERY/', 
+        'GALLERY/',
         'GALLERY/' + folder,
         'GALLERY/' + folder + '/'+ ego,
         'GALLERY/' + folder + '/'+ ego + '/Graphs',
@@ -32,7 +32,7 @@ def create_folders(folder, ego):
         'GALLERY/General']:
         if not os.path.isdir(path):
             os.mkdir(path)
-            
+
 def induced_graph_friends(args):
     folder = args.folder
     ego = args.ego
@@ -69,14 +69,13 @@ def init(args):
         return main_graphs.create_friends_graph(mutual_friends, correspondence, args.folder, args.ego)
     else:
         return None
-    
+
 def enumerate(args, quality, graph_format = 'gml', induced = False):
     """
        enumerate imports the graph from the ml file created by init and runs the enumeration algo on it.
        once the result shows up, it prints it in two differents csv files. One for the patterns and the other for the positions.
     """
     graph = main_graphs.import_graph(args.folder, args.ego, quality, graph_format, induced)
-    return
     enumeration = main_enumeration.main(graph, {})
     path = 'GALLERY/'+args.folder+'/'+args.ego+'/Enumeration/CSV/'
     if induced:
@@ -96,7 +95,7 @@ def display(args):
         init_light(args)
     graph = main_graphs.import_graph(args.folder, args.ego, 'friends', 'edgelist')
     main_graphs.display_light(graph)
-  
+
 print str(args.folder) + ' ' + str(args.ego) + ' ' + str(args.options)
 create_folders(args.folder, args.ego)
 
@@ -113,12 +112,12 @@ if args.options != None:
         else:
             enumerate(args, 'friends')
             enumerate(args, 'commenters')
-            
+
     elif 'indu' in args.options:
         induced_graph_friends(args)
     if 'indicators' in args.options:
         main_indicators.main(args.folder, args.ego)
-    
+
 else:
     graph_friends = init(args)
     if graph_friends != None :

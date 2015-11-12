@@ -1,7 +1,7 @@
 import os
-import csv    
+import csv
 import sys
- 
+
 def read_csv(name):
     if not os.path.isfile(name):
         return [0]*30
@@ -21,7 +21,7 @@ def refresh_aggregation(name, patterns_enumeration):
     csv_file = open(name, 'wb')
     writer = csv.writer(csv_file, delimiter=';')
     writer.writerow(new_aggregation)
-    
+
 def aggregate(quality):
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     if os.path.isfile('GALLERY/aggregation_patterns_'+quality+'.csv'):
@@ -30,7 +30,7 @@ def aggregate(quality):
     writer = csv.writer(csv_file, delimiter=';')
     writer.writerow([0]*30)
     csv_file.close()
-    for folder in list_folders: 
+    for folder in list_folders:
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
             if os.path.isfile('GALLERY/'+folder+'/'+ego + '/Enumeration/CSV/patterns_'+quality+'.csv'):
@@ -38,11 +38,11 @@ def aggregate(quality):
             else:
                 continue
             refresh_aggregation('GALLERY/aggregation_patterns_'+quality+'.csv', patterns_enumeration)
-       
+
 def aggregate_status(quality):
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
-    os.remove('GALLERY/aggregation_patterns_'+quality+'.csv',) 
-    for folder in list_folders: 
+    os.remove('GALLERY/aggregation_patterns_'+quality+'.csv',)
+    for folder in list_folders:
         dirname = 'GALLERY/'+folder
         list_ego = [f for f in os.listdir(dirname) if os.path.isdir(os.path.join(dirname, f))]
         for ego in list_ego:
@@ -55,7 +55,7 @@ def aggregate_status(quality):
                 patterns_enumeration = read_csv(path+'/statuses/'+status+'/patterns_'+quality+'.csv')
                 refresh_aggregation('GALLERY/aggregation_patterns_'+quality+'.csv', patterns_enumeration)
                 refresh_aggregation(path+'/statuses/aggregation_patterns_'+quality+'.csv', patterns_enumeration)
-       
+
 def calculate_sum(patterns_enumeration):
     result = [0,0,0,0]
     result[0] = int(patterns_enumeration[0])
@@ -68,7 +68,7 @@ def calculate_sum(patterns_enumeration):
 
 def calculate_proportions_list(aggregation, patterns_enumeration, sum_agreg, sum_current):
     result = []
-        
+
     if sum_current != 0 and sum_agreg != 0:
         for i in range(0, len(patterns_enumeration)):
             prop_pattern_current = int(patterns_enumeration[i])/float(sum_current)
@@ -79,21 +79,21 @@ def calculate_proportions_list(aggregation, patterns_enumeration, sum_agreg, sum
                 result.append(0)
     else:
         result = [0]*len(patterns_enumeration)
-    
+
     return result
 
 
 def calculate_proportion(aggregation, patterns_enumeration):
     result = []
-    
+
     tab_agreg = calculate_sum(aggregation)
     tab_current = calculate_sum(patterns_enumeration)
-    
+
     result.extend(calculate_proportions_list([aggregation[0]], [patterns_enumeration[0]], tab_agreg[0], tab_current[0]))
     result.extend(calculate_proportions_list(aggregation[1:3], patterns_enumeration[1:3], tab_agreg[1], tab_current[1]))
     result.extend(calculate_proportions_list(aggregation[3:9], patterns_enumeration[3:9], tab_agreg[2], tab_current[2]))
     result.extend(calculate_proportions_list(aggregation[9:30], patterns_enumeration[9:30], tab_agreg[3], tab_current[3]))
-    
+
     return result
 
 def add_aggregation_data(folder, ego, quality, statuses = False):
@@ -114,13 +114,11 @@ def add_aggregation_data(folder, ego, quality, statuses = False):
     writer = csv.writer(csv_enumeration, delimiter = ';')
     writer.writerow(enumeration)
     writer.writerow(proportion)
-    
+
 def add_aggregation_data_all():
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders:
         if folder in ['PATTERNS', 'Info_per_carac', 'Info-alters', 'Test']:
-            continue
-        if folder != 'entretiens':
             continue
         dirname = 'GALLERY/'+folder
         list_ego = [f for f in os.listdir(dirname) if os.path.isdir(os.path.join(dirname, f))]
