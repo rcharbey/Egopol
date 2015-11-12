@@ -234,4 +234,4 @@ def gt_and_activity(folder, ego):
 
     return result
 
-print gt_and_activity('entretiens', 'Amine')
+print gt_and_activity('entretiens', '3eb987f1fd7d298e0548726fc516e8e0')
