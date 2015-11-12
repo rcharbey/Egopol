@@ -235,22 +235,32 @@ def gt_and_activity(folder, ego):
     result = {}
     for elem in dict_gt:
         if not dict_gt[elem] in result:
-            result[dict_gt[elem]] = ({}, {})
-        ln_com = result[dict_gt[elem]][0]
-        ln_likes = result[dict_gt[elem]][1]
+            result[dict_gt[elem]] = (0, {}, {})
+        ln_sum = result[dict_gt[elem]][0]
+        ln_com = result[dict_gt[elem]][1]
+        ln_likes = result[dict_gt[elem]][2]
 
         for commenter in dict_commenters.get(elem, []):
             if not commenter in ln_com:
                 ln_com[commenter] = dict_commenters[elem][commenter]
             else:
                 ln_com[commenter] += dict_commenters[elem][commenter]
+            ln_sum += dict_commenters[elem][commenter]
 
         for liker in dict_likers.get(elem, []):
             if not liker in ln_likes:
                 ln_likes[liker] = 1
             else:
                 ln_likes[liker] += 1
+            ln_sum += 1
 
-    return result
+    new_result = {}
+
+    for elem in result:
+        if result[elem][0] != 0:
+            new_result[elem] = result[elem]
+
+
+    return new_result
 
 print gt_and_activity('entretiens', '3eb987f1fd7d298e0548726fc516e8e0')
