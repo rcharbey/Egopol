@@ -226,7 +226,7 @@ def gt_and_activity(folder, ego):
     dict_gt = {}
     with open('%s/statuses-csv/%s.csv' % (os.path.expanduser("~"), ego), 'r') as reader:
         csv_reader = csv.reader(reader, delimiter = ';')
-        csv_reader.nextLine()
+        csv_reader.next()
         for line in csv_reader:
             dict_gt[line[2]] = line[16]
 
