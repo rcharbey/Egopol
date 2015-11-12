@@ -243,6 +243,7 @@ def gt_and_activity(folder, ego):
                 ln_com[commenter] = nb_com
             else:
                 ln_com[commenter] += nb_com
+            print result[dict_gt[elem]][0]
             result[dict_gt[elem]][0] += nb_com
 
         for liker in dict_likers.get(elem, []):
