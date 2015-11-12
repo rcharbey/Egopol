@@ -65,14 +65,14 @@ def gt_coloration(graph):
 
     dico = read_statuses.gt_and_activity(folder, ego)
 
-    palette = GradientPalette('grey', 'red', 5)
+    palette = GradientPalette('grey', 'red', 6)
     quality = ['', 'comments', 'likes']
 
     for gt in dico:
         for i in range(1,3):
             current_dico = dico[gt][i]
-            print np.array(current_dico.values())
-            quintiles = np.percentile(np.array(current_dico.values()), np.arange(0, 100, 20))
+            quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 40, 50, 60, 80, 100]]
+            quintiles = , np.arange(0, 100, 20))
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
                 for threshold in quintile:
