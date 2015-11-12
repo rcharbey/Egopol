@@ -232,7 +232,7 @@ def gt_and_activity(folder, ego):
     print dict_gt
 
     result = {}
-    for elem in dict_gt:
+    for elem in dict_commenters:
         result[elem] = (dict_gt[elem], dict_commenters[elem], dict_likers[elem])
 
     return result
