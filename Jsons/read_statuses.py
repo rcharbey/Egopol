@@ -226,14 +226,15 @@ def gt_and_activity(folder, ego):
     dict_gt = {}
     with open('%s/statuses-csv/%s.csv' % (os.path.expanduser("~"), ego), 'r') as reader:
         csv_reader = csv.reader(reader, delimiter = ';')
+        csv_reader.nextLine()
         for line in csv_reader:
-            dict_gt[line[2]] = line[17]
+            dict_gt[line[2]] = line[16]
 
     print dict_gt
 
     result = {}
-    for elem in dict_commenters:
-        result[elem] = (dict_gt[elem], dict_commenters[elem], dict_likers[elem])
+    for elem in dict_gt:
+        result[elem] = (dict_gt[elem], dict_commenters.get(elem, 0), dict_likers.get(elem, 0))
 
     return result
 
