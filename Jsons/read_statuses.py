@@ -3,6 +3,7 @@
 import gzip
 import json
 import os
+import csv
 
 def open_json(folder, ego):
     path = folder +'/' + ego
