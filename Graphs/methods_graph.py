@@ -68,6 +68,8 @@ def gt_coloration(graph):
     palette = GradientPalette('grey', 'red', 6)
     quality = ['', 'comments', 'likes']
 
+    print palette
+
     for gt in dico:
         for i in range(1,3):
             current_dico = dico[gt][i]
@@ -77,7 +79,6 @@ def gt_coloration(graph):
                 for threshold in quintiles:
                     if value <= threshold:
                         v['color'] = palette.get(threshold)
-            print palette
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 
