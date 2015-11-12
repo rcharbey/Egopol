@@ -230,8 +230,6 @@ def gt_and_activity(folder, ego):
         for line in csv_reader:
             dict_gt[line[2]] = line[16]
 
-    print dict_gt
-
     result = {}
     for elem in dict_gt:
         if not dict_gt[elem] in result:
@@ -260,6 +258,7 @@ def gt_and_activity(folder, ego):
         if result[elem][0] != 0:
             new_result[elem] = result[elem]
 
+    print new_result
 
     return new_result
 
