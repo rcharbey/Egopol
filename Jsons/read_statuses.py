@@ -234,7 +234,22 @@ def gt_and_activity(folder, ego):
 
     result = {}
     for elem in dict_gt:
-        result[elem] = (dict_gt[elem], dict_commenters.get(elem, 0), dict_likers.get(elem, 0))
+        if not dict_gt[elem] in result:
+            result[dict_gt[elem]] = ({}, {})
+        ln_com = result[dict_gt[elem]][0]
+        ln_likes = result[dict_gt[elem]][1]
+
+        for commenter in dict_commenters.get(elem, []):
+            if not commenter in ln_com:
+                ln_com[commenter] = dict_commenters[elem][commenter]
+            else:
+                ln_com[commenter] += dict_commenters[elem][commenter]
+
+        for liker in dict_likers.get(elem, []):
+            if not liker in ln_likes:
+                ln_likes[liker] = 1
+            else:
+                ln_likes[liker] += 1
 
     return result
 
