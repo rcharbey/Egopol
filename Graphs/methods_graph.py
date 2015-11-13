@@ -73,6 +73,10 @@ def gt_coloration(graph):
     for gt in dico:
         for i in range(1,3):
             current_dico = dico[gt][i]
+            print gt,
+            print ' : '
+            print dico[gt]
+            print current_dico
             if len(current_dico) < 5:
                 continue
             quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 40, 50, 60, 80, 100]]
