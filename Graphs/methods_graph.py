@@ -78,7 +78,7 @@ def gt_coloration(graph):
                 value = current_dico.get(v['name'], 0)
                 for threshold in quintiles:
                     if value <= threshold:
-                        v['color'] = palette[quintiles.index(threshold)]
+                        v['palette'] = palette[quintiles.index(threshold)]
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
@@ -89,7 +89,10 @@ def display_gt_coloration(folder, ego):
         graph.es['curved'] = 0.3
         layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
         place = '%s/%s.svg' % (path, graph_path[0:-4])
-        plot(graph, place, layout = layout)
+        for v in graph.vs:
+            print v
+            print v['color']
+        plot(graph, place, layout = layout, vertex_color = [v['color'] for v in graph.vs])
 
 
 
