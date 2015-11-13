@@ -12,7 +12,13 @@ from igraph import *
 def write_figure(file_html, path_img, gt, nb_statuses, nb_qual, qual):
     if os.path.isfile(path_img):
         file_html.write('\
-            <figure> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <image xlink:href="%s" width="70" height = "70" alt="image" /> </svg>  <figcaption> %s %s statuts %s %s </figcaption> </figures>' % (path_img, gt, nb_statuses, nb_qual, qual))
+<figure> \n \
+    <object data="%s" type="image/svg+xml"> \n \
+    </object> \n \
+    <figcaption> \n \
+        %s %s statuts %s %s \n \
+    </figcaption> \n \
+</figure> \n' % (path_img, gt, nb_statuses, nb_qual, qual))
 
 def pretty_print(folder, ego):
 
