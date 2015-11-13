@@ -71,7 +71,7 @@ def gt_coloration(graph):
     quality = ['', '', 'comments', 'likes']
 
     for gt in dico:
-        for i in range(2,4):
+        for i in range(3,5):
             current_dico = dico[gt][i]
             if dico[gt][i-2] < 5:
                 continue
@@ -85,6 +85,9 @@ def gt_coloration(graph):
                     if value <= threshold:
                         v['color'] = palette[quintiles.index(threshold)]
                         continue
+            graph['nb_statuses'] = dico[gt][0]
+            graph['nb_comments'] = dico[gt][1]
+            graph['nb_likes'] = dico[gt][2]
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
@@ -94,7 +97,7 @@ def display_gt_coloration(folder, ego):
         graph = graph = Graph.Read_GML('%s/%s' % (path,graph_path))
         graph.es['curved'] = 0.3
         layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
-        place = '%s/%s.svg' % (path, graph_path[0:-4])
+        place = '%s/SVG/%s.svg' % (path, graph_path[0:-4])
         plot(graph, place, layout = layout, vertex_color = [v['color'] for v in graph.vs])
 
 

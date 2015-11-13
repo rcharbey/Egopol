@@ -123,6 +123,7 @@ if args.options != None:
         main_graphs.gt_coloration(args.folder, args.ego)
     elif 'gt_display' in args.options:
         main_graphs.display_gt_coloration(args.folder, args.ego)
+        main_pretty_print.gt_pretty_print(args.folder, args.ego)
 
 else:
     graph_friends = init(args)

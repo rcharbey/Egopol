@@ -5,9 +5,13 @@ sys.path.append('./Pretty_print')
 import pp_patterns
 import pp_positions
 import main_jsons
+import pp_gt_graphs
 
 def extract_friends(folder, ego):
     pp_positions.pretty_print_extraction('GALLERY/%s/%s/Enumeration/' % (folder, ego), '../../../../PATTERNS')
+
+def gt_pretty_print(folder, ego):
+    pp_gt_graphs.pretty_print(folder, ego)
 
 def main():
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
