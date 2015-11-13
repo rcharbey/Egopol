@@ -80,7 +80,7 @@ def gt_coloration(graph):
             quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 50, 75, 100]]
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
-                if value == 0:
+                if int(value) == 0:
                     v['color'] = 'white'
                     break
                 for threshold in quintiles:
