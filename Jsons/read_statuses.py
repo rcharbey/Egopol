@@ -233,9 +233,9 @@ def gt_and_activity(folder, ego):
     result = {}
     for elem in dict_gt:
         if not dict_gt[elem] in result:
-            result[dict_gt[elem]] = [0, {}, {}]
-        ln_com = result[dict_gt[elem]][1]
-        ln_likes = result[dict_gt[elem]][2]
+            result[dict_gt[elem]] = [0, 0, {}, {}]
+        ln_com = result[dict_gt[elem]][2]
+        ln_likes = result[dict_gt[elem]][3]
 
         for commenter in dict_commenters.get(elem, []):
             nb_com = dict_commenters[elem][commenter]
@@ -250,12 +250,12 @@ def gt_and_activity(folder, ego):
                 ln_likes[liker] = 1
             else:
                 ln_likes[liker] += 1
-            result[dict_gt[elem]][0] += 1
+            result[dict_gt[elem]][1] += 1
 
     new_result = {}
 
     for elem in result:
-        if result[elem][0] >= 5:
+        if result[elem][0] >= 5 or result[elem][1] >= 5:
             new_result[elem] = result[elem]
 
     return new_result

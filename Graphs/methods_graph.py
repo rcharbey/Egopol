@@ -71,14 +71,14 @@ def gt_coloration(graph):
     quality = ['', 'comments', 'likes']
 
     for gt in dico:
-        for i in range(1,3):
+        for i in range(2,4):
             current_dico = dico[gt][i]
             print gt,
             print ' : '
             print dico[gt]
             print current_dico
             print
-            if len(current_dico) < 5:
+            if dico[gt][i-2] < 5:
                 continue
             quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 40, 50, 60, 80, 100]]
             for v in graph.vs:
