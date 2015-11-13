@@ -53,4 +53,7 @@ def display_light(graph, show = True, fc = False):
 def gt_coloration(folder, ego):
     methods_graph.gt_coloration(import_graph(folder, ego, 'friends'))
 
+def display_gt_coloration(folder, ego):
+    methods_graph.display_gt_coloration(folder, ego)
+
 

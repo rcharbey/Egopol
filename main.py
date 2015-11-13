@@ -121,6 +121,8 @@ if args.options != None:
 
     elif 'gt_coloration' in args.options:
         main_graphs.gt_coloration(args.folder, args.ego)
+    elif 'gt_display' in args.options:
+        main_graphs.display_gt_coloration(args.folder, args.ego)
 
 else:
     graph_friends = init(args)

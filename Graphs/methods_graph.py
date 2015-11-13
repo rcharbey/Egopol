@@ -5,6 +5,7 @@ import os
 sys.path.append('./Jsons')
 import read_statuses
 import numpy as np
+import friends
 
 def create_list_neighbors(graph):
     for v in graph.vs:
@@ -68,8 +69,6 @@ def gt_coloration(graph):
     palette = GradientPalette('grey', 'red', 6)
     quality = ['', 'comments', 'likes']
 
-    print palette
-
     for gt in dico:
         for i in range(1,3):
             current_dico = dico[gt][i]
@@ -78,8 +77,19 @@ def gt_coloration(graph):
                 value = current_dico.get(v['name'], 0)
                 for threshold in quintiles:
                     if value <= threshold:
+                        print 'color'
                         v['color'] = palette._get(threshold)
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
+
+def display_gt_coloration(folder, ego):
+    path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
+    graphs_list = [graph for graph in os.listdir(path) if os.path.isfile(os.path.join(path,graph))]
+    for graph_path in graphs_list:
+        graph = friends.import_graph(folder, ego, 'gml')
+        graph.es['curved'] = 0.3
+        layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
+        place = '%s/%s.svg' % (path, graph_path[0:-4])
+        plot(graph, place, layout = layout)
 
 
 
