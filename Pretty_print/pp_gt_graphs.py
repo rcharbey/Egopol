@@ -14,22 +14,18 @@ def pretty_print(folder, ego):
     path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
 
     graphs_list = [graph for graph in os.listdir(path) if os.path.isfile(os.path.join(path,graph))]
-    graph_infos = []
-    for graph_path in graphs_list:
-        graph = graph = Graph.Read_GML('%s/%s' % (path,graph_path))
-        graph_infos.append(
-            ( graph_path,
-              graph['nbstatuses'],
-              graph['nbcomments'],
-              graph['nblikes']))
-
-    graph_infos.sort(key=lambda gt: gt[1], reverse=True)
 
     qualities = ['comments', 'likes']
 
-    with open('%s/pretty_print.html' % path) as file_html:
+    file_with_info = open('%s/infos.txt' % path)
+    infos = []
+    for line in file_with_info:
+        info.append(line.split(' '))
+    info.sort(key=lambda gt: gt[1], reverse=True)
+
+    with open('%s/pretty_print.html' % path, 'w') as file_html:
         utilities.print_begin(file_html)
-        for gt in graph_infos:
+        for gt in infos:
             for quality in qualities:
                 path_img = '%s/SVG/%s_%s.svg' % (path, gt[0], quality)
                 if os.path.isfile(path_img):

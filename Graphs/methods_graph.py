@@ -70,6 +70,8 @@ def gt_coloration(graph):
     palette = ['blue', 'cyan1', 'cyan2', 'cyan3', 'cyan4']
     quality = ['', '', '', 'comments', 'likes']
 
+    file_with_info = open('%s/infos.txt' % path, 'w')
+
     for gt in dico:
         for i in range(3,5):
             current_dico = dico[gt][i]
@@ -85,9 +87,7 @@ def gt_coloration(graph):
                     if value <= threshold:
                         v['color'] = palette[quintiles.index(threshold)]
                         continue
-            graph['nbstatuses'] = dico[gt][0]
-            graph['nbcomments'] = dico[gt][1]
-            graph['nblikes'] = dico[gt][2]
+            file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
