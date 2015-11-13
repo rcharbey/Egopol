@@ -87,7 +87,8 @@ def gt_coloration(graph):
             print quintiles
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
-                print value
+                print value,
+                print ' : ',
                 for threshold in quintiles:
                     if value <= threshold:
                         print threshold
