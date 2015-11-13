@@ -74,11 +74,10 @@ def gt_coloration(graph):
         for i in range(1,3):
             current_dico = dico[gt][i]
             quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 40, 50, 60, 80, 100]]
-            print quintiles
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
                 for threshold in quintiles:
-                    if value <= threshold:
+                    if value < threshold:
                         v['color'] = palette[quintiles.index(threshold)]
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
