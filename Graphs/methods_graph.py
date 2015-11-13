@@ -79,6 +79,7 @@ def gt_coloration(graph):
                     if value <= threshold:
                         v['color'] = palette._get(threshold)
                         print v['color']
+                        v['coucou'] = 'coucou'
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
