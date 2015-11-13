@@ -6,7 +6,7 @@ def image(path_to_images, i, file_html, rowspan = 1):
     if i+1 < 10:
         file_html.write('0')
     file_html.write(str(i+1)+'"></td>')
-    
+
 def appearance(number, file_html, color):
     file_html.write('<td class="nb" style = "color:rgb')
     if number == '0':
@@ -15,12 +15,12 @@ def appearance(number, file_html, color):
         file_html.write(color)
     file_html.write('">'+str(number))
     file_html.write('</td>')
-    
+
 def create_list_colors(table):
     temp = []
     for elem in table:
         temp.append(elem)
-        
+
     colors = []
     prev_max = None
     suppressed_elem = 0
@@ -36,7 +36,7 @@ def create_list_colors(table):
                 colors[len(colors) - 1].append(i)
                 suppressed_elem += 1
         prev_max = maximum
-    
+
     result = [0]*len(table)
     for j in range(0, len(colors)):
         for color in colors[j]:
@@ -48,7 +48,7 @@ def create_list_colors(table):
             else:
                 str_red = str(red)
             result[color] = '('+str_red+',0,0)'
-   
+
     return result
 
 def print_begin(fichier):

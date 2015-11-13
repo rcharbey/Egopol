@@ -87,14 +87,16 @@ def gt_coloration(graph):
                     if value <= threshold:
                         v['color'] = palette[quintiles.index(threshold)]
                         continue
-            file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
+        file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
 
 def display_gt_coloration(folder, ego):
     path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
     graphs_list = [graph for graph in os.listdir(path) if os.path.isfile(os.path.join(path,graph))]
     for graph_path in graphs_list:
-        graph = graph = Graph.Read_GML('%s/%s' % (path,graph_path))
+        if 'txt' in graph_path:
+            continue
+        graph = Graph.Read_GML('%s/%s' % (path,graph_path))
         graph.es['curved'] = 0.3
         layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
         place = '%s/SVG/%s.svg' % (path, graph_path[0:-4])

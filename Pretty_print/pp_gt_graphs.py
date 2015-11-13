@@ -9,6 +9,11 @@ import utilities
 import os
 from igraph import *
 
+def write_figure(file_html, path_img, gt, nb_statuses, nb_qual, qual):
+    if os.path.isfile(path_img):
+        file_html.write('\
+            <figure> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <image xlink:href="%s" width="70" height = "70" alt="image" /> </svg>  <figcaption> %s %s statuts %s %s </figcaption> </figures>' % (path_img, gt, nb_statuses, nb_qual, qual))
+
 def pretty_print(folder, ego):
 
     path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
@@ -20,16 +25,15 @@ def pretty_print(folder, ego):
     file_with_info = open('%s/infos.txt' % path)
     infos = []
     for line in file_with_info:
-        info.append(line.split(' '))
-    info.sort(key=lambda gt: gt[1], reverse=True)
+        infos.append(line[0:-1].split(' '))
+    infos.sort(key=lambda gt: gt[1], reverse=True)
 
     with open('%s/pretty_print.html' % path, 'w') as file_html:
         utilities.print_begin(file_html)
         for gt in infos:
+            print gt
             for quality in qualities:
                 path_img = '%s/SVG/%s_%s.svg' % (path, gt[0], quality)
-                if os.path.isfile(path_img):
-                    file_html.write('<figure><img src="%s" width="70" height = "70" alt="image /><figcaption>%s %s statuts %s %s</figcaption>' \
-                                    % (path_img, gt[0], gt[1], gt[2+[qualities.index[quality]]], quality))
+                write_figure(file_html, path_img, gt[0], gt[1], gt[2+qualities.index(quality)], quality)
 
 
