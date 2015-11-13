@@ -89,7 +89,6 @@ def display_gt_coloration(folder, ego):
         graph.es['curved'] = 0.3
         layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
         place = '%s/%s.svg' % (path, graph_path[0:-4])
-        for v in graph.vs:
         plot(graph, place, layout = layout, vertex_color = [v['color'] for v in graph.vs])
 
 
