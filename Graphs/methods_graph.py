@@ -71,8 +71,6 @@ def gt_coloration(graph):
     quality = ['', '', 'comments', 'likes']
 
     for gt in dico:
-        if not 'ALienSecE' in gt:
-            continue
         for i in range(2,4):
             current_dico = dico[gt][i]
             if dico[gt][i-2] < 5:
@@ -80,15 +78,13 @@ def gt_coloration(graph):
             quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 50, 75, 100]]
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
-                print value
                 if int(value) == 0:
-                    print 'hey'
                     v['color'] = 'white'
-                    break
+                    continue
                 for threshold in quintiles:
                     if value <= threshold:
                         v['color'] = palette[quintiles.index(threshold)]
-                        break
+                        continue
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
