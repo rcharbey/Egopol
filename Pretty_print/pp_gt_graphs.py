@@ -19,9 +19,9 @@ def pretty_print(folder, ego):
         graph = graph = Graph.Read_GML('%s/%s' % (path,graph_path))
         graph_infos.append(
             ( graph_path,
-              graph['nb_statuses'],
-              graph['nb_comments'],
-              graph['nb_likes']))
+              graph['nbstatuses'],
+              graph['nbcomments'],
+              graph['nblikes']))
 
     graph_infos.sort(key=lambda gt: gt[1], reverse=True)
 

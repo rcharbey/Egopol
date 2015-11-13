@@ -85,9 +85,9 @@ def gt_coloration(graph):
                     if value <= threshold:
                         v['color'] = palette[quintiles.index(threshold)]
                         continue
-            graph['nb_statuses'] = dico[gt][0]
-            graph['nb_comments'] = dico[gt][1]
-            graph['nb_likes'] = dico[gt][2]
+            graph['nbstatuses'] = dico[gt][0]
+            graph['nbcomments'] = dico[gt][1]
+            graph['nblikes'] = dico[gt][2]
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
