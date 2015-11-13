@@ -67,7 +67,7 @@ def gt_coloration(graph):
 
     dico = read_statuses.gt_and_activity(folder, ego)
 
-    palette = GradientPalette('grey', 'red', 6)
+    palette = ['cyan', 'cyan1', 'cyan2', 'cyan3', 'cyan4', 'dark blue']
     quality = ['', 'comments', 'likes']
 
     for gt in dico:
@@ -78,7 +78,7 @@ def gt_coloration(graph):
                 value = current_dico.get(v['name'], 0)
                 for threshold in quintiles:
                     if value <= threshold:
-                        v['color'] = known_colors[palette._get(threshold)]
+                        v['color'] = palette.get(threshold)
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
