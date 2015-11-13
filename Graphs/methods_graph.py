@@ -67,7 +67,7 @@ def gt_coloration(graph):
 
     dico = read_statuses.gt_and_activity(folder, ego)
 
-    palette = ['blue', 'cyan1', 'cyan2', 'cyan3', 'cyan4', 'dark blue']
+    palette = ['white', 'blue', 'cyan1', 'cyan2', 'cyan3', 'cyan4']
     quality = ['', 'comments', 'likes']
 
     for gt in dico:
@@ -78,20 +78,18 @@ def gt_coloration(graph):
                 value = current_dico.get(v['name'], 0)
                 for threshold in quintiles:
                     if value <= threshold:
-                        v['palette'] = palette[quintiles.index(threshold)]
+                        v['color'] = palette[quintiles.index(threshold)]
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
     path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
     graphs_list = [graph for graph in os.listdir(path) if os.path.isfile(os.path.join(path,graph))]
     for graph_path in graphs_list:
-        graph = friends.import_graph(folder, ego, 'gml')
+        graph = graph = Graph.Read_GML('%s/%s' % (path,graph_path))
         graph.es['curved'] = 0.3
         layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
         place = '%s/%s.svg' % (path, graph_path[0:-4])
         for v in graph.vs:
-            print v
-            print v['color']
         plot(graph, place, layout = layout, vertex_color = [v['color'] for v in graph.vs])
 
 
