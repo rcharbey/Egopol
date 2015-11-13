@@ -67,7 +67,7 @@ def gt_coloration(graph):
 
     dico = read_statuses.gt_and_activity(folder, ego)
 
-    palette = ['white', 'blue', 'cyan1', 'cyan2', 'cyan3', 'cyan4']
+    palette = ['blue', 'cyan1', 'cyan2', 'cyan3', 'cyan4']
     quality = ['', '', 'comments', 'likes']
 
     for gt in dico:
@@ -75,23 +75,16 @@ def gt_coloration(graph):
             continue
         for i in range(2,4):
             current_dico = dico[gt][i]
-            print gt,
-            print ' : '
-            print current_dico
             if dico[gt][i-2] < 5:
-                print 'pass'
-                print
                 continue
-            print
-            quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 40, 50, 60, 80, 100]]
-            print quintiles
+            quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 50, 75, 100]]
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
-                print value,
-                print ' : ',
+                if value == 0:
+                    v['color'] = 'white'
+                    break
                 for threshold in quintiles:
                     if value <= threshold:
-                        print threshold
                         v['color'] = palette[quintiles.index(threshold)]
                         break
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
