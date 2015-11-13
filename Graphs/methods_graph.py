@@ -79,6 +79,7 @@ def gt_coloration(graph):
                 for threshold in quintiles:
                     if value <= threshold:
                         v['color'] = palette[quintiles.index(threshold)]
+                        print quintiles.index(threshold)
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
