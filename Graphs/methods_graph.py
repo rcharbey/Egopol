@@ -71,6 +71,8 @@ def gt_coloration(graph):
     quality = ['', '', 'comments', 'likes']
 
     for gt in dico:
+        if not 'ALienSecE' in gt:
+            continue
         for i in range(2,4):
             current_dico = dico[gt][i]
             print gt,
@@ -85,8 +87,10 @@ def gt_coloration(graph):
             print quintiles
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
+                print value
                 for threshold in quintiles:
                     if value <= threshold:
+                        print threshold
                         v['color'] = palette[quintiles.index(threshold)]
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
