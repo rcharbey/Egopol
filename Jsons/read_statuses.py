@@ -252,6 +252,8 @@ def gt_and_activity(folder, ego):
                 ln_likes[liker] += 1
             result[dict_gt[elem]][2] += 1
 
+    print result
+
     new_result = {}
 
     for elem in result:

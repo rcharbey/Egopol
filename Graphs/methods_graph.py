@@ -70,8 +70,6 @@ def gt_coloration(graph):
     palette = ['blue', 'cyan1', 'cyan2', 'cyan3', 'cyan4']
     quality = ['', '', 'comments', 'likes']
 
-    print dico
-
     for gt in dico:
         for i in range(3,5):
             current_dico = dico[gt][i]
