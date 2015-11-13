@@ -6,6 +6,7 @@ sys.path.append('./Jsons')
 import read_statuses
 import numpy as np
 import friends
+from igraph.drawing import colors
 
 def create_list_neighbors(graph):
     for v in graph.vs:
@@ -77,7 +78,7 @@ def gt_coloration(graph):
                 value = current_dico.get(v['name'], 0)
                 for threshold in quintiles:
                     if value <= threshold:
-                        v['color'] = ClusterColoringPalette.color_to_html_format(palette._get(threshold))
+                        v['color'] = colors.color_to_html_format(palette._get(threshold))
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
 
 def display_gt_coloration(folder, ego):
