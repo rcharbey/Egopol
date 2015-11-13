@@ -76,13 +76,13 @@ def gt_coloration(graph):
             print gt,
             print ' : '
             print current_dico
-            print quintiles
             if dico[gt][i-2] < 5:
                 print 'pass'
                 print
                 continue
             print
             quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 40, 50, 60, 80, 100]]
+            print quintiles
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
                 for threshold in quintiles:
