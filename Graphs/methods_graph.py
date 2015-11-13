@@ -67,7 +67,7 @@ def gt_coloration(graph):
 
     dico = read_statuses.gt_and_activity(folder, ego)
 
-    palette = ['cyan', 'cyan1', 'cyan2', 'cyan3', 'cyan4', 'dark blue']
+    palette = ['blue', 'cyan1', 'cyan2', 'cyan3', 'cyan4', 'dark blue']
     quality = ['', 'comments', 'likes']
 
     for gt in dico:
