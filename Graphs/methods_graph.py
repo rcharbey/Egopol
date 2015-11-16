@@ -74,6 +74,7 @@ def gt_coloration(graph):
 
     lists_all = [[], []]
     for gt in dico:
+        print gt
         for i in range(3,5):
             lists_all[i-3].append(gt[i])
     quintiles_all = []
