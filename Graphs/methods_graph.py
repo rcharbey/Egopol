@@ -82,6 +82,8 @@ def gt_coloration(graph):
         quintiles_all.append([np.percentile(lists_all[i], x) for x in [25, 50, 75, 100]])
     print quintiles_all
 
+    counter = [0,0,0,0,0,0]
+
     for gt in dico:
         for i in range(3,5):
             current_dico = dico[gt][i]
@@ -91,15 +93,20 @@ def gt_coloration(graph):
                 value = current_dico.get(v['name'], 0)
                 if int(value) == 0:
                     v['color'] = 'white'
+                    counter[0] += 1
                     continue
                 if int(value) == 1:
                     v['color'] = 'blue'
+                    counter[1] += 1
+                    continue
                 for threshold in quintiles_all[i-3]:
                     if value <= threshold:
                         v['color'] = palette[quintiles_all[i-3].index(threshold)]
+                        counter[threshold+2] += 1
                         continue
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
         file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
+    print counter
 
 def display_gt_coloration(folder, ego):
     path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
