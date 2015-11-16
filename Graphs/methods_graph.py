@@ -106,7 +106,7 @@ def gt_coloration(graph):
                         v['color'] = palette[quintiles_all[i-3].index(threshold)]
                         counter[quintiles_all[i-3].index(threshold)+2] += 1
                         if gt == 'ALienSecE' and v['name'] == 'Bastien Parisot':
-                        print 2222222222222222222
+                            print 2222222222222222222
                         continue
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
         file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
