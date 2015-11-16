@@ -102,7 +102,7 @@ def gt_coloration(graph):
                 for threshold in quintiles_all[i-3]:
                     if value <= threshold:
                         v['color'] = palette[quintiles_all[i-3].index(threshold)]
-                        counter[threshold+2] += 1
+                        counter[quintiles_all[i-3].index(threshold)+2] += 1
                         continue
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
         file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
