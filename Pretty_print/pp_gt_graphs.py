@@ -12,7 +12,7 @@ from igraph import *
 def write_figure(file_html, path_img, gt, nb_statuses, nb_qual, qual):
     file_html.write('\
 <figure> \n \
-    <img src="%s" widht="200" height="200"> \n \
+    <img src="%s" widht="300" height="300"> \n \
     <figcaption> \n \
         %s<br> %s statuts<br> %s %s \n \
     </figcaption> \n \

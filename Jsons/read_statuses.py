@@ -220,43 +220,44 @@ def find_status(folder, ego, id):
             return status
 
 def gt_and_activity(folder, ego):
-    dict_commenters = dict_of_commenters_per_status(folder, ego)
-    dict_likers = dict_of_likers_per_status(folder, ego)
+    dict_commenters_per_status = dict_of_commenters_per_status(folder, ego)
+    dict_likers_per_status = dict_of_likers_per_status(folder, ego)
 
-    dict_gt = {}
+    dict_gt_per_status = {}
     with open('%s/statuses-csv/%s.csv' % (os.path.expanduser("~"), ego), 'r') as reader:
         csv_reader = csv.reader(reader, delimiter = ';')
         csv_reader.next()
         for line in csv_reader:
-            dict_gt[line[2]] = line[16]
+            dict_gt_per_status[line[2]] = line[16]
 
     result = {}
-    for elem in dict_gt:
-        if not dict_gt[elem] in result:
-            result[dict_gt[elem]] = [0, 0, 0, {}, {}]
-        ln_com = result[dict_gt[elem]][3]
-        ln_likes = result[dict_gt[elem]][4]
-        result[dict_gt[elem]][0] += 1
+    for status in dict_gt_per_status:
+        gt = dict_gt_per_status[status]
+        if not gt in result:
+            result[gt] = [0, 0, 0, {}, {}]
+        ln_com = result[gt][3]
+        ln_likes = result[gt][4]
+        result[gt][0] += 1
 
-        for commenter in dict_commenters.get(elem, []):
-            nb_com = dict_commenters[elem][commenter]
+        for commenter in dict_commenters_per_status.get(status, []):
+            nb_com = dict_commenters_per_status[status][commenter]
             if not commenter in ln_com:
                 ln_com[commenter] = nb_com
             else:
                 ln_com[commenter] += nb_com
-            result[dict_gt[elem]][1] += nb_com
+            result[dict_gt_per_status[status]][1] += nb_com
 
-        for liker in dict_likers.get(elem, []):
+        for liker in dict_likers_per_status.get(status, []):
             if not liker in ln_likes:
                 ln_likes[liker] = 1
             else:
                 ln_likes[liker] += 1
-            result[dict_gt[elem]][2] += 1
+            result[dict_gt_per_status[status]][2] += 1
 
     new_result = {}
 
-    for elem in result:
-        if result[elem][0] >= 5 and (result[elem][1] >= 5 or result[elem][2] >= 5):
-            new_result[elem] = result[elem]
+    for status in result:
+        if result[status][0] >= 5 and (result[status][1] >= 5 or result[status][2] >= 5):
+            new_result[status] = result[status]
 
     return new_result

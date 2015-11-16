@@ -98,6 +98,8 @@ def gt_coloration(graph):
                 if int(value) == 1:
                     v['color'] = 'blue'
                     counter[1] += 1
+                    print gt
+                    print v['name']
                     continue
                 for threshold in quintiles_all[i-3]:
                     if value <= threshold:
