@@ -75,8 +75,7 @@ def gt_coloration(graph):
     lists_all = [[], []]
     for gt in dico:
         for i in range(3,5):
-            print dico[gt][i]
-            lists_all[i-3].append(dico[gt][i])
+            lists_all[i-3].extend(dico[gt][i].values())
     quintiles_all = []
     for i in range(0,2):
         quintiles_all.append([np.percentile(lists_all[i], x) for x in [20, 40, 60, 80, 100]])
