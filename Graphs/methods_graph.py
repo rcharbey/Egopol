@@ -90,9 +90,9 @@ def gt_coloration(graph):
             if dico[gt][i-2] < 5:
                 continue
             for v in graph.vs:
+                v['color'] = 'white'
                 value = current_dico.get(v['name'], 0)
                 if int(value) == 0:
-                    v['color'] = 'white'
                     counter[0] += 1
                     continue
                 if int(value) == 1:
