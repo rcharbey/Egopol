@@ -96,7 +96,7 @@ def gt_coloration(graph):
                     counter[0] += 1
                     continue
                 if int(value) == 1:
-                    v['color'] = 'blue'
+                    v['color'] = 'lightcyan'
                     counter[1] += 1
                     continue
                 for threshold in quintiles_all[i-3]:
