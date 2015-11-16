@@ -10,21 +10,17 @@ import os
 from igraph import *
 
 def write_figure(file_html, path_img, gt, nb_statuses, nb_qual, qual):
-    if os.path.isfile(path_img):
-        file_html.write('\
+    file_html.write('\
 <figure> \n \
-    <object data="%s" type="image/svg+xml"> \n \
-    </object> \n \
+    <img src="%s" widht="200" height="200"> \n \
     <figcaption> \n \
-        %s %s statuts %s %s \n \
+        %s<br> %s statuts<br> %s %s \n \
     </figcaption> \n \
-</figure> \n' % (path_img, gt, nb_statuses, nb_qual, qual))
+</figure>' % (path_img, gt, nb_statuses, nb_qual, qual))
 
 def pretty_print(folder, ego):
 
     path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
-
-    graphs_list = [graph for graph in os.listdir(path) if os.path.isfile(os.path.join(path,graph))]
 
     qualities = ['comments', 'likes']
 
@@ -32,14 +28,14 @@ def pretty_print(folder, ego):
     infos = []
     for line in file_with_info:
         infos.append(line[0:-1].split(' '))
-    infos.sort(key=lambda gt: gt[1], reverse=True)
+    infos.sort(key=lambda gt: int(gt[1]), reverse=True)
 
     with open('%s/pretty_print.html' % path, 'w') as file_html:
         utilities.print_begin(file_html)
         for gt in infos:
-            print gt
             for quality in qualities:
-                path_img = '%s/SVG/%s_%s.svg' % (path, gt[0], quality)
-                write_figure(file_html, path_img, gt[0], gt[1], gt[2+qualities.index(quality)], quality)
+                path_img = 'SVG/%s_%s.svg' % (gt[0], quality)
+                if os.path.isfile(path+'/'+path_img):
+                    write_figure(file_html, path_img, gt[0], gt[1], gt[2+qualities.index(quality)], quality)
 
 

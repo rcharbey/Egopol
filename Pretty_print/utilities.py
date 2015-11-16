@@ -57,15 +57,7 @@ def print_begin(fichier):
 <html>
 <head>
   <meta charset="utf-8">
-  <style type="text/css">
-    td.nb {
-      text-align: right;
-    }
-    td.ratio {
-      border-right: solid thin black;
-      padding: 0 4px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 ''')

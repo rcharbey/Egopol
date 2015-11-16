@@ -72,12 +72,19 @@ def gt_coloration(graph):
 
     file_with_info = open('%s/infos.txt' % path, 'w')
 
+    lists_all = [[], []]
+    for gt in dico:
+        for i in range(3,5):
+            lists_all[i-3].append(gt[i])
+    quintiles_all = []
+    for i in range(0,2):
+        quintiles_all.append([np.percentile(lists_all[i], x) for x in [20, 40, 60, 80, 100]])
+
     for gt in dico:
         for i in range(3,5):
             current_dico = dico[gt][i]
             if dico[gt][i-2] < 5:
                 continue
-            quintiles = [np.percentile(np.array(current_dico.values()), x) for x in [25, 50, 75, 100]]
             for v in graph.vs:
                 value = current_dico.get(v['name'], 0)
                 if int(value) == 0:
@@ -85,18 +92,18 @@ def gt_coloration(graph):
                     continue
                 for threshold in quintiles:
                     if value <= threshold:
-                        v['color'] = palette[quintiles.index(threshold)]
+                        v['color'] = palette[quintiles_all[i-3].index(threshold)]
                         continue
             graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
         file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
 
 def display_gt_coloration(folder, ego):
     path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
-    graphs_list = [graph for graph in os.listdir(path) if os.path.isfile(os.path.join(path,graph))]
+    graphs_list = [graph for graph in os.listdir(path) if (os.path.isfile(os.path.join(path,graph)) and '.gml' in graph)]
     for graph_path in graphs_list:
-        if 'txt' in graph_path:
-            continue
         graph = Graph.Read_GML('%s/%s' % (path,graph_path))
+        for v in graph.vs:
+            v['size'] = 5*math.log(2+v.degree())
         graph.es['curved'] = 0.3
         layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
         place = '%s/SVG/%s.svg' % (path, graph_path[0:-4])
