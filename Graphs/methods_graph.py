@@ -90,7 +90,7 @@ def gt_coloration(graph):
                 if int(value) == 0:
                     v['color'] = 'white'
                     continue
-                for threshold in quintiles:
+                for threshold in quintiles_all[i-3]:
                     if value <= threshold:
                         v['color'] = palette[quintiles_all[i-3].index(threshold)]
                         continue
