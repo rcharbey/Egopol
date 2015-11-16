@@ -67,7 +67,7 @@ def gt_coloration(graph):
 
     dico = read_statuses.gt_and_activity(folder, ego)
 
-    palette = ['blue', 'cyan1', 'cyan2', 'cyan3', 'cyan4']
+    palette = ['cyan1', 'cyan2', 'cyan3', 'cyan4']
     quality = ['', '', '', 'comments', 'likes']
 
     file_with_info = open('%s/infos.txt' % path, 'w')
@@ -75,7 +75,7 @@ def gt_coloration(graph):
     lists_all = [[], []]
     for gt in dico:
         for i in range(3,5):
-            lists_all[i-3].extend([value for value in dico[gt][i].values() if value != 0])
+            lists_all[i-3].extend([value for value in dico[gt][i].values() if value > 1])
     print lists_all
     quintiles_all = []
     for i in range(0,2):
@@ -92,6 +92,8 @@ def gt_coloration(graph):
                 if int(value) == 0:
                     v['color'] = 'white'
                     continue
+                if int(value) == 1:
+                    v['color'] = 'blue'
                 for threshold in quintiles_all[i-3]:
                     if value <= threshold:
                         v['color'] = palette[quintiles_all[i-3].index(threshold)]
