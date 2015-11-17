@@ -7,6 +7,7 @@ import read_statuses
 import numpy as np
 import friends
 from igraph.drawing import colors
+import re
 
 def create_list_neighbors(graph):
     for v in graph.vs:
@@ -104,9 +105,7 @@ def gt_coloration(graph):
                         v['color'] = palette[quintiles_all[i-3].index(threshold)]
                         counter[quintiles_all[i-3].index(threshold)+2] += 1
                         break
-            if gt == 'App/Jeux':
-                gt = 'App\/Jeu'
-            graph.write('%s/%s_%s.gml' % (path, gt, quality[i]), format = 'gml')
+            graph.write('%s/%s_%s.gml' % (path, re.escape(gt), quality[i]), format = 'gml')
         file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
     print counter
 
