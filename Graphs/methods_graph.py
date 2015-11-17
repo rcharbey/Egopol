@@ -108,6 +108,7 @@ def gt_coloration(graph):
         file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
     print counter
 
+
 def display_gt_coloration(folder, ego):
     path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
     graphs_list = [graph for graph in os.listdir(path) if (os.path.isfile(os.path.join(path,graph)) and '.gml' in graph)]
@@ -115,6 +116,7 @@ def display_gt_coloration(folder, ego):
         graph = Graph.Read_GML('%s/%s' % (path,graph_path))
         for v in graph.vs:
             v['size'] = 5*math.log(2+v.degree())
+        graph.vs[0]
         graph.es['curved'] = 0.3
         layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
         place = '%s/SVG/%s.svg' % (path, graph_path[0:-4])
