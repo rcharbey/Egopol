@@ -77,11 +77,9 @@ def gt_coloration(graph):
     for gt in dico:
         for i in range(3,5):
             lists_all[i-3].extend([value for value in dico[gt][i].values() if value > 1])
-    print lists_all
     quintiles_all = []
     for i in range(0,2):
         quintiles_all.append([np.percentile(lists_all[i], x) for x in [25, 50, 75, 100]])
-    print quintiles_all
 
     counter = [0,0,0,0,0,0]
 
@@ -105,6 +103,8 @@ def gt_coloration(graph):
                         v['color'] = palette[quintiles_all[i-3].index(threshold)]
                         counter[quintiles_all[i-3].index(threshold)+2] += 1
                         break
+            if gt == 'App/Jeux':
+                gt = 'App_Jeux'
             graph.write('%s/%s_%s.gml' % (path, re.escape(gt), quality[i]), format = 'gml')
         file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
     print counter
