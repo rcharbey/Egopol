@@ -104,8 +104,10 @@ def gt_coloration(graph):
                         counter[quintiles_all[i-3].index(threshold)+2] += 1
                         break
             if gt == 'App/Jeux':
-                gt = 'App_Jeux'
-            graph.write('%s/%s_%s.gml' % (path, re.escape(gt), quality[i]), format = 'gml')
+                graph.write('%s/App_Jeux_%s.gml' % (path, quality[i]), format = 'gml')
+            else:
+                graph.write('%s/%s_%s.gml' % (path, re.escape(gt), quality[i]), format = 'gml')
+
         file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
     print counter
 
