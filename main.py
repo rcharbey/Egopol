@@ -120,6 +120,8 @@ if args.options != None:
 
 
     elif 'gt_coloration' in args.options:
+        print args.folder
+        print args.ego
         main_graphs.gt_coloration(args.folder, args.ego)
     elif 'gt_display' in args.options:
         main_graphs.display_gt_coloration(args.folder, args.ego)
