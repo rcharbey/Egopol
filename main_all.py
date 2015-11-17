@@ -36,7 +36,7 @@ def main():
             main_indicators.main(args.dataset, None, tab_options)
             return
 
-    list_folders = args.dataset if args.dataset else ['csa', 'all', 'p5']
+    list_folders = args.dataset if args.dataset else ['csa', 'all', 'p5', 'entretiens']
     for folder in list_folders:
         print list_folders
         if args.folders and folder not in args.folders:
