@@ -18,6 +18,8 @@ import main_indicators
 sys.path.append('../webapp/')
 from algopol.statuses import ParsedStatus
 
+
+print args
 folder = args.folder
 ego = args.ego
 options = args.options
