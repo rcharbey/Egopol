@@ -160,8 +160,7 @@ def cluster_per_alter(folder, ego):
     i = 0
     for cluster in clusters_list:
         for alter in cluster:
-            print graph.vs[alter]
-            result[graph.vs[alter]['id']] = i
+            result[graph.vs[alter]['name']] = i
         i += 1
 
     return result

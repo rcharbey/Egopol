@@ -128,7 +128,7 @@ def clusters_per_gt(couple_of_gt):
                 status = main_jsons.find_status(folder, ego, id_status)
                 for quality in ['comments', 'likes']:
                     accounter = accounter[quality]
-                    for active_alter in [activity.get('from', activity)['id'] for activity in status.get(quality, [])]:
+                    for active_alter in [activity.get('from', activity).get('name', activity.get('from', activity)['id']) for activity in status.get(quality, [])]:
                         print cluster_per_alter
                         cluster = cluster_per_alter[active_alter]
                         if cluster in accounter:
