@@ -119,33 +119,31 @@ def clusters_per_gt(couple_of_gt):
         file_name += '_%s' % gt
         accounter_per_gt[gt] = {'comments' : [0]*nb_cluster, 'likes' : [0]*nb_cluster}
         max_per_gt[gt] = {'comments' : [-1,-1,-1], 'likes' : [-1,-1,-1]}
+    for id_status in gt_per_status:
+        gt = gt_per_status[id_status]
+        if gt in couple_of_gt:
+            temp = accounter_per_gt[gt]
+            status = main_jsons.find_status(folder, ego, id_status)
+            for quality in ['comments', 'likes']:
+                accounter = temp[quality]
+                for active_alter in [activity.get('from', activity).get('name', activity.get('from', activity)['id']) for activity in status.get(quality, [])]:
+                    cluster = cluster_per_alter.get(active_alter, -1)
+                    if cluster == -1:
+                        continue
+                    accounter[cluster] = 1 if not cluster in accounter else accounter[cluster]+1
+                    for i in range(0,3):
+                        elem = max_per_gt[gt][quality][i]
+                        if elem < accounter[cluster]:
+                            if i <= 1:
+                                max_per_gt[gt][quality][2] = max_per_gt[gt][quality][1]
+                            elif i == 0:
+                                max_per_gt[gt][quality][1] = max_per_gt[gt][quality][0]
+                            max_per_gt[gt][quality][i] = accounter[cluster]
+                            break
+
+    print accounter_per_gt
     with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
         csv_writer = csv.writer(file_to_write, delimiter = ';')
-        for id_status in gt_per_status:
-            gt = gt_per_status[id_status]
-            if gt in couple_of_gt:
-                temp = accounter_per_gt[gt]
-                status = main_jsons.find_status(folder, ego, id_status)
-                for quality in ['comments', 'likes']:
-                    accounter = temp[quality]
-                    for active_alter in [activity.get('from', activity).get('name', activity.get('from', activity)['id']) for activity in status.get(quality, [])]:
-                        cluster = cluster_per_alter.get(active_alter, -1)
-                        if cluster == -1:
-                            continue
-                        if cluster in accounter:
-                            accounter[cluster] += 1
-                        else:
-                            accounter[cluster] = 1
-                        for i in range(0,3):
-                            elem = max_per_gt[gt][quality][i]
-                            if elem < accounter[cluster]:
-                                if i <= 1:
-                                    max_per_gt[gt][quality][2] = max_per_gt[gt][quality][1]
-                                elif i == 0:
-                                    max_per_gt[gt][quality][1] = max_per_gt[gt][quality][0]
-                                max_per_gt[gt][quality][i] = accounter[cluster]
-                                break
-
         for quality in ['comments', 'likes']:
             common = 0
             print max_per_gt
