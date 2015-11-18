@@ -108,7 +108,7 @@ def display(args):
 
 def clusters_per_gt(couple_of_gt):
     cluster_per_alter = main_graphs.cluster_per_alter(folder, ego)
-    gt_per_status = main_jsons.gt_and_activity(folder, ego)
+    gt_per_status = main_jsons.gt_per_status(folder, ego)
     nb_cluster = max(cluster_per_alter.values())
     if nb_cluster < 3:
         return
