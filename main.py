@@ -131,8 +131,6 @@ def clusters_per_gt(couple_of_gt):
                         continue
                     accounter[cluster] = 1 if not cluster in accounter else accounter[cluster]+1
 
-    print accounter_per_gt
-
     for gt in couple_of_gt:
          max_per_gt[gt] = {'comments' : [], 'likes' : []}
          for quality in ['comments', 'likes']:
@@ -146,8 +144,6 @@ def clusters_per_gt(couple_of_gt):
                          max_id = j
                  max_per_gt[gt][quality].append(max_id)
                  to_class[max_id] = -1
-
-    print max_per_gt
 
     with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
         csv_writer = csv.writer(file_to_write, delimiter = ';')
