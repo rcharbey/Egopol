@@ -105,6 +105,7 @@ def display(args):
     graph = main_graphs.import_graph(args.folder, args.ego, 'friends', 'edgelist')
     main_graphs.display_light(graph)
 
+print sys.argv
 
 def clusters_per_gt(couple_of_gt):
     folder = args.folder
