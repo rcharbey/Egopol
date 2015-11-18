@@ -134,6 +134,8 @@ def import_graph(folder, ego, graph_format, fc = False):
         else:
             graph = Graph.Read_Edgelist('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph', directed = False)
     else:
+        if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
+            return Graph.Formula('')
         graph = Graph.Read_GML('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml')
     graph['folder'] = folder
     graph['ego'] = ego
