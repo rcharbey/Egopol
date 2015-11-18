@@ -38,12 +38,9 @@ def main():
 
     list_folders = args.dataset if args.dataset else ['csa', 'all', 'p5', 'entretiens']
     for folder in list_folders:
-        print list_folders
         if args.folders and folder not in args.folders:
             continue
-        print args.options
-        print args.folders
-        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
+        list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
             sys.argv = ['main.py', folder, ego]
             if args.options != None:

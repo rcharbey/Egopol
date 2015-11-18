@@ -20,7 +20,7 @@ def write_figure(file_html, path_img, gt, nb_statuses, nb_qual, qual):
 
 def pretty_print(folder, ego):
 
-    path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
+    path = 'GALLERY/%s/%s/Graphs/GT_graphs' % (folder, ego)
 
     qualities = ['comments', 'likes']
 
@@ -28,7 +28,7 @@ def pretty_print(folder, ego):
     infos = []
     for line in file_with_info:
         infos.append(line[0:-1].split(' '))
-    infos.sort(key=lambda gt: int(gt[1]), reverse=True)
+    infos.sort(key=lambda gt: max(int(gt[2]),int(gt[3])), reverse=True)
 
     with open('%s/pretty_print.html' % path, 'w') as file_html:
         utilities.print_begin(file_html)

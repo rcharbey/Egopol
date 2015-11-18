@@ -81,8 +81,6 @@ def gt_coloration(graph):
     for i in range(0,2):
         quintiles_all.append([np.percentile(lists_all[i], x) for x in [25, 50, 75, 100]])
 
-    counter = [0,0,0,0,0,0]
-
     for gt in dico:
         for i in range(3,5):
             current_dico = dico[gt][i]
@@ -92,28 +90,24 @@ def gt_coloration(graph):
                 v['color'] = 'white'
                 value = current_dico.get(v['name'], 0)
                 if int(value) == 0:
-                    counter[0] += 1
                     continue
                 if int(value) == 1:
                     v['color'] = 'lightcyan'
-                    counter[1] += 1
                     continue
                 for threshold in quintiles_all[i-3]:
                     if value <= threshold:
                         v['color'] = palette[quintiles_all[i-3].index(threshold)]
-                        counter[quintiles_all[i-3].index(threshold)+2] += 1
                         break
             if gt == 'App/Jeux':
                 graph.write('%s/App_Jeux_%s.gml' % (path, quality[i]), format = 'gml')
             else:
                 graph.write('%s/%s_%s.gml' % (path, re.escape(gt), quality[i]), format = 'gml')
 
-        file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2]))
-    print counter
+        file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2], dico[gt][5], dico[gt][6]))
 
 
 def display_gt_coloration(folder, ego):
-    path = 'GALLERY/%s/%s/Graphs/GT_Graphs' % (folder, ego)
+    path = 'GALLERY/%s/%s/Graphs/GT_graphs' % (folder, ego)
     graphs_list = [graph for graph in os.listdir(path) if (os.path.isfile(os.path.join(path,graph)) and '.gml' in graph)]
     for graph_path in graphs_list:
         graph = Graph.Read_GML('%s/%s' % (path,graph_path))
@@ -123,7 +117,24 @@ def display_gt_coloration(folder, ego):
         graph.es['curved'] = 0.3
         layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
         place = '%s/SVG/%s.svg' % (path, graph_path[0:-4])
+        if not os.path.isdir('%s/SVG' % path):
+            os.mkdir('%s/SVG' % path)
         plot(graph, place, layout = layout, vertex_color = [v['color'] for v in graph.vs])
+
+    with open(path+'/style.css', 'w') as css_file:
+        css_file.write(
+'td.nb {\n \
+    text-align: right; \n\
+    }\n\
+td.ratio {\n\
+      border-right: solid thin black;\n\
+      padding: 0 4px;\n\
+    }\n\
+\n\
+figure {\n\
+  display: inline-block;\n\
+}'
+        )
 
 
 

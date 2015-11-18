@@ -234,7 +234,7 @@ def gt_and_activity(folder, ego):
     for status in dict_gt_per_status:
         gt = dict_gt_per_status[status]
         if not gt in result:
-            result[gt] = [0, 0, 0, {}, {}]
+            result[gt] = [0, 0, 0, {}, {}, 0, 0]
         ln_com = result[gt][3]
         ln_likes = result[gt][4]
         result[gt][0] += 1
@@ -243,6 +243,7 @@ def gt_and_activity(folder, ego):
             nb_com = dict_commenters_per_status[status][commenter]
             if not commenter in ln_com:
                 ln_com[commenter] = nb_com
+                result[gt][5] += 1
             else:
                 ln_com[commenter] += nb_com
             result[dict_gt_per_status[status]][1] += nb_com
@@ -250,6 +251,7 @@ def gt_and_activity(folder, ego):
         for liker in dict_likers_per_status.get(status, []):
             if not liker in ln_likes:
                 ln_likes[liker] = 1
+                result[gt][6] += 1
             else:
                 ln_likes[liker] += 1
             result[dict_gt_per_status[status]][2] += 1
