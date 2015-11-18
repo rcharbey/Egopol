@@ -15,6 +15,8 @@ import main_jsons
 import csv
 import main_pretty_print
 import main_indicators
+sys.path.append('../webapp/algopol')
+import statuses
 
 
 folder = args.folder
@@ -179,7 +181,7 @@ if options != None:
         main_graphs.display_gt_coloration(folder, ego)
         main_pretty_print.gt_pretty_print(folder, ego)
     elif 'cluster_per_gt' in options:
-        clusters_per_gt(options)
+        clusters_per_gt([option for option in options if option in ParsedStatuses.GUESSED_TYPES.get_name_set())
 
 else:
     graph_friends = init(args)
