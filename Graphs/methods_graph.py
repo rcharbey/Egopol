@@ -103,7 +103,7 @@ def gt_coloration(graph):
             else:
                 graph.write('%s/%s_%s.gml' % (path, re.escape(gt), quality[i]), format = 'gml')
 
-        file_with_info.write('%s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2], dico[gt][5], dico[gt][6]))
+        file_with_info.write('%s %s %s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2], dico[gt][5], dico[gt][6]))
 
 
 def display_gt_coloration(folder, ego):
