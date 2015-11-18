@@ -123,13 +123,13 @@ def clusters_per_gt(couple_of_gt):
         csv_writer = csv.writer(file_to_write, delimiter = ';')
         for id_status in gt_per_status:
             gt = gt_per_status[id_status]
-            print gt
             if gt in couple_of_gt:
                 accounter = accounter_per_gt[gt]
                 status = main_jsons.find_status(folder, ego, id_status)
                 for quality in ['comments', 'likes']:
                     accounter = accounter[quality]
                     for active_alter in [activity.get('from', activity)['id'] for activity in status.get(quality, [])]:
+                        print cluster_per_alter
                         cluster = cluster_per_alter[active_alter]
                         if cluster in accounter:
                             accounter[cluster] += 1
