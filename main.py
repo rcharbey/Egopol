@@ -181,7 +181,7 @@ if options != None:
         main_graphs.display_gt_coloration(folder, ego)
         main_pretty_print.gt_pretty_print(folder, ego)
     elif 'cluster_per_gt' in options:
-        clusters_per_gt([option for option in options if option in ParsedStatuses.GUESSED_TYPES.get_name_set())
+        clusters_per_gt([option for option in options if option in ParsedStatuses.GUESSED_TYPES.get_name_set()])
 
 else:
     graph_friends = init(args)
