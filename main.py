@@ -16,7 +16,7 @@ import csv
 import main_pretty_print
 import main_indicators
 sys.path.append('../webapp')
-from algopol.statuses import ParsedStatus
+#from algopol.statuses import ParsedStatus
 
 for elem in sys.path:
     print elem
