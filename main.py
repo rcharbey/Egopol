@@ -19,12 +19,6 @@ sys.path.append('../webapp/')
 from algopol.statuses import ParsedStatus
 
 
-print args
-folder = args.folder
-ego = args.ego
-options = args.options
-print str(args.folder) + ' ' + str(ego) + ' ' + str(options)
-
 def create_folders(folder, ego):
     for path in [
         'GALLERY/',
@@ -164,6 +158,13 @@ def clusters_per_gt(couple_of_gt):
             csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common])
 
 
+
+
+print args
+folder = args.folder
+ego = args.ego
+options = args.options
+print str(args.folder) + ' ' + str(ego) + ' ' + str(options)
 
 if options != None:
     if 'light' in options:
