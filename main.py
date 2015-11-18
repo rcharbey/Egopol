@@ -138,10 +138,9 @@ def clusters_per_gt(couple_of_gt):
                                 max_per_gt[gt][quality][2] = max_per_gt[gt][quality][1]
                             elif i == 0:
                                 max_per_gt[gt][quality][1] = max_per_gt[gt][quality][0]
-                            max_per_gt[gt][quality][i] = accounter[cluster]
+                            max_per_gt[gt][quality][i] = cluster
                             break
 
-    print accounter_per_gt
     with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
         csv_writer = csv.writer(file_to_write, delimiter = ';')
         for quality in ['comments', 'likes']:
