@@ -116,14 +116,14 @@ def clusters_per_gt(couple_of_gt):
     max_per_gt = {}
     file_name = 'matrix'
     for gt in couple_of_gt:
-        print couple_of_gt
         file_name += '_%s' % gt
         accounter_per_gt[gt] = {'comments' : [0]*nb_cluster, 'likes' : [0]*nb_cluster}
-        max_per_gt[gt] = {'comments' : [0,0,0], 'likes' : [0,0,0]}
+        max_per_gt[gt] = {'comments' : [-1,-1,-1], 'likes' : [-1,-1,-1]}
     with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
         csv_writer = csv.writer(file_to_write, delimiter = ';')
         for id_status in gt_per_status:
             gt = gt_per_status[id_status]
+            print gt
             if gt in couple_of_gt:
                 accounter = accounter_per_gt[gt]
                 status = main_jsons.find_status(folder, ego, id_status)
@@ -148,6 +148,8 @@ def clusters_per_gt(couple_of_gt):
             common = 0
             print max_per_gt
             for cluster in max_per_gt[couple_of_gt[0]][quality]:
+                if cluster == -1:
+                    break
                 if cluster in max_per_gt[couple_of_gt[1]][quality]:
                     common += 1
 
