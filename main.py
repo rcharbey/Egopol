@@ -116,6 +116,7 @@ def clusters_per_gt(couple_of_gt):
     max_per_gt = {}
     file_name = 'matrix'
     for gt in couple_of_gt:
+        print couple_of_gt
         file_name += '_%s' % gt
         accounter_per_gt[gt] = {'comments' : [0]*nb_cluster, 'likes' : [0]*nb_cluster}
         max_per_gt[gt] = {'comments' : [0,0,0], 'likes' : [0,0,0]}
