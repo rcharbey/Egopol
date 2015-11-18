@@ -18,14 +18,6 @@ import main_indicators
 sys.path.append('../webapp/')
 from algopol.statuses import ParsedStatus
 
-for elem in sys.path:
-    print elem
-    if os.path.isdir(elem):
-        print os.listdir(elem)
-    else:
-        print 'file'
-
-
 folder = args.folder
 ego = args.ego
 options = args.options
@@ -153,12 +145,12 @@ def clusters_per_gt(couple_of_gt):
 
         for quality in ['comments', 'likes']:
             common = 0
+            print max_per_gt
             for cluster in max_per_gt[couple_of_gt[0]][quality]:
                 if cluster in max_per_gt[couple_of_gt[1]][quality]:
                     common += 1
 
             csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common])
-
 
 
 
