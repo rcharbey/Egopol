@@ -150,7 +150,7 @@ def clusters_per_gt(couple_of_gt):
                 if cluster in max_per_gt[couple_of_gt[1]][quality]:
                     common += 1
 
-            csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common)
+            csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common])
 
 
 
