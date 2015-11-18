@@ -118,7 +118,6 @@ def clusters_per_gt(couple_of_gt):
     for gt in couple_of_gt:
         file_name += '_%s' % gt
         accounter_per_gt[gt] = {'comments' : [0]*nb_cluster, 'likes' : [0]*nb_cluster}
-        max_per_gt[gt] = {'comments' : [-1,-1,-1], 'likes' : [-1,-1,-1]}
     for id_status in gt_per_status:
         gt = gt_per_status[id_status]
         if gt in couple_of_gt:
@@ -131,15 +130,24 @@ def clusters_per_gt(couple_of_gt):
                     if cluster == -1:
                         continue
                     accounter[cluster] = 1 if not cluster in accounter else accounter[cluster]+1
-                    for i in range(0,3):
-                        elem = max_per_gt[gt][quality][i]
-                        if elem < accounter[cluster]:
-                            if i <= 1:
-                                max_per_gt[gt][quality][2] = max_per_gt[gt][quality][1]
-                            elif i == 0:
-                                max_per_gt[gt][quality][1] = max_per_gt[gt][quality][0]
-                            max_per_gt[gt][quality][i] = cluster
-                            break
+
+    print accounter_per_gt
+
+    for gt in couple_of_gt:
+         max_per_gt[gt] = {'comments' : [], 'likes' : []}
+         for quality in ['comments', 'likes']:
+             for i in range(0,3):
+                 to_class = accounter_per_gt[gt][quality]
+                 maximum = -1
+                 max_id = -1
+                 for j in range(0, len(to_class)):
+                     if to_class[j] > maximum:
+                         maximum = to_class[j]
+                         max_id = j
+                 max_per_gt[gt].append(maximum)
+                 to_class[max_id] = -1
+
+    print max_per_gt
 
     with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
         csv_writer = csv.writer(file_to_write, delimiter = ';')
