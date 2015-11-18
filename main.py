@@ -104,8 +104,6 @@ def display(args):
 print sys.argv
 
 def clusters_per_gt(couple_of_gt):
-    folder = args.folder
-    ego = args.ego
     cluster_per_alter = main_graphs.cluster_per_alter(folder, ego)
     gt_per_status = main_jsons.gt_per_status(folder, ego)
     nb_cluster = max(cluster_per_alter.values())
@@ -158,7 +156,6 @@ def clusters_per_gt(couple_of_gt):
             csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common])
 
 
-print 'yo'
 
 print args
 folder = args.folder
