@@ -18,6 +18,10 @@ import main_indicators
 sys.path.append('../webapp')
 from algopol.statuses import ParsedStatus
 
+for elem in sys.path:
+    print elem
+    print os.listdir(elem)
+
 
 folder = args.folder
 ego = args.ego
