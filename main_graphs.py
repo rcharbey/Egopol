@@ -50,10 +50,14 @@ def induced_subgraph(graph, id_status, list_of_vertices, quality):
 def display_light(graph, show = True, fc = False):
     friends.display_light(graph, show, fc)
 
-def gt_coloration(folder, ego):
-    methods_graph.gt_coloration(import_graph(folder, ego, 'friends'))
+def gt_coloration(folder, ego, dico):
+    methods_graph.gt_coloration(import_graph(folder, ego, 'friends'), dico)
 
 def display_gt_coloration(folder, ego):
     methods_graph.display_gt_coloration(folder, ego)
+
+def cluster_per_alter(folder, ego):
+    return friends.cluster_per_alter(folder, ego):
+
 
 

@@ -151,3 +151,16 @@ def induced_graph(graph, id_status, list_of_vertices):
     place = 'GALLERY/'+folder+'/'+ego+'/Statuses/'+id_status+'/induit_friends.svg'
     #plot(induced, place, layout = layout, vertex_size = 10)
     return induced
+
+def cluster_per_alter(folder, ego):
+    result = {}
+    graph = import_graph(folder, ego, 'gml')
+    clusters_list = graph.community_multilevel()
+
+    i = 0
+    for cluster in clusters_list:
+        for alter in cluster:
+            result[alter] = i
+        i += 1
+
+    return result

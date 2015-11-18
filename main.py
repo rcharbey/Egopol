@@ -15,6 +15,14 @@ import main_jsons
 import csv
 import main_pretty_print
 import main_indicators
+sys.path.append('../webapp')
+from algopol.statuses import ParsedStatus
+
+
+folder = args.folder
+ego = args.ego
+options = args.options
+print str(args.folder) + ' ' + str(ego) + ' ' + str(options)
 
 def create_folders(folder, ego):
     for path in [
@@ -32,6 +40,8 @@ def create_folders(folder, ego):
         'GALLERY/General']:
         if not os.path.isdir(path):
             os.mkdir(path)
+
+create_folders(folder, ego)
 
 def induced_graph_friends(args):
     folder = args.folder
@@ -96,36 +106,82 @@ def display(args):
     graph = main_graphs.import_graph(args.folder, args.ego, 'friends', 'edgelist')
     main_graphs.display_light(graph)
 
-print str(args.folder) + ' ' + str(args.ego) + ' ' + str(args.options)
-create_folders(args.folder, args.ego)
 
-if args.options != None:
-    if 'light' in args.options:
+def clusters_per_gt(couple_of_gt):
+    cluster_per_alter = main_graphs.cluster_per_alter(folder, ego)
+    gt_per_status = gt_and_activity(folder, ego)
+    nb_cluster = max(cluster_per_elem.values())
+    if nb_cluster < 3:
+        return
+    accounter_per_gt = {}
+    max_per_gt = {}
+    file_name = 'matrix'
+    for gt in couple_of_gt:
+        file_name += '_%s' % gt
+        accounter_per_gt[gt] = {'comments' : [0]*nb_cluster, 'likes' : [0]*nb_cluster}
+        max_per_gt[gt] = {'comments' : [0,0,0], 'likes' : [0,0,0]}
+    with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
+        csv_writer = csv.writer(file_to_write, delimiter = ';')
+        for id_status in gt_per_status:
+            gt = gt_per_status[id_status]
+            if gt in couple_of_gt:
+                accounter = accounter_per_gt[gt]
+                status = main_jsons.find_status(folder, ego, id_status)
+                for quality in ['comments', 'likes']:
+                    accounter = accounter[quality]
+                    for active_alter in [activity.get('from', activity)['id'] for activity in status.get(quality, [])]:
+                        cluster = cluster_per_alter[active_alter]
+                        if cluster in accounter:
+                            accounter[cluster] += 1
+                        else:
+                            accounter[cluster] = 1
+                        for i in range(0,3):
+                            elem = max_per_gt[gt][quality][i]
+                            if elem < accounter[cluster]:
+                                if i <= 1:
+                                    max_per_gt[gt][quality][2] = max_per_gt[gt][quality][1]
+                                elif i == 0:
+                                    max_per_gt[gt][quality][1] = max_per_gt[gt][quality][0]
+                                max_per_gt[gt][quality][i] = accounter[cluster]
+
+        for quality in ['comments', 'likes']:
+            common = 0
+            for cluster in max_per_gt[couple_of_gt[0]][quality]:
+                if cluster in max_per_gt[couple_of_gt[1]][quality]:
+                    common += 1
+
+            csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common)
+
+
+
+
+if options != None:
+    if 'light' in options:
         init_light(args)
-    if 'init' in args.options:
+    if 'init' in options:
         init(args)
-    if 'display' in args.options:
+    if 'display' in options:
         display(args)
-    elif 'enumerate' in args.options:
-        if 'indu' in args.options:
+    elif 'enumerate' in options:
+        if 'indu' in options:
             enumerate(args, 'friends', 'edgelist', True)
         else:
             enumerate(args, 'friends')
             enumerate(args, 'commenters')
 
-    elif 'indu' in args.options:
+    elif 'indu' in options:
         induced_graph_friends(args)
-    if 'indicators' in args.options:
-        main_indicators.main(args.folder, args.ego)
+    if 'indicators' in options:
+        main_indicators.main(folder, ego)
 
 
     elif 'gt_coloration' in args.options:
-        print args.folder
-        print args.ego
-        main_graphs.gt_coloration(args.folder, args.ego)
+        main_graphs.gt_coloration(folder, ego, main_jsons.gt_and_activity(folder, ego))
     elif 'gt_display' in args.options:
-        main_graphs.display_gt_coloration(args.folder, args.ego)
-        main_pretty_print.gt_pretty_print(args.folder, args.ego)
+        main_graphs.display_gt_coloration(folder, ego)
+        main_pretty_print.gt_pretty_print(folder, ego)
+    elif 'cluster_per_gt' in options:
+        clusters_per_gt([option for option in options if option in ParsedStatus.GUESSED_TYPES.get_name_set()])
 
 else:
     graph_friends = init(args)

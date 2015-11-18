@@ -9,7 +9,7 @@ import utilities
 import os
 from igraph import *
 
-def write_figure(file_html, path_img, gt, nb_statuses, nb_qual, qual):
+def write_figure(file_html, path_img, gt, nb_statuses, nb_qual, qual, nb_qualiter):
     file_html.write('\
 <figure> \n \
     <img src="%s" widht="300" height="300"> \n \
@@ -36,6 +36,7 @@ def pretty_print(folder, ego):
             for quality in qualities:
                 path_img = 'SVG/%s_%s.svg' % (gt[0], quality)
                 if os.path.isfile(path+'/'+path_img):
-                    write_figure(file_html, path_img, gt[0], gt[1], gt[2+qualities.index(quality)], quality)
+                    id_qual = qualities.index(quality)
+                    write_figure(file_html, path_img, gt[0], gt[1], gt[2+id_qual], quality, gt[5+id_qual])
 
 

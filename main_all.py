@@ -17,6 +17,30 @@ import main_indicators
 import main_pretty_print
 import tarfile
 import shutil
+sys.path.append('../webapp')
+from algopol.statuses import ParsedStatus
+
+def clusters_per_gt(list_of_gt):
+    file_name = 'matrix'
+    for gt in list_of_gt:
+        file_name += '_%s' % gt
+    temp = ['id', 'quality']
+    temp.extend(list_of_gt)
+    temp.append('common clusters')
+    with open('GALLERY/General/%s' % file_name, 'w') as file_to_write:
+        csv_writer = csv.writer(file_to_write, delimiter = ';')
+        csv_writer.writerow(temp)
+
+def clusters_per_gt(list_of_gt):
+    file_name = 'matrix'
+    for gt in list_of_gt:
+        file_name += '_%s' % gt
+    temp = ['id']
+    temp.extend(list_of_gt)
+    temp.append('common clusters')
+    with open('GALLERY/General/%s' % file_name, 'w') as file_to_write:
+        csv_writer = csv.writer(file_to_write, delimiter = ';')
+        csv_writer.writerow(temp)
 
 def main():
     if args.options != None:
@@ -35,6 +59,9 @@ def main():
                 tab_options = None
             main_indicators.main(args.dataset, None, tab_options)
             return
+        elif 'cluster_per_gt' in args.options:
+            list_of_gt = [option for option in args.options if option in ParsedStatus.GUESSED_TYPES.get_name_set()]
+            clusters_per_gt(list_of_gt)
 
     list_folders = args.dataset if args.dataset else ['csa', 'all', 'p5', 'entretiens']
     for folder in list_folders:

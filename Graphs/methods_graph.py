@@ -2,10 +2,8 @@ import json
 import gzip
 from igraph import *
 import os
-sys.path.append('./Jsons')
 import read_statuses
 import numpy as np
-import friends
 from igraph.drawing import colors
 import re
 
@@ -58,15 +56,13 @@ def export(path):
             export_file.write('\n')
         i += 1
 
-def gt_coloration(graph):
+def gt_coloration(graph, dico):
     folder = graph['folder']
     ego = graph['ego']
 
     path = 'GALLERY/%s/%s/Graphs/GT_graphs' % (folder, ego)
     if not os.path.isdir(path):
         os.mkdir(path)
-
-    dico = read_statuses.gt_and_activity(folder, ego)
 
     palette = ['cyan1', 'cyan2', 'cyan3', 'cyan4']
     quality = ['', '', '', 'comments', 'likes']
@@ -135,6 +131,7 @@ figure {\n\
   display: inline-block;\n\
 }'
         )
+
 
 
 

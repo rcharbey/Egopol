@@ -219,16 +219,20 @@ def find_status(folder, ego, id):
         if status['id'] == id:
             return status
 
-def gt_and_activity(folder, ego):
-    dict_commenters_per_status = dict_of_commenters_per_status(folder, ego)
-    dict_likers_per_status = dict_of_likers_per_status(folder, ego)
-
+def gt_per_status(folder, ego):
     dict_gt_per_status = {}
     with open('%s/statuses-csv/%s.csv' % (os.path.expanduser("~"), ego), 'r') as reader:
         csv_reader = csv.reader(reader, delimiter = ';')
         csv_reader.next()
         for line in csv_reader:
             dict_gt_per_status[line[2]] = line[16]
+    return dict_gt_per_status
+
+def gt_and_activity(folder, ego):
+    dict_commenters_per_status = dict_of_commenters_per_status(folder, ego)
+    dict_likers_per_status = dict_of_likers_per_status(folder, ego)
+
+    dict_gt_per_status = gt_per_status(folder, ego)
 
     result = {}
     for status in dict_gt_per_status:
