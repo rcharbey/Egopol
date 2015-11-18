@@ -57,7 +57,7 @@ def display_gt_coloration(folder, ego):
     methods_graph.display_gt_coloration(folder, ego)
 
 def cluster_per_alter(folder, ego):
-    return friends.cluster_per_alter(folder, ego):
+    return friends.cluster_per_alter(folder, ego)
 
 
 
