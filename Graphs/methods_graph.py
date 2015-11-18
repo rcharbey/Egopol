@@ -2,7 +2,6 @@ import json
 import gzip
 from igraph import *
 import os
-import read_statuses
 import numpy as np
 from igraph.drawing import colors
 import re
