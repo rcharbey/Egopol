@@ -114,7 +114,7 @@ def clusters_per_gt(couple_of_gt, folder, ego):
     file_name = 'matrix'
     for gt in couple_of_gt:
         file_name += '_%s' % gt
-        accounter_per_gt[gt] = {'comments' : [0]*nb_cluster+1, 'likes' : [0]*nb_cluster+1}
+        accounter_per_gt[gt] = {'comments' : [0]*(nb_cluster+1), 'likes' : [0]*(nb_cluster+1)}
     for id_status in gt_per_status:
         gt = gt_per_status[id_status]
         if gt in couple_of_gt:
