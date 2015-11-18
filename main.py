@@ -144,6 +144,7 @@ def clusters_per_gt(couple_of_gt):
                                 elif i == 0:
                                     max_per_gt[gt][quality][1] = max_per_gt[gt][quality][0]
                                 max_per_gt[gt][quality][i] = accounter[cluster]
+                                break
 
         for quality in ['comments', 'likes']:
             common = 0
