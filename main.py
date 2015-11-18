@@ -20,7 +20,10 @@ sys.path.append('../webapp')
 
 for elem in sys.path:
     print elem
-    print os.listdir(elem)
+    if os.path.isdir(elem):
+        print os.listdir(elem)
+    else:
+        print 'file'
 
 
 folder = args.folder
