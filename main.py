@@ -144,7 +144,7 @@ def clusters_per_gt(couple_of_gt):
                      if to_class[j] > maximum:
                          maximum = to_class[j]
                          max_id = j
-                 max_per_gt[gt][quality].append(j)
+                 max_per_gt[gt][quality].append(max_id)
                  to_class[max_id] = -1
 
     print max_per_gt
