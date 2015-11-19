@@ -104,6 +104,9 @@ def display(args):
 print sys.argv
 
 def clusters_per_gt(couple_of_gt, folder, ego):
+    print couple_of_gt
+    print folder
+    print ego
     cluster_per_alter = main_graphs.cluster_per_alter(folder, ego)
     gt_per_status = main_jsons.gt_per_status(folder, ego)
     nb_cluster = max(cluster_per_alter.values())
