@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+sys.path.append('../webapp/')
+for super_folder in ['Raphael', 'Algopol']:
+    for folder in ['Enumeration', 'Graphs', 'Jsons', 'Indicators', 'Pretty_print']:
+        sys.path.append('%s/%s/Egopol/%s/' % (os.path.expanduser("~"), super_folder, folder))
+
 import argparse
 import os
 import sys
@@ -9,7 +14,6 @@ import main_jsons
 import csv
 import main_pretty_print
 import main_indicators
-sys.path.append('../webapp/')
 from algopol.statuses import ParsedStatus
 
 
