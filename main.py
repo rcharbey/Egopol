@@ -125,9 +125,7 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                     cluster = cluster_per_alter.get(active_alter, -1)
                     if cluster == -1:
                         continue
-                    accounter_gt_quality[cluster]+1
-                    print '+1'
-                print accounter_gt_quality
+                    accounter_gt_quality[cluster] += 1
 
     print accounter_per_gt
 
