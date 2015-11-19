@@ -119,6 +119,7 @@ def clusters_per_gt(couple_of_gt, folder, ego):
         for quality in ['comments', 'likes']:
             accounter_gt_quality = accounter_gt[quality]
             for active_alter in [activity.get('from', activity)['id'] for activity in status.get(quality, [])]:
+                print active_alter
                 cluster = cluster_per_alter.get(active_alter, -1)
                 if cluster == -1:
                     continue
