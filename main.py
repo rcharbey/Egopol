@@ -112,14 +112,13 @@ def clusters_per_gt(couple_of_gt, folder, ego):
         file_name += '_%s' % gt
         accounter_per_gt[gt] = {'comments' : [0]*(nb_cluster+1), 'likes' : [0]*(nb_cluster+1)}
 
-    print gt_per_status
-
     for id_status in gt_per_status:
         gt = gt_per_status[id_status]
         accounter_gt = accounter_per_gt[gt]
         status = main_jsons.find_status(folder, ego, id_status)
         for quality in ['comments', 'likes']:
             accounter_gt_quality = accounter_gt[quality]
+            print status.get(quality)
             print [activity.get('from', activity)['id'] for activity in status.get(quality, [])]
             for active_alter in [activity.get('from', activity)['id'] for activity in status.get(quality, [])]:
                 print active_alter
