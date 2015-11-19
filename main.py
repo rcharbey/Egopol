@@ -34,8 +34,6 @@ def create_folders(folder, ego):
         if not os.path.isdir(path):
             os.mkdir(path)
 
-create_folders(args.folder, args.ego)
-
 def induced_graph_friends(args):
     folder = args.folder
     ego = args.ego
@@ -157,6 +155,8 @@ if __name__ == "__main__":
     parser.add_argument('ego', help="ego's name")
     parser.add_argument('--options', '-o', nargs='+')
     args = parser.parse_args()
+
+    create_folders(args.folder, args.ego)
 
     folder = args.folder
     ego = args.ego
