@@ -36,7 +36,7 @@ def create_folders(folder, ego):
         if not os.path.isdir(path):
             os.mkdir(path)
 
-create_folders(folder, ego)
+create_folders(args.folder, args.ego)
 
 def induced_graph_friends(args):
     folder = args.folder
