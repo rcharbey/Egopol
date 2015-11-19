@@ -219,12 +219,15 @@ def find_status(folder, ego, id):
         if status['id'] == id:
             return status
 
-def gt_per_status(folder, ego):
+def gt_per_status(folder, ego, list_of_gt):
     dict_gt_per_status = {}
     with open('%s/statuses-csv/%s.csv' % (os.path.expanduser("~"), ego), 'r') as reader:
         csv_reader = csv.reader(reader, delimiter = ';')
         csv_reader.next()
         for line in csv_reader:
+            if list_of_gt:
+                if not line[16] in list_of_gt:
+                    continue
             dict_gt_per_status[line[2]] = line[16]
     return dict_gt_per_status
 

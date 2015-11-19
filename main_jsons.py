@@ -59,8 +59,8 @@ def list_of_qualified(folder, ego):
 def gt_and_activity(folder, ego):
     return read_statuses.gt_and_activity(folder, ego)
 
-def gt_per_status(folder, ego):
-    return read_statuses.gt_per_status(folder, ego)
+def gt_per_status(folder, ego, list_of_gt = None):
+    return read_statuses.gt_per_status(folder, ego, list_of_gt)
 
 def dict_of_commenters_per_status(folder, ego):
     return read_statuses.dict_of_commenters_per_status(folder, ego)

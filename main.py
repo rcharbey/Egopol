@@ -100,28 +100,29 @@ def display(args):
 
 def clusters_per_gt(couple_of_gt, folder, ego):
     cluster_per_alter = main_graphs.cluster_per_alter(folder, ego)
-    gt_per_status = main_jsons.gt_per_status(folder, ego)
+    gt_per_status = main_jsons.gt_per_status(folder, ego, couple_of_gt)
     nb_cluster = max(cluster_per_alter.values())
+
     if nb_cluster < 3:
         return
-    accounter_per_gt = {}
-    max_per_gt = {}
+    accounter_per_gt, max_per_gt = {}, {}
+
     file_name = 'matrix'
     for gt in couple_of_gt:
         file_name += '_%s' % gt
         accounter_per_gt[gt] = {'comments' : [0]*(nb_cluster+1), 'likes' : [0]*(nb_cluster+1)}
+
     for id_status in gt_per_status:
         gt = gt_per_status[id_status]
-        if gt in couple_of_gt:
-            accounter_gt = accounter_per_gt[gt]
-            status = main_jsons.find_status(folder, ego, id_status)
-            for quality in ['comments', 'likes']:
-                accounter_gt_quality = accounter_gt[quality]
-                for active_alter in [activity.get('from', activity).get('name', activity.get('from', activity)['id']) for activity in status.get(quality, [])]:
-                    cluster = cluster_per_alter.get(active_alter, -1)
-                    if cluster == -1:
-                        continue
-                    accounter_gt_quality[cluster] += 1
+        accounter_gt = accounter_per_gt[gt]
+        status = main_jsons.find_status(folder, ego, id_status)
+        for quality in ['comments', 'likes']:
+            accounter_gt_quality = accounter_gt[quality]
+            for active_alter in [activity.get('from', activity)['id']) for activity in status.get(quality, [])]:
+                cluster = cluster_per_alter.get(active_alter, -1)
+                if cluster == -1:
+                    continue
+                accounter_gt_quality[cluster] += 1
 
     for gt in couple_of_gt:
          max_per_gt[gt] = {'comments' : [], 'likes' : []}
@@ -136,16 +137,17 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                          max_id = j
                  max_per_gt[gt][quality].append(max_id)
                  to_class[max_id] = -1
-    with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
-        csv_writer = csv.writer(file_to_write, delimiter = ';')
-        for quality in ['comments', 'likes']:
-            common = 0
-            for cluster in max_per_gt[couple_of_gt[0]][quality]:
-                if cluster == -1:
-                    break
-                if cluster in max_per_gt[couple_of_gt[1]][quality]:
-                    common += 1
 
+
+    for quality in ['comments', 'likes']:
+        common = 0
+        for cluster in max_per_gt[couple_of_gt[0]][quality]:
+            if cluster == -1:
+                break
+            if cluster in max_per_gt[couple_of_gt[1]][quality]:
+                common += 1
+        with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
+            csv_writer = csv.writer(file_to_write, delimiter = ';')
             csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common])
 
 if __name__ == "__main__":
