@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import sys
 sys.path.append('../webapp/')
 for super_folder in ['Raphael', 'Algopol']:
     for folder in ['Enumeration', 'Graphs', 'Jsons', 'Indicators', 'Pretty_print']:
@@ -7,7 +8,6 @@ for super_folder in ['Raphael', 'Algopol']:
 
 import argparse
 import os
-import sys
 import main_enumeration
 import main_graphs
 import main_jsons
