@@ -107,7 +107,7 @@ def clusters_per_gt(couple_of_gt, folder, ego):
         return
     accounter_per_gt, max_per_gt = {}, {}
 
-    file_name = 'matrix'
+    file_name = 'matrix_%s' % ego
     for gt in couple_of_gt:
         file_name += '_%s' % gt
         accounter_per_gt[gt] = {'comments' : [0]*(nb_cluster+1), 'likes' : [0]*(nb_cluster+1)}
@@ -147,7 +147,7 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                 break
             if cluster in max_per_gt[couple_of_gt[1]][quality]:
                 common += 1
-        with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
+        with open('GALLERY/General/Clusters_GT/%s' % file_name, 'w') as file_to_write:
             csv_writer = csv.writer(file_to_write, delimiter = ';')
             csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common])
 
