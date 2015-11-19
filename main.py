@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-parser = argparse.ArgumentParser(description="main")
-parser.add_argument('folder', help="ego's folder")
-parser.add_argument('ego', help="ego's name")
-parser.add_argument('--options', '-o', nargs='+')
-args = parser.parse_args()
-
 import os
 import sys
 import main_enumeration
@@ -127,8 +121,6 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                         continue
                     accounter_gt_quality[cluster] += 1
 
-    print accounter_per_gt
-
     for gt in couple_of_gt:
          max_per_gt[gt] = {'comments' : [], 'likes' : []}
          for quality in ['comments', 'likes']:
@@ -154,61 +146,68 @@ def clusters_per_gt(couple_of_gt, folder, ego):
 
             csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common])
 
+if __name__ == "__main__":
 
-folder = args.folder
-ego = args.ego
-options = args.options
-print str(args.folder) + ' ' + str(ego) + ' ' + str(options)
+    parser = argparse.ArgumentParser(description="main")
+    parser.add_argument('folder', help="ego's folder")
+    parser.add_argument('ego', help="ego's name")
+    parser.add_argument('--options', '-o', nargs='+')
+    args = parser.parse_args()
 
-if options != None:
-    if 'light' in options:
-        init_light(args)
-    if 'init' in options:
-        init(args)
-    if 'display' in options:
-        display(args)
-    elif 'enumerate' in options:
-        if 'indu' in options:
-            enumerate(args, 'friends', 'edgelist', True)
-        else:
-            enumerate(args, 'friends')
-            enumerate(args, 'commenters')
+    folder = args.folder
+    ego = args.ego
+    options = args.options
+    print str(args.folder) + ' ' + str(ego) + ' ' + str(options)
 
-    elif 'indu' in options:
-        induced_graph_friends(args)
-    if 'indicators' in options:
-        main_indicators.main(folder, ego)
+    if options != None:
+        if 'light' in options:
+            init_light(args)
+        if 'init' in options:
+            init(args)
+        if 'display' in options:
+            display(args)
+        elif 'enumerate' in options:
+            if 'indu' in options:
+                enumerate(args, 'friends', 'edgelist', True)
+            else:
+                enumerate(args, 'friends')
+                enumerate(args, 'commenters')
+
+        elif 'indu' in options:
+            induced_graph_friends(args)
+        if 'indicators' in options:
+            main_indicators.main(folder, ego)
 
 
-    elif 'gt_coloration' in args.options:
-        main_graphs.gt_coloration(folder, ego, main_jsons.gt_and_activity(folder, ego))
-    elif 'gt_display' in args.options:
-        main_graphs.display_gt_coloration(folder, ego)
-        main_pretty_print.gt_pretty_print(folder, ego)
-    elif 'cluster_per_gt' in options:
-        clusters_per_gt([option for option in args.options if option in ParsedStatus.GUESSED_TYPES.get_name_set()], folder, ego)
+        elif 'gt_coloration' in args.options:
+            main_graphs.gt_coloration(folder, ego, main_jsons.gt_and_activity(folder, ego))
+        elif 'gt_display' in args.options:
+            main_graphs.display_gt_coloration(folder, ego)
+            main_pretty_print.gt_pretty_print(folder, ego)
+        elif 'cluster_per_gt' in options:
+            clusters_per_gt([option for option in args.options if option in ParsedStatus.GUESSED_TYPES.get_name_set()], folder, ego)
 
-else:
-    graph_friends = init(args)
-    if graph_friends != None :
-        #graph_friends = triple[0]
-        #graph_commenters = triple[1]
-        print 'enumeration friends'
-        if len(graph_friends.es) < 3000 and len(graph_friends.es) > 0:
-            enumerate(args, 'friends', graph_format = 'edgelist')
-            print 'done'
-        else:
-            print 'squeezed'
-        print 'enumeration friends done'
-        #if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
-            #enumerate(args, 'commenters')
-            #print 'done'
-        #else:
-            #enumeration_status = [0]*len(enumeration)
-        #for status in list_of_statuses:
-            #temp = study_status(args, status[0])
-            #for i in range(0, len(temp)):
-                #enumeration_status[i] += temp[i]
-        #if len(list_of_statuses) > 0:
-            #print_result_all_induced(enumeration_status)
-        #indicators.main(args.folder, args.ego)
+    else:
+        graph_friends = init(args)
+        if graph_friends != None :
+            #graph_friends = triple[0]
+            #graph_commenters = triple[1]
+            print 'enumeration friends'
+            if len(graph_friends.es) < 3000 and len(graph_friends.es) > 0:
+                enumerate(args, 'friends', graph_format = 'edgelist')
+                print 'done'
+            else:
+                print 'squeezed'
+            print 'enumeration friends done'
+            #if len(graph_commenters.es) < 2000 and len(graph_commenters.es) > 0:
+                #enumerate(args, 'commenters')
+                #print 'done'
+            #else:
+                #enumeration_status = [0]*len(enumeration)
+            #for status in list_of_statuses:
+                #temp = study_status(args, status[0])
+                #for i in range(0, len(temp)):
+                    #enumeration_status[i] += temp[i]
+            #if len(list_of_statuses) > 0:
+                #print_result_all_induced(enumeration_status)
+            #indicators.main(args.folder, args.ego)
