@@ -146,6 +146,7 @@ def clusters_per_gt(couple_of_gt, folder, ego):
         csv_writer = csv.writer(file_to_write, delimiter = ';')
         for quality in ['comments', 'likes']:
             common = 0
+            print max_per_gt
             for cluster in max_per_gt[couple_of_gt[0]][quality]:
                 if cluster == -1:
                     break
