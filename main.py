@@ -126,6 +126,7 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                     if cluster == -1:
                         continue
                     accounter_gt_quality[cluster]+1
+                    print '+1'
                 print accounter_gt_quality
 
     print accounter_per_gt
