@@ -123,6 +123,8 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                         continue
                     accounter_gt_quality[cluster] += 1
 
+    print accounter_per_gt
+
     for gt in couple_of_gt:
          max_per_gt[gt] = {'comments' : [], 'likes' : []}
          for quality in ['comments', 'likes']:
