@@ -122,16 +122,13 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                     if cluster == -1:
                         continue
                     accounter_gt_quality[cluster] += 1
-                    print add
-
-    print accounter_per_gt
 
     for gt in couple_of_gt:
          max_per_gt[gt] = {'comments' : [], 'likes' : []}
          for quality in ['comments', 'likes']:
              for i in range(0,3):
                  to_class = accounter_per_gt[gt][quality]
-                 maximum = -1
+                 maximum = 0
                  max_id = -1
                  for j in range(0, len(to_class)):
                      if to_class[j] > maximum:
