@@ -101,12 +101,8 @@ def display(args):
     graph = main_graphs.import_graph(args.folder, args.ego, 'friends', 'edgelist')
     main_graphs.display_light(graph)
 
-print sys.argv
 
 def clusters_per_gt(couple_of_gt, folder, ego):
-    print couple_of_gt
-    print folder
-    print ego
     cluster_per_alter = main_graphs.cluster_per_alter(folder, ego)
     gt_per_status = main_jsons.gt_per_status(folder, ego)
     nb_cluster = max(cluster_per_alter.values())
@@ -190,6 +186,8 @@ if options != None:
         main_graphs.display_gt_coloration(folder, ego)
         main_pretty_print.gt_pretty_print(folder, ego)
     elif 'cluster_per_gt' in options:
+        print options
+        print [option for option in args.options if option in ParsedStatus.GUESSED_TYPES.get_name_set()]
         clusters_per_gt([option for option in args.options if option in ParsedStatus.GUESSED_TYPES.get_name_set()], folder, ego)
 
 else:
