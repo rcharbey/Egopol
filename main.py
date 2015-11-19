@@ -127,6 +127,8 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                         continue
                     accounter[cluster]+1
 
+    print accounter_per_gt
+
     for gt in couple_of_gt:
          max_per_gt[gt] = {'comments' : [], 'likes' : []}
          for quality in ['comments', 'likes']:
@@ -140,12 +142,10 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                          max_id = j
                  max_per_gt[gt][quality].append(max_id)
                  to_class[max_id] = -1
-
     with open('GALLERY/General/%s' % file_name, 'a') as file_to_write:
         csv_writer = csv.writer(file_to_write, delimiter = ';')
         for quality in ['comments', 'likes']:
             common = 0
-            print max_per_gt
             for cluster in max_per_gt[couple_of_gt[0]][quality]:
                 if cluster == -1:
                     break
@@ -186,8 +186,6 @@ if options != None:
         main_graphs.display_gt_coloration(folder, ego)
         main_pretty_print.gt_pretty_print(folder, ego)
     elif 'cluster_per_gt' in options:
-        print options
-        print [option for option in args.options if option in ParsedStatus.GUESSED_TYPES.get_name_set()]
         clusters_per_gt([option for option in args.options if option in ParsedStatus.GUESSED_TYPES.get_name_set()], folder, ego)
 
 else:
