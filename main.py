@@ -192,6 +192,8 @@ if __name__ == "__main__":
             main_pretty_print.gt_pretty_print(folder, ego)
         elif 'cluster_per_gt' in options:
             clusters_per_gt([option for option in args.options if option in ParsedStatus.GUESSED_TYPES.get_name_set()], folder, ego)
+        elif 'cluster_per_alter' in options:
+            main_graphs.cluster_per_alter(folder, ego)
 
     else:
         graph_friends = init(args)
