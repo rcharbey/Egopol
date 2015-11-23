@@ -108,6 +108,8 @@ def gt_coloration(graph, dico):
     sum_statuses = sum([dico[gt][0] for gt in dico])
     sum_comments = sum([dico[gt][1] for gt in dico])
     sum_likes = sum([dico[gt][2] for gt in dico])
+    sum_commenters = sum([dico[gt][5] for gt in dico])
+    sum_likers = sum([dico[gt][6] for gt in dico])
 
 
     for i in range(0,2):
@@ -129,7 +131,7 @@ def gt_coloration(graph, dico):
                     break
 
         graph.write('%s/Aggregation_%s.gml' % (path, quality), format = 'gml')
-        file_with_info.write('%s %s %s %s %s %s\n' % ('Aggregation', quality, sum_comments, sum_likes, 0, 0))
+        file_with_info.write('%s %s %s %s %s %s\n' % ('Aggregation', sum_statuses, sum_comments, sum_likes, sum_commenters, sum_likers))
 
 
 def display_gt_coloration(folder, ego):
