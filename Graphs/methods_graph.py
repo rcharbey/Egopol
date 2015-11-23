@@ -111,7 +111,7 @@ def gt_coloration(graph, dico):
 
 
     for i in range(0,2):
-        quality = qualities[i]
+        quality = qualities[i+3]
         quintiles = [np.percentile([sum_gt[i]], x) for x in [25, 50, 75, 100]]
         index_v = -1
         for v in graph.vs:
