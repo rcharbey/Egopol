@@ -126,7 +126,7 @@ def gt_coloration(graph, dico):
                 continue
             for threshold in quintiles:
                 if value <= threshold:
-                    v['color'] = palette[quintile.index(threshold)]
+                    v['color'] = palette[quintiles.index(threshold)]
                     break
 
         graph.write('%s/Aggregation_%s.gml' % (path, quality), format = 'gml')
