@@ -77,8 +77,6 @@ def gt_coloration(graph, dico):
         quintiles_all.append([np.percentile(lists_all[i], x) for x in [25, 50, 75, 100]])
 
     sum_gt = [[0]*len(graph.vs), [0]*len(graph.vs)]
-    sum_comments = 0
-    sum_likes = 0
 
     for gt in dico:
         for i in range(3,5):
@@ -111,6 +109,11 @@ def gt_coloration(graph, dico):
 
         file_with_info.write('%s %s %s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2], dico[gt][5], dico[gt][6]))
 
+    sum_statuses = sum([dico[gt][0] for gt in dico])
+    sum_comments = sum([dico[gt][1] for gt in dico])
+    sum_likes = sum([dico[gt][2] for gt in dico])
+
+
     for i in range(0,2):
         quality = qualities[i]
         quintiles = [np.percentile([sum_gt[i]], x) for x in [25, 50, 75, 100]]
@@ -130,7 +133,7 @@ def gt_coloration(graph, dico):
                     break
 
         graph.write('%s/Aggregation_%s.gml' % (path, quality), format = 'gml')
-        file_with_info.write('%s %s %s %s %s %s\n' % ('Aggregation' % quality, sum_comments, sum_likes))
+        file_with_info.write('%s %s %s %s %s %s\n' % ('Aggregation', quality, sum_comments, sum_likes, 0, 0))
 
 
 def display_gt_coloration(folder, ego):
