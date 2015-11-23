@@ -241,6 +241,7 @@ def gt_and_activity(folder, ego):
     for status in dict_gt_per_status:
         gt = dict_gt_per_status[status]
         if not gt in result:
+            #[nb statuses, nb com, nb likes, {nb com per commenter}, {nb likes per commenter}, nb commenter, nb liker]
             result[gt] = [0, 0, 0, {}, {}, 0, 0]
         ln_com = result[gt][3]
         ln_likes = result[gt][4]

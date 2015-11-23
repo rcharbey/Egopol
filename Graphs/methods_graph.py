@@ -64,7 +64,7 @@ def gt_coloration(graph, dico):
         os.mkdir(path)
 
     palette = ['cyan1', 'cyan2', 'cyan3', 'cyan4']
-    quality = ['', '', '', 'comments', 'likes']
+    qualities = ['', '', '', 'comments', 'likes']
 
     file_with_info = open('%s/infos.txt' % path, 'w')
 
@@ -76,14 +76,25 @@ def gt_coloration(graph, dico):
     for i in range(0,2):
         quintiles_all.append([np.percentile(lists_all[i], x) for x in [25, 50, 75, 100]])
 
+    sum_gt = [[0]*len(graph.vs), [0]*len(graph.vs)]
+    sum_comments = 0
+    sum_likes = 0
+
     for gt in dico:
         for i in range(3,5):
             current_dico = dico[gt][i]
             if dico[gt][i-2] < 5:
                 continue
+            index_v = -1
             for v in graph.vs:
+                index_v += 1
                 v['color'] = 'white'
                 value = current_dico.get(v['name'], 0)
+                if i == 3:
+                    sum_comments += value
+                elif i == 4:
+                    sum_likes += value
+                sum_gt[i-3][index_v] += int(value)
                 if int(value) == 0:
                     continue
                 if int(value) == 1:
@@ -94,11 +105,32 @@ def gt_coloration(graph, dico):
                         v['color'] = palette[quintiles_all[i-3].index(threshold)]
                         break
             if gt == 'App/Jeux':
-                graph.write('%s/App_Jeux_%s.gml' % (path, quality[i]), format = 'gml')
+                graph.write('%s/App_Jeux_%s.gml' % (path, qualities[i]), format = 'gml')
             else:
-                graph.write('%s/%s_%s.gml' % (path, re.escape(gt), quality[i]), format = 'gml')
+                graph.write('%s/%s_%s.gml' % (path, re.escape(gt), qualities[i]), format = 'gml')
 
         file_with_info.write('%s %s %s %s %s %s\n' % (gt, dico[gt][0], dico[gt][1], dico[gt][2], dico[gt][5], dico[gt][6]))
+
+    for i in range(0,2):
+        quality = qualities[i]
+        quintiles = [np.percentile([sum_gt[i]], x) for x in [25, 50, 75, 100]]
+        index_v = -1
+        for v in graph.vs:
+            index_v += 1
+            v['color'] = 'white'
+            value = sum_gt[i][index_v]
+            if int(value) == 0:
+                continue
+            if int(value) == 1:
+                v['color'] = 'lightcyan'
+                continue
+            for threshold in quintiles:
+                if value <= threshold:
+                    v['color'] = palette[quintile.index(threshold)]
+                    break
+
+        graph.write('%s/Aggregation_%s.gml' % (path, quality), format = 'gml')
+        file_with_info.write('%s %s %s %s %s %s\n' % ('Aggregation' % quality, sum_comments, sum_likes))
 
 
 def display_gt_coloration(folder, ego):
