@@ -131,7 +131,7 @@ def gt_coloration(graph, dico):
                     break
 
         graph.write('%s/Aggregation_%s.gml' % (path, quality), format = 'gml')
-        file_with_info.write('%s %s %s %s %s %s\n' % ('Aggregation', sum_statuses, sum_comments, sum_likes, sum_commenters, sum_likers))
+    file_with_info.write('%s %s %s %s %s %s\n' % ('Aggregation', sum_statuses, sum_comments, sum_likes, sum_commenters, sum_likers))
 
 
 def display_gt_coloration(folder, ego):

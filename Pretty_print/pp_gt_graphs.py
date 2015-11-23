@@ -37,6 +37,6 @@ def pretty_print(folder, ego):
                 path_img = 'SVG/%s_%s.svg' % (gt[0], quality)
                 if os.path.isfile(path+'/'+path_img):
                     id_qual = qualities.index(quality)
-                    write_figure(file_html, path_img, gt[0], gt[1], gt[2+id_qual], quality, gt[5+id_qual])
+                    write_figure(file_html, path_img, gt[0], gt[1], gt[2+id_qual], quality, gt[4+id_qual])
 
 
