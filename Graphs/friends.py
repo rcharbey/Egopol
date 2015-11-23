@@ -157,7 +157,7 @@ def induced_graph(graph, id_status, list_of_vertices):
 def cluster_per_alter(folder, ego):
     result = {}
     graph = import_graph(folder, ego, 'gml')
-    if not graph.vs[0].get('cluster', False):
+    if not 'cluster' in graph.vs.attributes():
         clusters_list = graph.community_multilevel()
         i = 0
         for cluster in clusters_list:
