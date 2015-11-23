@@ -140,6 +140,7 @@ def clusters_per_gt(couple_of_gt, folder, ego):
 
 
     with open('GALLERY/General/Clusters_GT/%s' % file_name, 'w') as file_to_write:
+        csv_writer = csv.writer(file_to_write, delimiter = ';')
         for quality in ['comments', 'likes']:
             common = 0
             for cluster in max_per_gt[couple_of_gt[0]][quality]:
@@ -147,8 +148,7 @@ def clusters_per_gt(couple_of_gt, folder, ego):
                     break
                 if cluster in max_per_gt[couple_of_gt[1]][quality]:
                     common += 1
-                csv_writer = csv.writer(file_to_write, delimiter = ';')
-                csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common])
+            csv_writer.writerow([ego, quality, max_per_gt[couple_of_gt[0]][quality], max_per_gt[couple_of_gt[1]][quality], common])
 
 if __name__ == "__main__":
 
