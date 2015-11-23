@@ -88,10 +88,6 @@ def gt_coloration(graph, dico):
                 index_v += 1
                 v['color'] = 'white'
                 value = current_dico.get(v['name'], 0)
-                if i == 3:
-                    sum_comments += value
-                elif i == 4:
-                    sum_likes += value
                 sum_gt[i-3][index_v] += int(value)
                 if int(value) == 0:
                     continue
