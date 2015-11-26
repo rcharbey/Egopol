@@ -100,7 +100,7 @@ def display(args):
 
 def clusters_per_gt(couple_of_gt, folder, ego):
 
-    dir_path = 'GALLERY/General/Clusters_GT/%s_%s' % (couple_of_gt[0], couple_of_gt[1])
+    dirpath = 'GALLERY/General/Clusters_GT/%s_%s' % (couple_of_gt[0], couple_of_gt[1])
     if not os.path.isdir(dirpath):
         os.mkdir(dirpath)
 
