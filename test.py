@@ -7,4 +7,4 @@ Created on Fri Nov 27 16:30:51 2015
 
 with open('print_test.txt', 'w') as writer:
     while(True):
-        writer.write("2")
+        writer.write("1")
