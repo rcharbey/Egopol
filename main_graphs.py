@@ -37,8 +37,7 @@ def light_graph(dict_of_mutual, folder, ego, induced = False):
 
 def _find_folder(ego):
     for temp_folder in ['all', 'csa', 'p5']:
-        if os.path.isdir('%s/DATA/%s/%s' % (os.path.expanduser("~"), folder, ego)):
-            print temp_folder
+        if os.path.isdir('%s/DATA/%s/%s' % (os.path.expanduser("~"), temp_folder, ego)):
             return temp_folder
 
 def import_graph(folder= None, ego = None, quality = 'friends', graph_format = 'gml', fc = False):
