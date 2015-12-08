@@ -64,7 +64,7 @@ def gt_coloration(folder, ego, dico):
 def display_gt_coloration(folder, ego):
     methods_graph.display_gt_coloration(folder, ego)
 
-def cluster_per_alter(folder = None, ego):
+def cluster_per_alter(folder = None, ego = None):
     if folder == None:
         folder = _find_folder(ego)
     return friends.cluster_per_alter(folder, ego)
