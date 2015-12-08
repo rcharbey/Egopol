@@ -41,7 +41,7 @@ def _find_folder(ego):
             print temp_folder
             return temp_folder
 
-def import_graph(folder= None, ego, quality, graph_format = 'gml', fc = False):
+def import_graph(folder= None, ego = None, quality = 'friends', graph_format = 'gml', fc = False):
     if folder == None:
         folder = _find_folder(ego)
     if quality == 'friends' :
