@@ -165,6 +165,8 @@ def cluster_per_alter(folder, ego):
                 result[graph.vs[alter]['name']] = i
                 graph.vs[alter]['cluster'] = i
             i += 1
+        graph['folder'] = folder
+        graph['ego'] = ego
         write_graph(graph)
     else:
         for v in graph.vs:
