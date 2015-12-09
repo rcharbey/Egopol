@@ -22,7 +22,7 @@ def choose_quality(folder, ego):
             return 'name'
         else:
             f.close()
-            return 'id'            
+            return 'id'
 
 def create_correspondence_table(folder, ego):
     path = folder +'/' + ego
@@ -38,14 +38,16 @@ def create_correspondence_table(folder, ego):
         result.append(to_write)
         table_to_write.write(to_write.encode('utf8'))
         table_to_write.write('\n')
-    f.close()    
+    f.close()
     table_to_write.close()
     return result
-    
+
 def list_of_friends(folder, ego):
-    path = folder +'/' + ego
+    path = 'GALLERY/'+ folder +'/' + ego +'/Graphs/correspondence_table'
+    if not os.path.isfile(path):
+        return create_correspondence_table(folder, ego)
     result = []
-    f = open('GALLERY/'+path+'/Graphs/correspondence_table', 'r')
+    f = open(path, 'r')
     for line in f:
         result.append(line[0:len(line)-1].decode('utf-8'))
     return result
