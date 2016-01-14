@@ -154,9 +154,14 @@ def induced_graph(graph, id_status, list_of_vertices):
     #plot(induced, place, layout = layout, vertex_size = 10)
     return induced
 
-def cluster_per_alter(folder, ego):
+def induced_graph(graph, list_of_vertices):
+    induced = graph.induced_subgraph(list_of_vertices)
+    return induced
+
+def cluster_per_alter(folder, ego, graph = None):
     result = {}
-    graph = import_graph(folder, ego, 'gml')
+    if not graph:
+        graph = import_graph(folder, ego, 'gml')
     if not 'cluster' in graph.vs.attributes():
         clusters_list = graph.community_multilevel()
         i = 0

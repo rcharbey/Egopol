@@ -47,6 +47,9 @@ def induced_subgraph(graph, id_status, list_of_vertices, quality):
     elif quality == 'commenters' :
         return commenters.induced_graph(graph, id_status, list_of_vertices)
 
+def induced_graph(graph, list_of_vertices):
+    return friends.induced_graph(graph, list_of_vertices)
+
 def display_light(graph, show = True, fc = False):
     friends.display_light(graph, show, fc)
 
@@ -56,6 +59,6 @@ def gt_coloration(folder, ego, dico):
 def display_gt_coloration(folder, ego):
     methods_graph.display_gt_coloration(folder, ego)
 
-def cluster_per_alter(folder, ego):
-    return friends.cluster_per_alter(folder, ego)
+def cluster_per_alter(folder, ego, graph = None):
+    return friends.cluster_per_alter(folder, ego, graph)
 
