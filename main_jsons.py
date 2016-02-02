@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+sys.path.append('Egopol/Jsons')
 sys.path.append('./Jsons')
 import read_friends
 import read_statuses
