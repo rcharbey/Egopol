@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append('./Enumeration')
+sys.path.append('../Egopol/Enumeration')
 import enumerate
 
 def main(graph, options):
