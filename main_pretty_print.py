@@ -1,5 +1,6 @@
 import os
 import sys
+sys.path.append('Egopol/Pretty_print')
 sys.path.append('./Pretty_print')
 
 import pp_patterns
