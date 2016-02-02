@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+sys.path.append('Egopol/Graphs')
 sys.path.append('./Graphs')
 import methods_graph
 import index_neighbors_degree
