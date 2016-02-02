@@ -2,6 +2,10 @@
 
 import sys
 import csv
+sys.path.append('Egopol/Jsons')
+sys.path.append('Egopol/GALLERY')
+sys.path.append('Egopol/Graphs')
+sys.path.append('Egopol/Indicators')
 sys.path.append('./Jsons')
 sys.path.append('./GALLERY')
 sys.path.append('./Graphs')
@@ -22,8 +26,8 @@ def print_info_commenters_likers(folder, ego, clusters_list):
     info_likers_of_comment = main_jsons.calculate_info_likers_of_comment(folder, ego)
     csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'CSV/list_of_commenters_likers.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(['id/nom', 'nombre de commentaires', 'nombre de statuts commentés', 'nombre de likes de statuts', 'nombre de likes de commentaires', 'cluster']) 
-    
+    writer.writerow(['id/nom', 'nombre de commentaires', 'nombre de statuts commentés', 'nombre de likes de statuts', 'nombre de likes de commentaires', 'cluster'])
+
     sorted_info = []
     for friend in list_of_friends:
         cluster_of_this_friend = 0
@@ -46,42 +50,42 @@ def print_info_commenters_likers(folder, ego, clusters_list):
         friend_info = main_jsons.find_friend(folder, ego, friend)
         if 'name' in friend_info:
             friend = friend_info['name']
-        infos_list = ((friend, 
-                            info_commenter['nb_of_comments'], 
-                            info_commenter['nb_of_statuses'], 
-                            info_liker, 
+        infos_list = ((friend,
+                            info_commenter['nb_of_comments'],
+                            info_commenter['nb_of_statuses'],
+                            info_liker,
                             info_liker_of_comment,
                             cluster_of_this_friend))
-        
+
         sorted_info.append([unicode(s).encode("utf-8") for s in infos_list])
-        
-    sorted_info.sort(key=lambda tup: 4*tup[1]+3*tup[3]+2*tup[4]+tup[1], reverse = True) 
-    
+
+    sorted_info.sort(key=lambda tup: 4*tup[1]+3*tup[3]+2*tup[4]+tup[1], reverse = True)
+
     for info in sorted_info:
-        writer.writerow(info) 
-        
+        writer.writerow(info)
+
     csv_file.close()
-        
+
 def print_info_statuses(folder, ego, clusters_list):
     dict_of_commenter_per_status =  main_jsons.calculate_dict_of_commenters_per_status(folder, ego)
     dict_of_likers_per_status = main_jsons.calculate_dict_of_likers_per_status(folder, ego)
     dict_of_likers_of_comments_per_status = main_jsons.calculate_dict_of_likers_of_comments_per_status(folder, ego)
-    
+
     csv_file = open('GALLERY_STATUSES/'+folder+'/'+ego+'_statuses.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
     writer.writerow(['id',
-                     'auteur', 
-                     'destinataire', 
-                     'nombre de commentaires', 
-                     'nombre de commentateurs', 
-                     'nombre de commentaires d\'ego', 
-                     'nombre de likes', 
-                     'nombre de likes de commentaires', 
-                     'texte', 
-                     'lien', 
-                     'type', 
-                     'date', 
-                     'liste des commentateurs', 
+                     'auteur',
+                     'destinataire',
+                     'nombre de commentaires',
+                     'nombre de commentateurs',
+                     'nombre de commentaires d\'ego',
+                     'nombre de likes',
+                     'nombre de likes de commentaires',
+                     'texte',
+                     'lien',
+                     'type',
+                     'date',
+                     'liste des commentateurs',
                      'liste des likers',
                      'cluster qui a le plus intéragis'])
     sorted_info = []
@@ -132,10 +136,10 @@ def print_info_statuses(folder, ego, clusters_list):
                 status_info['link'] = status_info['link']['link']
         if 'time' in status_info:
             date_object = time.localtime(status_info['time']/1000)
-            date = str(date_object.tm_mday) + ' ' + str(date_object.tm_mon) + ' ' + str(date_object.tm_year) 
+            date = str(date_object.tm_mday) + ' ' + str(date_object.tm_mon) + ' ' + str(date_object.tm_year)
         elif 'created' in status_info:
             date_object = time.localtime(status_info['created']/1000)
-            date = str(date_object.tm_mday) + ' ' + str(date_object.tm_mon) + ' ' + str(date_object.tm_year) 
+            date = str(date_object.tm_mday) + ' ' + str(date_object.tm_mon) + ' ' + str(date_object.tm_year)
         else:
             date = ''
         #liste des commentateurs
@@ -165,30 +169,30 @@ def print_info_statuses(folder, ego, clusters_list):
             if temp > max_cluster:
                 max_cluster = temp
                 id_max_cluster = current_cluster
-        infos_list = (status, 
-                    status_info['from']['name'], 
-                    status_info['to'], 
-                    sum_comments, 
-                    len(list_of_commenters_of_status), 
-                    nb_ego, 
-                    len(dict_of_likers_per_status[status]), 
-                    len(dict_of_likers_of_comments_per_status[status]), 
-                    status_info['message'], 
-                    status_info['link'], 
-                    status_info['type'], 
+        infos_list = (status,
+                    status_info['from']['name'],
+                    status_info['to'],
+                    sum_comments,
+                    len(list_of_commenters_of_status),
+                    nb_ego,
+                    len(dict_of_likers_per_status[status]),
+                    len(dict_of_likers_of_comments_per_status[status]),
+                    status_info['message'],
+                    status_info['link'],
+                    status_info['type'],
                     date,
                     print_commenters[0:len(print_commenters)-2],
                     print_likers[0:len(print_likers)-2],
                     id_max_cluster)
         sorted_info.append([unicode(s).encode("utf-8") for s in infos_list])
-    
-    sorted_info.sort(key=lambda tup: 2*tup[3]+tup[6], reverse = True) 
-    
+
+    sorted_info.sort(key=lambda tup: 2*tup[3]+tup[6], reverse = True)
+
     for info in sorted_info:
         writer.writerow(info)
-        
+
     csv_file.close()
-        
+
 def print_info_communities(folder, ego, graph):
     clusters_list_temp = graph.community_multilevel()
     clusters_list = []
@@ -197,7 +201,7 @@ def print_info_communities(folder, ego, graph):
         for index in cluster:
             temp.append(graph.vs[index]['name'].decode('utf-8'))
         clusters_list.append(temp)
-        
+
     info_commenters = main_jsons.calculate_info_commenters(folder, ego)
     info_likers = main_jsons.calculate_info_likers(folder, ego)
     info_likers_of_comment = main_jsons.calculate_info_likers_of_comment(folder, ego)
@@ -219,9 +223,9 @@ def print_info_communities(folder, ego, graph):
     for cluster in clusters_list:
         index_cluster += 1
         info_current = info_per_cluster[str(cluster)]
-        sorted_info.append((cluster, 
-                            info_current['nb_comments'], 
-                            info_current['nb_likes'], 
+        sorted_info.append((cluster,
+                            info_current['nb_comments'],
+                            info_current['nb_likes'],
                             info_current['nb_likes_of_comments'],
                             index_cluster))
     sorted_info.sort(key=lambda tup: 3*tup[1]+2*tup[2]+tup[1], reverse = True)
@@ -236,14 +240,14 @@ def print_info_communities(folder, ego, graph):
             else:
                 temp.append(friend_info['id'])
         writer.writerow([unicode(elem).encode('utf-8') for elem in temp])
-        writer.writerow(['nombre de commentaires', 
-                         'nombre de likes', 
+        writer.writerow(['nombre de commentaires',
+                         'nombre de likes',
                          'nombre de likes de commentaires'])
         to_write = []
         writer.writerow(info[1:len(info)-1])
     csv_file.close()
     return clusters_list
-        
+
 def print_info_pages(folder, ego):
     csv_file = open('GALLERY/'+folder+'/'+ego+'/CSV/list_of_liked_pages.csv', 'wb')
     writer = csv.writer(csv_file, delimiter = ';')
@@ -263,18 +267,18 @@ def print_info_qualify(folder, ego):
                      'au moins une fois tous les six mois',
                      'au moins une fois par an',
                      'moins d\'une fois par an']
-        
+
     writer = csv.writer(csv_file, delimiter = ';')
     writer.writerow(('nom',
-                    'durée', 
-                    'fréquence des rencontres', 
-                    'fréquence des communications', 
-                    'proximité affective',  
-                    'conaissance', 
-                    'famille', 
-                    'colègue', 
-                    'ami', 
-                    'autre info'))                     
+                    'durée',
+                    'fréquence des rencontres',
+                    'fréquence des communications',
+                    'proximité affective',
+                    'conaissance',
+                    'famille',
+                    'colègue',
+                    'ami',
+                    'autre info'))
     list_of_qualified = main_jsons.list_of_qualified(folder, ego)
     for qualified_data in list_of_qualified:
         qualified = qualified_data['data']
@@ -299,11 +303,11 @@ def print_info_qualify(folder, ego):
                 new_info.append(i)
         writer.writerow(new_info)
     csv_file.close()
-    
+
 def print_nb_of_friends(folder, ego, graph):
     file_to_write = open('GALLERY/'+folder+'/'+ego+'/Graphs/nb_of_friends', 'wb')
     file_to_write.write(str(len(graph.vs)))
-    file_to_write.close()        
+    file_to_write.close()
 
 def main(folder_arg = None, ego_arg = None, options = None):
     if folder_arg != None and ego_arg != None:
