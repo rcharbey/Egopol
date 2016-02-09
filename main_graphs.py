@@ -1,10 +1,10 @@
 import sys
-sys.path.append('./Graphs')
+import os
+sys.path.append('%s/Egopol/Enumeration' % os.path.expanduser("~"))
 
 import friends
 import commenters
 import both_friends_status
-import os
 import methods_graph
 
 def main(dict_friends, dict_commenters, correspondence, folder, ego):
