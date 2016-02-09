@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append('Egopol/Jsons')
-sys.path.append('./Jsons')
+import os
+sys.path.append('%s/Egopol/Jsons' % os.path.expanduser("~"))
 import read_friends
 import read_statuses
 import read_ego
 import read_qualify
-import os
-from os import path
 
 def dict_of_mutual_friends(folder, ego):
     return read_friends.dict_of_mutual(folder, ego)
