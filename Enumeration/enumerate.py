@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append('Egopol/Graphs')
-sys.path.append('./Graphs')
+import os
+sys.path.append('%s/Egopol/Graphs' % os.path.expanduser("~"))
 import methods_graph
 import index_neighbors_degree
 import index_dictionary
