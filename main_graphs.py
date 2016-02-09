@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append('%s/Egopol/Enumeration' % os.path.expanduser("~"))
+sys.path.append('%s/Egopol/Graphs' % os.path.expanduser("~"))
 
 import friends
 import commenters
