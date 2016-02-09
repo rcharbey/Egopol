@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 sys.path.append('%s/Egopol/Enumeration' % os.path.expanduser("~"))
 import enumerate
 
