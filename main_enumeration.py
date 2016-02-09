@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append('Egopol/Enumeration')
-import enumerate
+#sys.path.append('Egopol/Enumeration')
+from Enumaration import enumerate
 
 def main(graph, options):
     if 'k' in options:
