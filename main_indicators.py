@@ -1,17 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import csv
-sys.path.append('Egopol/Jsons')
-sys.path.append('Egopol/GALLERY')
-sys.path.append('Egopol/Graphs')
-sys.path.append('Egopol/Indicators')
-sys.path.append('./Jsons')
-sys.path.append('./GALLERY')
-sys.path.append('./Graphs')
-sys.path.append('./Indicators')
-import os.path
 import os
+import sys
+sys.path.append('%s/Egopol/Graphs' % os.path.expanduser("~"))
+sys.path.append('%s/Egopol/Jsons' % os.path.expanduser("~"))
+sys.path.append('%s/Egopol/Indicators' % os.path.expanduser("~"))
 from igraph import *
 import argparse
 import main_jsons
