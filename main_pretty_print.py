@@ -1,7 +1,6 @@
 import os
-import sys
-sys.path.append('Egopol/Pretty_print')
-sys.path.append('./Pretty_print')
+import os
+sys.path.append('%s/Egopol/Pretty_print' % os.path.expanduser("~"))
 
 import pp_patterns
 import pp_positions
