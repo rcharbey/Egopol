@@ -7,6 +7,7 @@ import methods_graph
 import index_neighbors_degree
 import index_dictionary
 import index_degree
+from igraph import *
 
 PT = []
 PS = []
