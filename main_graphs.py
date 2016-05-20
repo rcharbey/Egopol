@@ -35,6 +35,9 @@ def create_friends_graph(dict_friends, correspondence, folder, ego):
 def light_graph(dict_of_mutual, folder, ego, induced = False):
     friends.light_graph(dict_of_mutual, folder, ego, induced)
 
+def draw_graph(graph):
+    friends.draw_graph(graph)
+
 def import_graph(folder, ego, quality = 'friends', graph_format = 'gml', fc = False):
     if quality == 'friends' :
         return friends.import_graph(folder, ego, graph_format, fc)

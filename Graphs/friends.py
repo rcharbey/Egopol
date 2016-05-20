@@ -77,13 +77,22 @@ def display_light(graph, show = True, fc = False):
 def draw_graph(graph):
     graph.es['curved'] = 0.3
     layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
+    place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends.svg'
+    for v in graph.vs:
+        v['size'] = 10*math.log(2+v['sum_comments_likes'])
+        if v['sum_comments_likes'] > 10:
+            v['label'] = v['name']
+    plot(graph, place, layout = layout)
+
+def draw_graph_2(graph):
+    graph.es['curved'] = 0.3
+    layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**3)
     place = 'GALLERY/'+graph['folder']+'/'+graph['ego']+'/Graphs/friends_comments_likes.svg'
     for v in graph.vs:
         v['size'] = 10*math.log(2+v['sum_comments_likes'])
         if v['sum_comments_likes'] > 10:
             v['label'] = v['name']
-    if socket.gethostname() != 'ccadovir01':
-        plot(graph, place, layout = layout)
+    plot(graph, place, layout = layout)
     for v in graph.vs:
         v['size'] = 10
         v['label'] = None
@@ -93,8 +102,7 @@ def draw_graph(graph):
         v['size'] = 10*math.log(2+v.degree())
         if v.degree() > 10:
             v['label'] = v['name']
-    if socket.gethostname() != 'ccadovir01':
-        plot(graph, place, layout = layout)
+    plot(graph, place, layout = layout)
     for v in graph.vs:
         v['size'] = 10
         v['label'] = None
@@ -118,8 +126,7 @@ def draw_graph(graph):
             if v['sum_comments_likes'] > max_sum/2:
                 v['label'] = v['name']
                 v['label_size'] = 5*math.log(2+v.degree())
-    if socket.gethostname() != 'ccadovir01':
-        plot(graph, place, layout = layout)
+    plot(graph, place, layout = layout)
     for v in graph.vs:
         v['size'] = 10
         v['label'] = None

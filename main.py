@@ -15,6 +15,7 @@ import csv
 import main_pretty_print
 import main_indicators
 from algopol.statuses import ParsedStatus
+from igraph import *
 
 
 def create_folders(folder, ego):

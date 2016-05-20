@@ -143,37 +143,6 @@ def dict_of_mutual_commenters(folder, ego, list_of_friends):
 
     return result
 
-def calculate_info_commenters(folder, ego):
-    f = open_json(folder, ego)
-    result = {}
-
-    for line in f:
-        list_commenters_of_line = []
-        status = json.loads(line)
-        if 'comments' in status:
-            for comment in status['comments']:
-                if 'name' in comment['from']:
-                    commenter = comment['from']['name']
-                else:
-                    commenter = comment['from']['id']
-                #if commenter == ego:
-                    #commenter = 0
-                    #if commenter in result:
-                        #result[commenter]['nb_of_comments'] += 1
-                        #if commenter not in list_commenters_of_line:
-                            #result[commenter]['nb_of_statuses'] += 1
-                            #list_commenters_of_line.append(commenter)
-                if commenter in result:
-                    result[commenter]['nb_of_comments'] += 1
-                    if commenter not in list_commenters_of_line:
-                        result[commenter]['nb_of_statuses'] += 1
-                        list_commenters_of_line.append(commenter)
-                else:
-                    result[commenter] = {'nb_of_comments' : 1, 'nb_of_statuses' : 1}
-                    list_commenters_of_line.append(commenter)
-
-    return result
-
 def calculate_info_likers(folder, ego):
     f = open_json(folder, ego)
     result = {}
