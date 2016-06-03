@@ -15,10 +15,12 @@ def gt_pretty_print(folder, ego):
 
 def main():
     list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
+    print list_folders
     for folder in list_folders:
         if folder != 'entretiens':
             continue
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
+        print list_ego
         for ego in list_ego:
             print 'pretty print : ',
             print ego
