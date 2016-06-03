@@ -9,6 +9,7 @@ def image(path_to_images, i, file_html, rowspan = 1):
 
 def appearance(number, file_html, color):
     file_html.write('<td class="nb" style = "color:rgb')
+    print number
     if number == '0':
         file_html.write('(000,0,0)')
     else:
