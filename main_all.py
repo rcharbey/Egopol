@@ -69,6 +69,7 @@ def main():
             continue
         list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
+            print ego
             sys.argv = ['main.py', folder, ego]
             if args.options != None:
                 sys.argv.append('-o')
