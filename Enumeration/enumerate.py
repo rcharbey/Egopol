@@ -22,24 +22,15 @@ def add_vertex(graph, vertex):
     vertex['id_sub'] = len(graph.vs)
     graph.add_vertex(name = vertex['name'], **{'id_principal' : vertex.index})
 
-def extend_subgraph(graph, k, method, graph_sub, v, vext):
+def extend_subgraph(graph, k, graph_sub, v, vext):
     if len(graph_sub.es) > 0 :
-        if method == 'dictionary':
-            index_dictionary.index_pattern(graph_sub, PT, PS)
-        elif method == 'neighbor_degree':
-            index_neighbors_degree.index_pattern(graph_sub, PT, PS)
-        elif method == 'degree' :
-            index_degree.index_pattern(graph_sub, PT, PS)
-    if method == 'dictionary':
-        list_class = list(graph_sub.vs['evol_class'])
+        index_neighbors_degree.index_pattern(graph_sub, PT, PS)
     if len(graph_sub.vs) == k:
         return
     while vext:
         w = vext.pop()
         vext2 = list(vext)
         add_vertex(graph_sub, w)
-        if method == 'dictionary':
-            graph_sub.vs[len(graph_sub.vs) - 1]['neighbors_evol_classes'] = []
         for nei in w['list_neighbors']:
             u = graph.vs[nei]
             if u.index >= v.index:
@@ -47,19 +38,15 @@ def extend_subgraph(graph, k, method, graph_sub, v, vext):
                     if not in_neighborhood_vsub(graph, u['list_neighbors'], len(graph_sub.vs)):
                         vext2.append(u)
                 else:
-                    if method == 'dictionary':
-                        graph_sub.vs[len(graph_sub.vs)-1]['neighbors_evol_classes'].append(graph_sub.vs[u['id_sub']]['evol_class'])
                     graph_sub.add_edge(len(graph_sub.vs) - 1, u['id_sub'])
             else:
                 break
 
-        extend_subgraph(graph, k, method, graph_sub, v, vext2)
+        extend_subgraph(graph, k, graph_sub, v, vext2)
         graph_sub.delete_vertices(w['id_sub'])
         w['id_sub'] = -1
-        if method == 'dictionary':
-            graph_sub.vs['evol_class'] = list_class
 
-def characterize_with_patterns(graph, k, method):
+def characterize_with_patterns(graph, k):
     print graph
     methods_graph.create_list_neighbors(graph)
     global PT
@@ -83,6 +70,6 @@ def characterize_with_patterns(graph, k, method):
                 vext.append(graph.vs[nei])
 
         if len(vext) > 0:
-            extend_subgraph(graph, k, method, graph_sub, v, vext)
+            extend_subgraph(graph, k, graph_sub, v, vext)
         v['id_sub'] = -1
     return (PT, PS)
