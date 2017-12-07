@@ -77,9 +77,17 @@ def disambiguate_position(graph_sub, v, new_position):
         if n['d'] == new_position[0]:
             return new_position[1][0]
     return new_position[1][1]
+    
+def degree_distribution(graph):
+    result = []
+    for v in graph.vs:
+        result.append(v.degree())
+        v['d'] = result[v.index]
+    result.sort()
+    return result
 
 def index_pattern(graph_sub, pt, ps):
-    new_pattern = DICT_PATTERNS[str(methods_graph.degree_distribution(graph_sub))]
+    new_pattern = DICT_PATTERNS[str(degree_distribution(graph_sub))]
     if type(new_pattern) != int :
         new_pattern = disambiguate_pattern(graph_sub, new_pattern)
     pt[new_pattern - 1] += 1
