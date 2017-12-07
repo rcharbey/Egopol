@@ -24,7 +24,7 @@ def add_vertex(graph, vertex):
 
 def extend_subgraph(graph, k, graph_sub, v, vext):
     if len(graph_sub.es) > 0 :
-        index_neighbors_degree.index_pattern(graph_sub, PT, PS)
+        index_degree.index_pattern(graph_sub, PT, PS)
     if len(graph_sub.vs) == k:
         return
     while vext:
