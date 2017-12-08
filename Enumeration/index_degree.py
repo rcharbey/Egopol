@@ -111,4 +111,4 @@ def index_pattern(graph_sub, pt, ps):
             ps[v['id_principal']][new_position - 1] += 1
     else:
         for v in graph_sub.vs:
-            ps[v['id_principal']][new_positions[v['d']] - 1] += 1
+            ps[v['id_principal']][new_positions[v.degree()] - 1] += 1
