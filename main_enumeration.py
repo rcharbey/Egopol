@@ -36,11 +36,13 @@ if __name__ == "__main__":
     graph = import_graph(folder, ego)
     pt, ps = enumerate.characterize_with_patterns(graph, k)
     
-    with open('results/patterns_per_ego/%s_k%s.csv' % (ego, k), 'w') as patterns_w:
+    home = os.path.expanduser('~')
+    
+    with open('%s/results/patterns_per_ego/%s_k%s.csv' % (home,ego, k), 'w') as patterns_w:
         csv_wp = csv.writer(patterns_w, delimiter = ';')
         csv_wp.writerow(pt) 
         
-    with open('results/positions_per_alter/%s_k%s.csv' % (ego, k), 'w') as pos_w:
+    with open('%s/results/positions_per_alter/%s_k%s.csv' % (home,ego, k), 'w') as pos_w:
         csv_wpos = csv.writer(pos_w, delimiter = ';')
         for i in range(len(ps)):
             csv_wpos.writerow([graph.vs[i]['name']] + ps[i])
