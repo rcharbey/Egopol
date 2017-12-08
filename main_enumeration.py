@@ -6,6 +6,7 @@ import csv
 sys.path.append('%s/Egopol/Enumeration' % os.path.expanduser("~"))
 from igraph import Graph
 import argparse
+import enumerate
 
 
 def import_graph(folder, ego):
