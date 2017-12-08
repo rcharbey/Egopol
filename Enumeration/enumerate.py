@@ -4,10 +4,8 @@ import sys
 import os
 sys.path.append('%s/Egopol/Graphs' % os.path.expanduser("~"))
 import methods_graph
-import index_neighbors_degree
-import index_dictionary
 import index_degree
-from igraph import *
+from igraph import Graph
 
 PT = []
 PS = []
@@ -47,7 +45,6 @@ def extend_subgraph(graph, k, graph_sub, v, vext):
         w['id_sub'] = -1
 
 def characterize_with_patterns(graph, k):
-    print graph
     methods_graph.create_list_neighbors(graph)
     global PT
     global PS

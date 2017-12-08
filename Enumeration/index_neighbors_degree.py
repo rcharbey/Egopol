@@ -1,8 +1,6 @@
 import sys
 sys.path.append('../Methodes_graphe')
 import methods_graph
-sys.path.append('../Enumerate')
-import enumerate
 
 DICT_COMBI_PATTERNS = {
     '[2, 2]' : 1,

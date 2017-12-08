@@ -1,35 +1,48 @@
-import methods_graph
+LONG_DICT_PATTERNS = [
+        [1, 1],
+        [1, 1, 2],
+        [2, 2, 2],
+        [1, 1, 2, 2],
+        [1, 1, 1, 3],
+        [1, 2, 2, 3],
+        [2, 2, 2, 2],
+        [2, 2, 3, 3],
+        [3, 3, 3, 3],
+        [1, 1, 2, 2, 2],
+        [1, 1, 1, 1, 4],
+        [1, 1, 1, 2, 3],
+        [1, 2, 2, 2, 3],
+        [1, 1, 2, 3, 3],
+        [1, 1, 2, 2, 4],
+        [2, 2, 2, 2, 2],
+        [1, 2, 2, 2, 3],
+        [1, 2, 3, 3, 3],
+        [1, 2, 2, 3, 4],
+        [2, 2, 2, 2, 4],
+        [2, 2, 2, 3, 3],
+        [2, 2, 2, 3, 3],
+        [1, 3, 3, 3, 4],
+        [2, 2, 3, 3, 4],
+        [2, 2, 2, 4, 4],
+        [2, 3, 3, 3, 3],
+        [3, 3, 3, 3, 4],
+        [2, 3, 3, 4, 4],
+        [3, 3, 4, 4, 4],
+        [4, 4, 4, 4, 4]
+    ]
 
-DICT_PATTERNS = {
-        '[1, 1]' : 1,
-        '[1, 1, 2]' : 2,
-        '[2, 2, 2]' : 3,
-        '[1, 1, 2, 2]' : 4,
-        '[1, 1, 1, 3]' : 5,
-        '[1, 2, 2, 3]' : 6,
-        '[2, 2, 2, 2]' : 7,
-        '[2, 2, 3, 3]' : 8,
-        '[3, 3, 3, 3]' : 9,
-        '[1, 1, 2, 2, 2]' : 10,
-        '[1, 1, 1, 1, 4]' : 11,
-        '[1, 1, 1, 2, 3]' : 12,
-        '[1, 2, 2, 2, 3]' : (1,2,(13,17)),
-        '[1, 1, 2, 3, 3]' : 14,
-        '[1, 1, 2, 2, 4]' : 15,
-        '[2, 2, 2, 2, 2]' : 16,
-        '[1, 2, 3, 3, 3]' : 18,
-        '[1, 2, 2, 3, 4]' : 19,
-        '[2, 2, 2, 2, 4]' : 20,
-        '[2, 2, 2, 3, 3]' : (3,3,(21,22)),
-        '[1, 3, 3, 3, 4]' : 23,
-        '[2, 2, 3, 3, 4]' : 24,
-        '[2, 2, 2, 4, 4]' : 25,
-        '[2, 3, 3, 3, 3]' : 26,
-        '[3, 3, 3, 3, 4]' : 27,
-        '[2, 3, 3, 4, 4]' : 28,
-        '[3, 3, 4, 4, 4]' : 29,
-        '[4, 4, 4, 4, 4]' : 30
-    }
+DICT_PATTERNS,i = {}, 1
+for pattern in LONG_DICT_PATTERNS:
+    id_pat = 0
+    for deg in pattern:
+        id_pat += 1 << (deg * 4)
+    if i in [13, 17]:
+        DICT_PATTERNS[id_pat] = (1, 2, (13,17))
+    elif i in [21, 22]:
+        DICT_PATTERNS[id_pat] = (3, 3, (21,22))
+    else:
+        DICT_PATTERNS[id_pat] = i
+    i += 1
     
 DICT_POSITIONS = [
     {1 : 1}, #1
@@ -79,15 +92,13 @@ def disambiguate_position(graph_sub, v, new_position):
     return new_position[1][1]
     
 def degree_distribution(graph):
-    result = []
+    result = 0
     for v in graph.vs:
-        result.append(v.degree())
-        v['d'] = result[v.index]
-    result.sort()
+        result += 1 << (4 * v.degree())
     return result
 
 def index_pattern(graph_sub, pt, ps):
-    new_pattern = DICT_PATTERNS[str(degree_distribution(graph_sub))]
+    new_pattern = DICT_PATTERNS[degree_distribution(graph_sub)]
     if type(new_pattern) != int :
         new_pattern = disambiguate_pattern(graph_sub, new_pattern)
     pt[new_pattern - 1] += 1
