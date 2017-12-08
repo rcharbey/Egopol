@@ -34,7 +34,7 @@ if __name__ == "__main__":
        once the result shows up, it prints it in two differents csv files. One for the patterns and the other for the positions.
     """
     graph = import_graph(folder, ego)
-    pt, ps = enumerate.characterize_with_patterns(graph, k)
+    pt, ps = enumerate.characterize_with_patterns(graph, int(k))
     
     home = os.path.expanduser('~')
     
