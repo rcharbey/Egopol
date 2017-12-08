@@ -20,12 +20,11 @@ def import_graph(folder, ego):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="main")
-    parser.add_argument('folder', help="ego's folder")
     parser.add_argument('ego', help="ego's name")
     parser.add_argument('k', help="graphlets size")
     args = parser.parse_args()
 
-    folder = args.folder
+    folder = 'three'
     ego = args.ego
     k = args.k
     
