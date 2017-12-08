@@ -28,6 +28,7 @@ if __name__ == "__main__":
     folder = 'three'
     ego = args.ego
     k = args.k
+    print ego
     
     """
        enumerate imports the graph from the ml file created by init and runs the enumeration algo on it.
