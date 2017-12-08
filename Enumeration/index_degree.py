@@ -98,7 +98,11 @@ def degree_distribution(graph):
     return result
 
 def index_pattern(graph_sub, pt, ps):
-    new_pattern = DICT_PATTERNS[degree_distribution(graph_sub)]
+    try:
+        new_pattern = DICT_PATTERNS[degree_distribution(graph_sub)]
+    except:
+        print graph_sub
+        print DICT_PATTERNS
     if type(new_pattern) != int :
         new_pattern = disambiguate_pattern(graph_sub, new_pattern)
     pt[new_pattern - 1] += 1
