@@ -42,7 +42,7 @@ if __name__ == "__main__":
         csv_wp = csv.writer(patterns_w, delimiter = ';')
         csv_wp.writerow(pt) 
         
-    with open('%s/results/positions_per_alter/%s_k%s.csv' % (home,ego, k), 'w') as pos_w:
+    with open('%s/results/positions_per_alters/%s_k%s.csv' % (home,ego, k), 'w') as pos_w:
         csv_wpos = csv.writer(pos_w, delimiter = ';')
         for i in range(len(ps)):
             csv_wpos.writerow([graph.vs[i]['name']] + ps[i])
