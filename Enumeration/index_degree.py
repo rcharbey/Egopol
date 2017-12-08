@@ -79,15 +79,15 @@ DICT_POSITIONS = [
                 
 def disambiguate_pattern(graph_sub, new_pattern):
     for v in graph_sub.vs:
-        if v['d'] == new_pattern[0]:
+        if v.degree() == new_pattern[0]:
             for n in v.neighbors():
-                if n['d'] == new_pattern[1]:
+                if n.degree() == new_pattern[1]:
                     return new_pattern[2][0]
     return new_pattern[2][1]
 
 def disambiguate_position(graph_sub, v, new_position):
     for n in v.neighbors():
-        if n['d'] == new_position[0]:
+        if n.degree() == new_position[0]:
             return new_position[1][0]
     return new_position[1][1]
     
@@ -105,9 +105,9 @@ def index_pattern(graph_sub, pt, ps):
     new_positions = DICT_POSITIONS[new_pattern - 1]
     if new_pattern in [10, 12, 13, 17, 18, 21, 26] :
         for v in graph_sub.vs:
-            new_position = new_positions[v['d']]
+            new_position = new_positions[v.degree()]
             if type(new_position) != int:
-                new_position = disambiguate_position(graph_sub, v, new_positions[v['d']])
+                new_position = disambiguate_position(graph_sub, v, new_positions[v.degree()])
             ps[v['id_principal']][new_position - 1] += 1
     else:
         for v in graph_sub.vs:
